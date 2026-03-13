@@ -1,0 +1,27 @@
+﻿<Window x:Class="CigarHouseApp.Views.AuthentificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CigarHouseApp.Views"
+        mc:Ignorable="d"
+        Title="AuthentificationWindow" Height="300" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Логин"></TextBlock>
+            <TextBox x:Name="tbLogin" Width="200" Height="20"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Пароль"></TextBlock>
+            <PasswordBox x:Name="pbPassword" Width="200" Height="20"></PasswordBox>
+        </StackPanel>
+        <Button x:Name="btnJoin" Click="btnJoin_Click" Grid.Row="2" Content="Войти" Width="100" Height="30"></Button>
+        <Button x:Name="btnRegistration" Click="btnRegistration_Click" Grid.Row="3" Content="Зарегистрироваться" Background="Transparent" BorderThickness="0" Width="200" Height="30" Foreground="#47352B"></Button>
+    </Grid>
+</Window>
