@@ -40,7 +40,11 @@
                                Grid.ColumnSpan="5"
                                Background="Transparent" 
                                BorderThickness="0"
-                               Height="60">
+                               Height="60"
+                            SelectedIndex="-1"
+                            x:Name="tabControlProducts"
+                            SelectionChanged="TabControl_SelectionChanged"
+                            >
 
                     <TabControl.Resources>
                         <Style TargetType="TabItem">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,24 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class ListProductsPage : Page
     {
+
+        List<Product> products = new List<Product>();
         public ListProductsPage()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (CigarhouseContext _context = new CigarhouseContext())
+            {
+                products = _context.Products
+            .Include(p => p.Brand)
+            .Include(p => p.Cigar)
+            .ToList();
+                MessageBox.Show(products[0].ProductName);
+                listViewProducts.ItemsSource = products;
+            }
         }
     }
 }

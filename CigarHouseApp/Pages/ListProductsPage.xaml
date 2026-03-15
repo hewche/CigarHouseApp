@@ -6,15 +6,27 @@
       xmlns:local="clr-namespace:CigarHouseApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ListProductsPage">
-
+      Title="ListProductsPage" Loaded="Page_Loaded"
+      FontFamily="B612 Mono">
     <Grid>
         <Grid>
 
             <ListView x:Name="listViewProducts" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalContentAlignment="Stretch">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel MaxWidth="1200" HorizontalAlignment="Center" Orientation="Horizontal" 
+                       ItemWidth="310"
+                            ItemHeight="360"
+                            Margin="10"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border>
+                        <Border BorderBrush="Gray" 
+                    BorderThickness="1" 
+                    CornerRadius="5"  
+                    Padding="10"
+                    Width="290"> 
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
@@ -23,17 +35,17 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Button>
-                                    <Image></Image>
-                                </Button>
-                                <StackPanel>
-                                    <TextBlock x:Name="tbBrandName" Text="{Binding Name}"></TextBlock>
-                                    <TextBlock x:Name="tbProductName" Text="{Binding ProductName}"/>
-                                    <TextBlock x:Name="tbStrength" Text="{Binding Strength}"></TextBlock>
+                                <Button Width="30" Height="30" Background="Transparent" Grid.Row="0" HorizontalAlignment="Right" >
+                                    <Image Source="/Images/heart_icon.png"></Image>
+                                </Button >
+                                <StackPanel Grid.Row="1" >
+                                    <TextBlock Foreground="Black" x:Name="tbBrandName" Text="{Binding Brand.Name}"></TextBlock>
+                                    <TextBlock Foreground="Black" x:Name="tbProductName" Text="{Binding ProductName}"/>
+                                    <TextBlock Foreground="Black" x:Name="tbStrength" Text="{Binding Cigar.Strength}"></TextBlock>
                                 </StackPanel>
                                 <Image/>
-                                <StackPanel>
-                                    <TextBlock x:Name="tbPrice" Text="{Binding CostProduct}"></TextBlock>
+                                <StackPanel Grid.Row="2">
+                                    <TextBlock x:Name="tbPrice" Text="{Binding Path=CostProduct}"></TextBlock>
                                     <Border CornerRadius="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -41,16 +53,16 @@
                                                 <ColumnDefinition></ColumnDefinition>
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <Button x:Name="minusButton"></Button>
-                                            <TextBlock x:Name="tbCountProduct"  Text="0"/>
-                                            <Button x:Name="plusButton"></Button>
+                                            <Button Grid.Column="0" x:Name="minusButton"></Button>
+                                            <TextBlock Grid.Column="1" x:Name="tbCountProduct"  Text="0"/>
+                                            <Button Grid.Column="2" x:Name="plusButton"></Button>
                                         </Grid>
                                     </Border>
                                     <Button>
                                         <Image></Image>
                                     </Button>
                                 </StackPanel>
-                                <Button x:Name="tbBuyButton" Content="Купить в 1 клик"></Button>
+                                <Button Grid.Row="3" x:Name="tbBuyButton" Content="Купить в 1 клик"></Button>
                             </Grid>
                         </Border>
                     </DataTemplate>

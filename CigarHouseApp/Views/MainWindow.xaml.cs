@@ -24,12 +24,21 @@ namespace CigarHouseApp.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cigarFrame.Navigate(new Pages.ProductPage());
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (tabControlProducts.SelectedIndex)
+            {
+                case 0:
+                    cigarFrame.Navigate(new Pages.ListProductsPage());
+                    break;
+            }
         }
     }
 }
