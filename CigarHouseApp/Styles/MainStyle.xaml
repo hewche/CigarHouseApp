@@ -13,4 +13,14 @@
     <Style x:Key="PrimaryTextBlock" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="B612 Mono"/>
     </Style>
+
+    <Style x:Key="PrimaryProfileButton" TargetType="Ellipse">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter 
+                Property="Fill" 
+                Value="#CE9E6E"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

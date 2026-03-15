@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -22,6 +22,8 @@ public partial class CigarhouseContext : DbContext
     public virtual DbSet<Brand> Brands { get; set; }
 
     public virtual DbSet<Cigar> Cigars { get; set; }
+
+    public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<Delivery> Deliveries { get; set; }
 
@@ -47,7 +49,7 @@ public partial class CigarhouseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5050;Database=cigarhouse;Username=postgres;Password=123");
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=cigarhouse;Username=postgres;Password=123;Port=5050");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -126,6 +128,18 @@ public partial class CigarhouseContext : DbContext
                 .HasConstraintName("cigar_product_id_fkey");
         });
 
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.CountryId).HasName("country_pkey");
+
+            entity.ToTable("country");
+
+            entity.Property(e => e.CountryId).HasColumnName("country_id");
+            entity.Property(e => e.CountryName)
+                .HasMaxLength(50)
+                .HasColumnName("country_name");
+        });
+
         modelBuilder.Entity<Delivery>(entity =>
         {
             entity.HasKey(e => e.DeliveryId).HasName("delivery_pkey");
@@ -134,9 +148,16 @@ public partial class CigarhouseContext : DbContext
 
             entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
             entity.Property(e => e.DeliveryDate).HasColumnName("delivery_date");
-            entity.Property(e => e.DeliveryLocation)
-                .HasMaxLength(50)
-                .HasColumnName("delivery_location");
+            entity.Property(e => e.DeliveryLocationFrom).HasColumnName("delivery_location_from");
+            entity.Property(e => e.DeliveryLocationTo).HasColumnName("delivery_location_to");
+
+            entity.HasOne(d => d.DeliveryLocationFromNavigation).WithMany(p => p.DeliveryDeliveryLocationFromNavigations)
+                .HasForeignKey(d => d.DeliveryLocationFrom)
+                .HasConstraintName("delivery_delivery_location_from_fkey");
+
+            entity.HasOne(d => d.DeliveryLocationToNavigation).WithMany(p => p.DeliveryDeliveryLocationToNavigations)
+                .HasForeignKey(d => d.DeliveryLocationTo)
+                .HasConstraintName("delivery_delivery_location_to_fkey");
         });
 
         modelBuilder.Entity<Favoriteproduct>(entity =>

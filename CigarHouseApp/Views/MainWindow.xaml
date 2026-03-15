@@ -7,16 +7,14 @@
             xmlns:local="clr-namespace:CigarHouseApp.Views"
             mc:Ignorable="d"
             FontFamily="Exo 2 Extra Bold"
-            Title="MainWindow" Height="650" Width="800" Loaded="Window_Loaded">
+            Title="MainWindow" Height="650" Width="800" Loaded="Window_Loaded" Cursor="">
 
-    <Grid>
+    <Grid Cursor="">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!-- Панель с вкладками -->
         <Border Grid.Row="0">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -195,7 +193,7 @@
                 </StackPanel>
 
                 <StackPanel  Margin="10 0 0 10" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Foreground="#6b4e23" Text="Доп. фильтры"></TextBlock>
+                    <TextBlock Cursor="Hand" FontWeight="Bold" Foreground="#6b4e23" Text="Доп. фильтры"></TextBlock>
                 </StackPanel>
 
                 <StackPanel x:Name="additionFilters" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="4">
@@ -238,7 +236,12 @@
         </StackPanel>
         <Frame Grid.Row="2" x:Name="cigarFrame" JournalOwnership="OwnsJournal" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" Focusable="False" IsTabStop="False"/>
 
-
+        <Button Margin="0" Grid.RowSpan="5" Width="60" Height="60" BorderBrush="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="Transparent" Cursor="Hand">
+            <Image Source="/Images/profile_icon.png"></Image>
+        </Button>
+        <Button Margin="0" Grid.RowSpan="5" Width="60" Height="60" BorderBrush="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Right" Background="Transparent" Cursor="Hand">
+            <Image Source="/Images/handbag.png"></Image>
+        </Button>
     </Grid>
 
 </Window>

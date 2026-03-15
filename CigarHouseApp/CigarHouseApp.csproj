@@ -11,8 +11,10 @@
   <ItemGroup>
     <None Remove="Images\cigarillo_icon.png" />
     <None Remove="Images\cigar_icon.png" />
+    <None Remove="Images\handbag.png" />
     <None Remove="Images\Image_not_available.png" />
     <None Remove="Images\lighter_icon.png" />
+    <None Remove="Images\profile_icon.png" />
     <None Remove="Images\ranking_icon.png" />
     <None Remove="Images\sets_icon.png" />
   </ItemGroup>
@@ -33,11 +35,17 @@
     <Resource Include="Images\cigar_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\handbag.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Image_not_available.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\lighter_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\profile_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\ranking_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

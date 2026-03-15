@@ -27,13 +27,13 @@
                                     <Image></Image>
                                 </Button>
                                 <StackPanel>
-                                    <TextBlock x:Name="tbBrandName"></TextBlock>
-                                    <TextBlock x:Name="tbProductName"/>
-                                    <TextBlock x:Name="tbStrength"></TextBlock>
+                                    <TextBlock x:Name="tbBrandName" Text="{Binding Name}"></TextBlock>
+                                    <TextBlock x:Name="tbProductName" Text="{Binding ProductName}"/>
+                                    <TextBlock x:Name="tbStrength" Text="{Binding Strength}"></TextBlock>
                                 </StackPanel>
                                 <Image/>
                                 <StackPanel>
-                                    <TextBlock x:Name="tbPrice"></TextBlock>
+                                    <TextBlock x:Name="tbPrice" Text="{Binding CostProduct}"></TextBlock>
                                     <Border CornerRadius="10">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -42,7 +42,7 @@
                                                 <ColumnDefinition></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <Button x:Name="minusButton"></Button>
-                                            <TextBlock x:Name="tbCountProduct"  Text="Количество"></TextBlock>
+                                            <TextBlock x:Name="tbCountProduct"  Text="0"/>
                                             <Button x:Name="plusButton"></Button>
                                         </Grid>
                                     </Border>
