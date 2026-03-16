@@ -12,6 +12,7 @@
     <None Remove="Images\cigarillo_icon.png" />
     <None Remove="Images\cigar_icon.png" />
     <None Remove="Images\handbag.png" />
+    <None Remove="Images\heart_full_icon.png" />
     <None Remove="Images\heart_icon.png" />
     <None Remove="Images\Image_not_available.png" />
     <None Remove="Images\lighter_icon.png" />
@@ -37,6 +38,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\handbag.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\heart_full_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\heart_icon.png">

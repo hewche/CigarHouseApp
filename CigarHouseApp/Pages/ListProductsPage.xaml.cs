@@ -31,10 +31,9 @@ namespace CigarHouseApp.Pages
             using (CigarhouseContext _context = new CigarhouseContext())
             {
                 products = _context.Products
-            .Include(p => p.Brand)
-            .Include(p => p.Cigar)
-            .ToList();
-                MessageBox.Show(products[0].ProductName);
+                .Include(p => p.Brand)
+                .Include(p => p.Cigar)
+                .ToList();
                 listViewProducts.ItemsSource = products;
             }
         }
