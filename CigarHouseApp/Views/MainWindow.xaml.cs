@@ -17,6 +17,7 @@ namespace CigarHouseApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Frame frame;
         public MainWindow()
         {
             InitializeComponent();

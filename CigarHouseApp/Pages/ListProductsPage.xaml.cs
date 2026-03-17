@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CigarHouseApp.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,5 +38,33 @@ namespace CigarHouseApp.Pages
                 listViewProducts.ItemsSource = products;
             }
         }
+
+        private void btnProductName_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void tbProductName_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hyperlink = sender as Hyperlink;
+            if(hyperlink.DataContext is Product product)
+            {
+                listViewProducts.SelectedItem = product;
+                MainWindow main = Application.Current.MainWindow as MainWindow;
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product));
+            }
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button.DataContext is Product product)
+            {
+                listViewProducts.SelectedItem = product;
+                MainWindow main = Application.Current.MainWindow as MainWindow;
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product));
+            }
+        }
+
     }
 }

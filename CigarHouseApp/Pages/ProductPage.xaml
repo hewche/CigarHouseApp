@@ -18,20 +18,23 @@
                 <RowDefinition Height="0.2*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock HorizontalAlignment="Center" x:Name="tbBrandName" Text="Название бренда"></TextBlock>
-            <StackPanel Grid.Row="1">
-                <TextBlock HorizontalAlignment="Center" x:Name="tbProductName" Text="Название продукта"></TextBlock>
+            <TextBlock HorizontalAlignment="Center" x:Name="tbBrandName" Text="{Binding Brand.Name}"></TextBlock>
+            <StackPanel Grid.Row="1" x:Name="spProductInfo">
+                <TextBlock HorizontalAlignment="Center" x:Name="tbProductName" Text="{Binding ProductName}"></TextBlock>
                 <Image Source="/Images/Image_not_available.png" Width="300" Height="120" x:Name="imgProduct"></Image>
                 <Button Width="200" Height="35" Style="{StaticResource PrimaryButtonKey}" x:Name="likeButton" Click="likeButton_Click" Content="Добавить в избранное"></Button>
             </StackPanel>
-            <ListView Grid.Row="2" x:Name="ProductInfoListView" 
+
+            <ScrollViewer Grid.Row="2" x:Name="svStatsCigar" 
               MaxHeight="150">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" Margin="5"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding Cigar.Strength}" Margin="5"/>
+                    <TextBlock Text="{Binding Cigar.Vitola}"></TextBlock>
+                    <TextBlock Text="{Binding Cigar.RingGauge}"></TextBlock>
+                    <TextBlock Text="{Binding Cigar.FlavorProfile}"></TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+            
             <StackPanel Grid.Row="3">
                 <Button Width="200" Height="35" Style="{StaticResource PrimaryButtonKey}" Content="Купить"></Button>
             </StackPanel>

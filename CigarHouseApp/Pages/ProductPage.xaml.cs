@@ -23,9 +23,21 @@ namespace CigarHouseApp.Pages
             InitializeComponent();
         }
 
+        public ProductPage(Product product)
+        {
+            InitializeComponent();
+            LoadDataProduct(product);   
+        }
+
         private void likeButton_Click(object sender, RoutedEventArgs e)
         {
+        }
 
+        private void LoadDataProduct(Product product)
+        {
+            svStatsCigar.DataContext = product;
+            spProductInfo.DataContext = product;
+            tbBrandName.DataContext = product;
         }
 
     }
