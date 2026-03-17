@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class Product
 {
@@ -16,6 +16,8 @@ public partial class Product
     public int Quantity { get; set; }
 
     public decimal CostProduct { get; set; }
+
+    public string? Image { get; set; }
 
     public virtual Accessory? Accessory { get; set; }
 

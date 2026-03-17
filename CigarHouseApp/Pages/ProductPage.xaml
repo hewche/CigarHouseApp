@@ -27,7 +27,7 @@
 
             <ScrollViewer Grid.Row="2" x:Name="svStatsCigar" 
               MaxHeight="150">
-                <StackPanel HorizontalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" Cursor="">
                     <TextBlock Text="{Binding Cigar.Strength}" Margin="5"/>
                     <TextBlock Text="{Binding Cigar.Vitola}"></TextBlock>
                     <TextBlock Text="{Binding Cigar.RingGauge}"></TextBlock>

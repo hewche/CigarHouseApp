@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -49,7 +49,7 @@ public partial class CigarhouseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=cigarhouse;Username=postgres;Password=123;Port=5050");
+        => optionsBuilder.UseNpgsql("Host=localhost; Port=5050; Database=cigarhouse; Username=postgres; Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -273,6 +273,9 @@ public partial class CigarhouseContext : DbContext
                 .HasPrecision(8, 3)
                 .HasColumnName("cost_product");
             entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+            entity.Property(e => e.Image)
+                .HasMaxLength(300)
+                .HasColumnName("image");
             entity.Property(e => e.ProductName)
                 .HasMaxLength(200)
                 .HasColumnName("product_name");

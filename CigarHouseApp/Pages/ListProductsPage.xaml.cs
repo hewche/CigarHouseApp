@@ -1,4 +1,5 @@
-﻿using CigarHouseApp.Views;
+﻿using CigarHouseApp.Models;
+using CigarHouseApp.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
