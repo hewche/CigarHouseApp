@@ -27,19 +27,29 @@ namespace CigarHouseApp.Views
         {
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
+        
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (tabControlProducts.SelectedIndex)
+            if (e.Source is TabControl tc && tc.IsLoaded)
             {
-                case 0:
-                    cigarFrame.Navigate(new Pages.ListProductsPage());
-                    break;
+                switch (tabControlProducts.SelectedIndex)
+                {
+                    case 0:
+                        cigarFrame.Navigate(new Pages.ListProductsPage());
+                        break;
+                }
             }
+        }
+
+        private void tabControlProducts_Selected(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
+        private void tabControlProducts_Loaded(object sender, RoutedEventArgs e)
+        {
+            tabControlProducts.SelectedIndex = -1;
         }
     }
 }

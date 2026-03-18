@@ -66,6 +66,17 @@ namespace CigarHouseApp.Pages
                 main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product));
             }
         }
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
 
+        }
+
+        private void tbFilters_Click(object sender, RoutedEventArgs e)
+        {
+            if(additionFilters.Visibility == Visibility.Hidden) 
+                additionFilters.Visibility = Visibility.Visible;
+            else
+                additionFilters.Visibility = Visibility.Hidden;
+        }
     }
 }

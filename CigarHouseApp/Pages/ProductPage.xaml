@@ -16,8 +16,12 @@
         <SolidColorBrush x:Key="GoldAccent" Color="#CE9E6E"/>
     </Page.Resources>
 
+    
+    
     <Grid Background="#F5F5F5">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+        
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <materialDesign:Card Margin="25" UniformCornerRadius="15" Background="White">
                 <Grid Margin="20">
                     <Grid.RowDefinitions>

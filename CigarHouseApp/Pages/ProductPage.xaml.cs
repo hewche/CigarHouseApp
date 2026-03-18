@@ -40,6 +40,5 @@ namespace CigarHouseApp.Pages
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
         }
-
     }
 }

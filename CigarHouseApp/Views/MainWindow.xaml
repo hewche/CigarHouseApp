@@ -45,9 +45,8 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Cursor="">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -69,7 +68,7 @@
                 <TabControl Grid.Column="1" 
                             Background="Transparent" 
                             BorderThickness="0"
-                            SelectedIndex="-1"
+                            Loaded="tabControlProducts_Loaded"
                             x:Name="tabControlProducts"
                             SelectionChanged="TabControl_SelectionChanged">
                     <TabControl.ItemsPanel>
@@ -87,14 +86,6 @@
                         </TabItem.Header>
                     </TabItem>
 
-                    <TabItem>
-                        <TabItem.Header>
-                            <StackPanel HorizontalAlignment="Center">
-                                <Image Source="/Images/cigarillo_icon.png" Width="18" Height="18" Margin="0,0,0,2"/>
-                                <TextBlock Text="СИГАРИЛЛЫ" FontSize="11"/>
-                            </StackPanel>
-                        </TabItem.Header>
-                    </TabItem>
 
                     <TabItem>
                         <TabItem.Header>
@@ -126,81 +117,16 @@
             </Grid>
         </Border>
 
-        <materialDesign:Card Grid.Row="1" Margin="15" Padding="15" Background="White" UniformCornerRadius="10">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        
 
-                    <ListBox Grid.Row="0" Grid.Column="0" Margin="5" Height="30" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
-                    <ListBox Grid.Row="0" Grid.Column="1" Margin="5" Height="30" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
-                    <TextBox Grid.Row="0" Grid.Column="2" Margin="5" Height="30" VerticalContentAlignment="Center" BorderBrush="{StaticResource DeepBrown}" BorderThickness="0,0,0,1"/>
+        <Frame Grid.Row="1" x:Name="cigarFrame" NavigationUIVisibility="Hidden"/>
 
-                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="5,15,5,0">
-                        <TextBlock Margin="0,0,0,5" Text="Цена" Foreground="Gray" FontSize="11"/>
-                        <Slider Minimum="0" Maximum="100" IsSelectionRangeEnabled="True" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged" />
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,15,5,0">
-                        <TextBlock Cursor="Hand" FontWeight="Bold" Foreground="{StaticResource DeepBrown}" Text="ДОП. ФИЛЬТРЫ"/>
-                    </StackPanel>
-
-                    <StackPanel x:Name="additionFilters" Visibility="Visible" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,15,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0" Margin="5">
-                                <TextBlock Text="Крепость" Foreground="Gray" FontSize="11" Margin="0,0,0,5"/>
-                                <ListBox Height="25" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Длина" Foreground="Gray" FontSize="11"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                    <TextBlock Text="-" Foreground="Gray"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                </StackPanel>
-                                <Slider Minimum="0" Maximum="100" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Толщина" Foreground="Gray" FontSize="11"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                    <TextBlock Text="-" Foreground="Gray"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                </StackPanel>
-                                <Slider Minimum="0" Maximum="100" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
-        </materialDesign:Card>
-
-        <Frame Grid.Row="2" x:Name="cigarFrame" NavigationUIVisibility="Hidden"/>
-
-        <Button Grid.Row="2" Width="50" Height="50" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+        <Button Grid.Row="1" Width="50" Height="50" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" 
                 Background="{StaticResource BeigeLight}" BorderBrush="{StaticResource BeigeLight}" Cursor="Hand" Style="{StaticResource MaterialDesignFloatingActionLightButton}">
             <Image Width="30" Source="/Images/profile_icon.png"></Image>
         </Button>
 
-        <Button Grid.Row="2" Width="60" Height="60" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+        <Button Grid.Row="1" Width="60" Height="60" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                 Background="{StaticResource DeepBrown}" BorderBrush="{StaticResource DeepBrown}" Cursor="Hand" Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
             <Image Width="35" Source="/Images/handbag.png"></Image>
         </Button>
