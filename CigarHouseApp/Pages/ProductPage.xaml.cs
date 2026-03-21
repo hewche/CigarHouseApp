@@ -1,4 +1,5 @@
 ﻿using CigarHouseApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,7 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class ProductPage : Page
     {
+        List<Review> reviews = new List<Review>();
         public ProductPage()
         {
             InitializeComponent();
@@ -39,6 +41,17 @@ namespace CigarHouseApp.Pages
             svStatsCigar.DataContext = product;
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
+            LoadReviews(product);
+        }
+
+        private void LoadReviews(Product product)
+        {
+            using(CigarhouseContext _context = new CigarhouseContext())
+            {
+                reviews = _context.Reviews.Include(r=> r.User)
+                    .Where(r => r.ProductId == product.ProductId).ToList();
+                listReview.ItemsSource = reviews;
+            }
         }
     }
 }
