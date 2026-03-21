@@ -24,7 +24,20 @@ namespace CigarHouseApp.Pages
 
         List<Product> products = new List<Product>();
         List<Brand> brands = new List<Brand>();
+        List<Product> filteredProducts = new List<Product>();
         List<Country> countries = new List<Country>();
+
+
+        private Brand selectedBrand = null;
+        private Country selectedCountry = null;
+
+        enum Filters
+        {
+            All,
+            Brand,
+            Country,
+            None
+        }
         public ListProductsPage()
         {
             InitializeComponent();
@@ -44,7 +57,7 @@ namespace CigarHouseApp.Pages
                 products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Cigar)
-                .Include(p=> p.Country)
+                .Include(p=> p.CountryNavigation)
                 .ToList();
 
                 listViewProducts.ItemsSource = products;
@@ -88,6 +101,10 @@ namespace CigarHouseApp.Pages
                 lbCountry.DisplayMemberPath = "CountryName";
                 brands = _context.Brands.ToList();
                 countries = _context.Countries.ToList();
+
+                brands.Insert(0, new Brand { BrandId = 0, Name = "Все" });
+                countries.Insert(0, new Country { CountryId = 0, CountryName = "Все" });
+
                 lbBrand.ItemsSource = brands;
                 lbCountry.ItemsSource = countries;
             }
@@ -102,11 +119,42 @@ namespace CigarHouseApp.Pages
 
         private void lbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            if (lbCountry.SelectedItem is Country selected)
+            {
+                selectedCountry = selected.CountryId == 0 ? null : selected;
+                ApplyFilters();
+            }
         }
 
         private void lbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (lbBrand.SelectedItem is Brand selected)
+            {
+                selectedBrand = selected.BrandId == 0 ? null : selected;
+                ApplyFilters();
+            }
+        }
 
+        private void ApplyFilters()
+        {
+            // Начинаем с полного списка
+            var query = products.AsEnumerable();
+
+            // Применяем фильтр по бренду, если выбран
+            if (selectedBrand != null)
+            {
+                query = query.Where(p => p.BrandId == selectedBrand.BrandId);
+            }
+
+            // Применяем фильтр по стране, если выбрана
+            if (selectedCountry != null)
+            {
+                query = query.Where(p => p.Country == selectedCountry.CountryId);
+            }
+
+            filteredProducts = query.ToList();
+            listViewProducts.ItemsSource = filteredProducts;
         }
     }
 }

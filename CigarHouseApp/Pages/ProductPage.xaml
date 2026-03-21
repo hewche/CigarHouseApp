@@ -84,7 +84,13 @@
                                             <TextBlock Text="{Binding Cigar.FlavorProfile}" Foreground="{StaticResource DeepBrown}" FontWeight="Bold" HorizontalAlignment="Right" MaxWidth="180" TextAlignment="Right" TextWrapping="Wrap"/>
                                         </Grid>
                                     </Border>
-                                </StackPanel>
+                                <Border BorderBrush="{StaticResource BeigeLight}" BorderThickness="0,0,0,1" Padding="10">
+                                    <Grid>
+                                        <TextBlock Text="Страна:" Foreground="Gray" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding CountryNavigation.CountryName}" Foreground="{StaticResource DeepBrown}" FontWeight="Bold" HorizontalAlignment="Right" MaxWidth="180" TextAlignment="Right" TextWrapping="Wrap"/>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
                             </StackPanel>
 
                             <StackPanel Grid.Row="3" Margin="0,20,0,10">
