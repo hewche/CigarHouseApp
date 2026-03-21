@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class User
 {
@@ -24,4 +24,8 @@ public partial class User
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Role? Role { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
+    public virtual ICollection<Product> ProductsNavigation { get; set; } = new List<Product>();
 }

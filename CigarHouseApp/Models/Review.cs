@@ -17,6 +17,8 @@ public partial class Review
 
     public DateTime? CreatedAt { get; set; }
 
+    public int? Rating { get; set; }
+
     public virtual Product? Product { get; set; }
 
     public virtual User? User { get; set; }

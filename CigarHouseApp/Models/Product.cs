@@ -30,4 +30,8 @@ public partial class Product
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
+
+    public virtual ICollection<User> UsersNavigation { get; set; } = new List<User>();
 }
