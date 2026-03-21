@@ -12,4 +12,6 @@ public partial class Country
     public virtual ICollection<Delivery> DeliveryDeliveryLocationFromNavigations { get; set; } = new List<Delivery>();
 
     public virtual ICollection<Delivery> DeliveryDeliveryLocationToNavigations { get; set; } = new List<Delivery>();
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

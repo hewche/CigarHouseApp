@@ -58,12 +58,15 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0,0,0,5" Text="Страна" Foreground="Gray" FontSize="11"/>
-                                <ListBox x:Name="lbCountry" Margin="5" Height="30" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
+                                <TextBlock Margin="0,0,0,5" Text="Страна" Foreground="Black" FontSize="11"/>
+                                <ComboBox SelectionChanged="lbCountry_SelectionChanged"
+          materialDesign:HintAssist.Hint="Выберите страну"
+          BorderBrush="{StaticResource BeigeLight}" x:Name="lbCountry" Foreground="Black" Margin="5" Height="30"  BorderThickness="1"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Margin="0,0,0,5" Text="Марка" Foreground="Gray" FontSize="11"/>
-                                <ListBox x:Name="lbBrand" Margin="5" Height="30" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
+                                <TextBlock Margin="0,0,0,5" Text="Марка" Foreground="Black" FontSize="11"/>
+                                <ComboBox SelectionChanged="lbBrand_SelectionChanged" materialDesign:HintAssist.Hint="Выберите страну"
+BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Margin="5" Height="30"  BorderThickness="1"/>
                             </StackPanel>
                             <StackPanel Grid.Column="2" Margin="5" VerticalAlignment="Bottom">
                                 <TextBox Height="30" BorderBrush="{StaticResource DeepBrown}" BorderThickness="0,0,0,1"/>

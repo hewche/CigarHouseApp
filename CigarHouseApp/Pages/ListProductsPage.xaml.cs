@@ -23,6 +23,8 @@ namespace CigarHouseApp.Pages
     {
 
         List<Product> products = new List<Product>();
+        List<Brand> brands = new List<Brand>();
+        List<Country> countries = new List<Country>();
         public ListProductsPage()
         {
             InitializeComponent();
@@ -30,16 +32,24 @@ namespace CigarHouseApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            using (CigarhouseContext _context = new CigarhouseContext())
+            LoadProducts();
+            LoadFilters();
+        }
+
+
+        private void LoadProducts()
+        {
+            using (var _context = new CigarhouseContext())
             {
                 products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Cigar)
+                .Include(p=> p.Country)
                 .ToList();
+
                 listViewProducts.ItemsSource = products;
             }
         }
-
         private void btnProductName_Click(object sender, RoutedEventArgs e)
         {
             
@@ -70,13 +80,33 @@ namespace CigarHouseApp.Pages
         {
             
         }
-
+        private void LoadFilters()
+        {
+            using(CigarhouseContext _context =  new CigarhouseContext())
+            {
+                lbBrand.DisplayMemberPath = "Name";
+                lbCountry.DisplayMemberPath = "CountryName";
+                brands = _context.Brands.ToList();
+                countries = _context.Countries.ToList();
+                lbBrand.ItemsSource = brands;
+                lbCountry.ItemsSource = countries;
+            }
+        }
         private void tbFilters_Click(object sender, RoutedEventArgs e)
         {
             if(additionFilters.Visibility == Visibility.Hidden) 
                 additionFilters.Visibility = Visibility.Visible;
             else
                 additionFilters.Visibility = Visibility.Hidden;
+        }
+
+        private void lbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        private void lbBrand_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

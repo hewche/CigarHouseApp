@@ -19,11 +19,15 @@ public partial class Product
 
     public string? Image { get; set; }
 
+    public int? Country { get; set; }
+
     public virtual Accessory? Accessory { get; set; }
 
     public virtual Brand? Brand { get; set; }
 
     public virtual Cigar? Cigar { get; set; }
+
+    public virtual Country? CountryNavigation { get; set; }
 
     public virtual Delivery? Delivery { get; set; }
 

@@ -41,6 +41,7 @@ namespace CigarHouseApp.Pages
             svStatsCigar.DataContext = product;
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
+
             LoadReviews(product);
         }
 
@@ -53,5 +54,7 @@ namespace CigarHouseApp.Pages
                 listReview.ItemsSource = reviews;
             }
         }
+
+        
     }
 }
