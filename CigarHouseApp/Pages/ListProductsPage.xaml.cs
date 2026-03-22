@@ -27,6 +27,9 @@ namespace CigarHouseApp.Pages
         List<Product> filteredProducts = new List<Product>();
         List<Country> countries = new List<Country>();
 
+        private System.Threading.Timer searchTimer;
+        private const int SearchDelay = 100;
+
 
         private Brand selectedBrand = null;
         private Country selectedCountry = null;
@@ -55,6 +58,7 @@ namespace CigarHouseApp.Pages
             using (var _context = new CigarhouseContext())
             {
                 products = _context.Products
+                .AsNoTracking()
                 .Include(p => p.Brand)
                 .Include(p => p.Cigar)
                 .Include(p=> p.CountryNavigation)
@@ -136,25 +140,52 @@ namespace CigarHouseApp.Pages
             }
         }
 
-        private void ApplyFilters()
+        private async Task ApplyFilters()
         {
-            // Начинаем с полного списка
-            var query = products.AsEnumerable();
+            await Task.Run(() => {
+                var query = products.AsEnumerable();
+                if (selectedBrand != null)
+                {
+                    query = query.Where(p => p.BrandId == selectedBrand.BrandId);
+                }
+                if (selectedCountry != null)
+                {
+                    query = query.Where(p => p.Country == selectedCountry.CountryId);
+                }
 
-            // Применяем фильтр по бренду, если выбран
-            if (selectedBrand != null)
+                filteredProducts = query.ToList();
+            });
+
+            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
+        }
+
+        private List<Product> SearchProducts(string search,List<Product> products)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return products.ToList();
+
+            return products
+            .Where(p => p.ProductName.ToLower().Contains(search.ToLower()))
+            .ToList();
+
+        }
+
+        private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            searchTimer?.Dispose();
+
+            searchTimer = new System.Threading.Timer(_ =>
             {
-                query = query.Where(p => p.BrandId == selectedBrand.BrandId);
-            }
+                Dispatcher.Invoke(() =>
+                {
+                    if (selectedBrand != null || selectedCountry != null)
+                        listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
+                    else
+                        listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
+                });
 
-            // Применяем фильтр по стране, если выбрана
-            if (selectedCountry != null)
-            {
-                query = query.Where(p => p.Country == selectedCountry.CountryId);
-            }
-
-            filteredProducts = query.ToList();
-            listViewProducts.ItemsSource = filteredProducts;
+            },null,SearchDelay,System.Threading.Timeout.Infinite);
         }
     }
 }
