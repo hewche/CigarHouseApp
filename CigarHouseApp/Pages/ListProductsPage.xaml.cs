@@ -1,5 +1,8 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
 using CigarHouseApp.Views;
+using ControlzEx.Standard;
+using MaterialDesignColors;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,6 +37,11 @@ namespace CigarHouseApp.Pages
         private Brand selectedBrand = null;
         private Country selectedCountry = null;
 
+
+        private decimal minPrice = 0;
+        private decimal maxPrice = 0;
+
+
         enum Filters
         {
             All,
@@ -49,6 +57,7 @@ namespace CigarHouseApp.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadProducts();
+            LoadValues();
             LoadFilters();
         }
 
@@ -66,6 +75,16 @@ namespace CigarHouseApp.Pages
 
                 listViewProducts.ItemsSource = products;
             }
+        }
+
+        private void LoadValues()
+        {
+            maxPrice = products.Max(p => p.CostProduct);
+            minPrice = products.Min(p=> p.CostProduct);
+
+            tbMaxPrice.Text = maxPrice.ToString();
+            tbMinPrice.Text = minPrice.ToString();
+
         }
         private void btnProductName_Click(object sender, RoutedEventArgs e)
         {
@@ -153,8 +172,14 @@ namespace CigarHouseApp.Pages
                     query = query.Where(p => p.Country == selectedCountry.CountryId);
                 }
 
+                if (minPrice >= 0 || (maxPrice >= 0 && minPrice< maxPrice))
+                {
+                    query = PriceFilter(minPrice, maxPrice, query.ToList());
+                }
+
                 filteredProducts = query.ToList();
             });
+
 
             listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
         }
@@ -173,19 +198,88 @@ namespace CigarHouseApp.Pages
         private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            searchTimer?.Dispose();
-
-            searchTimer = new System.Threading.Timer(_ =>
+            Freezer freezer = new Freezer(() =>
             {
-                Dispatcher.Invoke(() =>
-                {
-                    if (selectedBrand != null || selectedCountry != null)
-                        listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
-                    else
-                        listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
-                });
+                if (selectedBrand != null || selectedCountry != null)
+                    listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
+                else
+                    listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
+            }, 300);
+            freezer.Execute();
 
-            },null,SearchDelay,System.Threading.Timeout.Infinite);
+            //searchTimer?.Dispose();
+
+            //searchTimer = new System.Threading.Timer(_ =>
+            //{
+            //    Dispatcher.Invoke(() =>
+            //    {
+            //        if (selectedBrand != null || selectedCountry != null)
+            //            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
+            //        else
+            //            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
+            //    });
+
+            //},null,SearchDelay,System.Threading.Timeout.Infinite);
+        }
+
+        private List<Product> PriceFilter(decimal min,decimal max, List<Product> products)
+        {
+            if (products == null || !products.Any())
+                return new List<Product>();
+
+            bool hasMin = min != -1;
+            bool hasMax = max != -1;
+
+            if (!hasMin && !hasMax)
+                return products.ToList();
+
+            var result = products;
+
+            if (hasMin)
+                result = result.Where(p => p.CostProduct >= min).ToList();
+
+            if (hasMax)
+                result = result.Where(p => p.CostProduct <= max).ToList();
+
+            if (hasMin && hasMax && min > max)
+                return new List<Product>();
+
+            return result;
+        }
+
+        private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void sliderPrice_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void tbMinPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tbMinPrice.Text))
+            {
+                minPrice = Convert.ToDecimal(tbMinPrice.Text);
+                ApplyFilters();
+            }
+        }
+
+        private void tbMaxPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(tbMaxPrice.Text))
+            {
+                try
+                {
+                    maxPrice = Convert.ToDecimal(tbMaxPrice.Text);
+                    ApplyFilters();
+                }
+                catch (Exception ex)
+                {
+                };
+            }
         }
     }
 }

@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:CigarHouseApp.Pages"
+      xmlns:local="clr-namespace:CigarHouseApp.Pages" 
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="ListProductsPage" Loaded="Page_Loaded"
@@ -86,11 +87,11 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
                                     <TextBlock Margin="0 0 10 5" VerticalAlignment="Center" Text="Цена" Foreground="Gray" FontSize="11"/>
-                                    <TextBox  BorderBrush="Gray" Width="40" Height="20"></TextBox>
+                                    <TextBox x:Name="tbMinPrice" TextChanged="tbMinPrice_TextChanged" BorderBrush="Gray" Width="40" Height="30" FontSize="10"></TextBox>
                                     <TextBlock Margin="5 0 5 0" VerticalAlignment="Center" Text="-"></TextBlock>
-                                    <TextBox BorderBrush="Gray" Width="40" Height="20"></TextBox>
+                                    <TextBox x:Name="tbMaxPrice" TextChanged="tbMaxPrice_TextChanged" BorderBrush="Gray" Width="40" Height="30" FontSize="10"></TextBox>
                                 </StackPanel>
-                                <Slider Minimum="0" Maximum="100" IsSelectionRangeEnabled="True" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged" />
+                                
                             </StackPanel>
                             <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,15,5,0">
                                 <TextBlock x:Name="tbFilters" Cursor="Hand">
