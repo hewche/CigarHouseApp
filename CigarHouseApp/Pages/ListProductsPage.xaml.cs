@@ -27,15 +27,15 @@ namespace CigarHouseApp.Pages
 
         List<Product> products = new List<Product>();
         List<Brand> brands = new List<Brand>();
-        List<Product> filteredProducts = new List<Product>();
         List<Country> countries = new List<Country>();
 
-        private System.Threading.Timer searchTimer;
-        private const int SearchDelay = 100;
 
+        Freezer searchFreezer;
+        Freezer priceFreezer;
+        Freezer categoryFreezer;
 
-        private Brand selectedBrand = null;
-        private Country selectedCountry = null;
+        ProductFilter productFilter;
+
 
 
         private decimal minPrice = 0;
@@ -56,11 +56,24 @@ namespace CigarHouseApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadService();
             LoadProducts();
             LoadValues();
             LoadFilters();
         }
 
+        private void LoadService()
+        {
+            productFilter = new ProductFilter();
+            searchFreezer = new Freezer(async ()=> {
+            {
+                    
+                        listViewProducts.ItemsSource = await productFilter.ApplyFilters(products);
+                }
+            }, 300);
+            priceFreezer = new Freezer(async ()=> listViewProducts.ItemsSource = await productFilter.ApplyFilters(products),300);
+            categoryFreezer = new Freezer(async ()=> listViewProducts.ItemsSource = await productFilter.ApplyFilters(products),0);
+        }
 
         private void LoadProducts()
         {
@@ -145,8 +158,8 @@ namespace CigarHouseApp.Pages
 
             if (lbCountry.SelectedItem is Country selected)
             {
-                selectedCountry = selected.CountryId == 0 ? null : selected;
-                ApplyFilters();
+                productFilter.SelectedCountry = selected.CountryId == 0 ? null : selected;
+                categoryFreezer.Execute();
             }
         }
 
@@ -154,97 +167,17 @@ namespace CigarHouseApp.Pages
         {
             if (lbBrand.SelectedItem is Brand selected)
             {
-                selectedBrand = selected.BrandId == 0 ? null : selected;
-                ApplyFilters();
+                productFilter.SelectedBrand = selected.BrandId == 0 ? null : selected;
+                categoryFreezer.Execute();
             }
-        }
-
-        private async Task ApplyFilters()
-        {
-            await Task.Run(() => {
-                var query = products.AsEnumerable();
-                if (selectedBrand != null)
-                {
-                    query = query.Where(p => p.BrandId == selectedBrand.BrandId);
-                }
-                if (selectedCountry != null)
-                {
-                    query = query.Where(p => p.Country == selectedCountry.CountryId);
-                }
-
-                if (minPrice >= 0 || (maxPrice >= 0 && minPrice< maxPrice))
-                {
-                    query = PriceFilter(minPrice, maxPrice, query.ToList());
-                }
-
-                filteredProducts = query.ToList();
-            });
-
-
-            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
-        }
-
-        private List<Product> SearchProducts(string search,List<Product> products)
-        {
-            if (string.IsNullOrWhiteSpace(search))
-                return products.ToList();
-
-            return products
-            .Where(p => p.ProductName.ToLower().Contains(search.ToLower()))
-            .ToList();
-
         }
 
         private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            productFilter.SearchText = tbSearch.Text;
+            searchFreezer.Execute();
 
-            Freezer freezer = new Freezer(() =>
-            {
-                if (selectedBrand != null || selectedCountry != null)
-                    listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
-                else
-                    listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
-            }, 300);
-            freezer.Execute();
 
-            //searchTimer?.Dispose();
-
-            //searchTimer = new System.Threading.Timer(_ =>
-            //{
-            //    Dispatcher.Invoke(() =>
-            //    {
-            //        if (selectedBrand != null || selectedCountry != null)
-            //            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, filteredProducts);
-            //        else
-            //            listViewProducts.ItemsSource = SearchProducts(tbSearch.Text, products);
-            //    });
-
-            //},null,SearchDelay,System.Threading.Timeout.Infinite);
-        }
-
-        private List<Product> PriceFilter(decimal min,decimal max, List<Product> products)
-        {
-            if (products == null || !products.Any())
-                return new List<Product>();
-
-            bool hasMin = min != -1;
-            bool hasMax = max != -1;
-
-            if (!hasMin && !hasMax)
-                return products.ToList();
-
-            var result = products;
-
-            if (hasMin)
-                result = result.Where(p => p.CostProduct >= min).ToList();
-
-            if (hasMax)
-                result = result.Where(p => p.CostProduct <= max).ToList();
-
-            if (hasMin && hasMax && min > max)
-                return new List<Product>();
-
-            return result;
         }
 
         private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -261,25 +194,26 @@ namespace CigarHouseApp.Pages
         {
             if (!string.IsNullOrEmpty(tbMinPrice.Text))
             {
-                minPrice = Convert.ToDecimal(tbMinPrice.Text);
-                ApplyFilters();
+                productFilter.MinPrice = Convert.ToDecimal(tbMinPrice.Text);
+                priceFreezer.Execute();
             }
+
         }
 
         private void tbMaxPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            if (!string.IsNullOrEmpty(tbMaxPrice.Text))
-            {
+            if (!string.IsNullOrEmpty(tbMaxPrice.Text)) { 
                 try
                 {
-                    maxPrice = Convert.ToDecimal(tbMaxPrice.Text);
-                    ApplyFilters();
+                    productFilter.MaxPrice = Convert.ToDecimal(tbMaxPrice.Text);
+                    priceFreezer.Execute();
                 }
                 catch (Exception ex)
                 {
-                };
+
+                }
             }
         }
     }
 }
+
