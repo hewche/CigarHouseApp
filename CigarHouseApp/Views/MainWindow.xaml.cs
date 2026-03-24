@@ -17,6 +17,12 @@ namespace CigarHouseApp.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public enum ListProductStatus
+        {
+            CIGAR,
+            ACCESSORY
+        }
         public static Frame frame;
         public MainWindow()
         {
@@ -36,7 +42,10 @@ namespace CigarHouseApp.Views
                 switch (tabControlProducts.SelectedIndex)
                 {
                     case 0:
-                        cigarFrame.Navigate(new Pages.ListProductsPage());
+                        cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.CIGAR));
+                        break;
+                    case 1:
+                        cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.ACCESSORY));
                         break;
                 }
             }

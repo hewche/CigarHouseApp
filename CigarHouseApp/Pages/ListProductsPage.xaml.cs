@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Views.MainWindow;
 
 namespace CigarHouseApp.Pages
 {
@@ -36,22 +37,17 @@ namespace CigarHouseApp.Pages
 
         ProductFilter productFilter;
 
-
+        ListProductStatus productStatus;
 
         private decimal minPrice = 0;
         private decimal maxPrice = 0;
 
 
-        enum Filters
+        public ListProductsPage(ListProductStatus status)
         {
-            All,
-            Brand,
-            Country,
-            None
-        }
-        public ListProductsPage()
-        {
+            
             InitializeComponent();
+            productStatus = status;
             Loaded += async (s, e) => await Page_LoadedAsync();
         }
 
@@ -99,12 +95,26 @@ namespace CigarHouseApp.Pages
             {
                 using (var _context = new CigarhouseContext())
                 {
-                    products = _context.Products
+                    if(productStatus == ListProductStatus.CIGAR)
+                    {
+                        products = _context.Products
                         .AsNoTracking()
+                        .Where(p => p.Accessory == null)
                         .Include(p => p.Brand)
                         .Include(p => p.Cigar)
                         .Include(p => p.CountryNavigation)
                         .ToList();
+                    }
+                    if(productStatus == ListProductStatus.ACCESSORY)
+                    {
+                        products = _context.Products
+                        .AsNoTracking()
+                        .Where(p => p.Cigar == null)
+                        .Include(p => p.Brand)
+                        .Include(p => p.Accessory)
+                        .Include(p => p.CountryNavigation)
+                        .ToList();
+                    }
                 }
             });
 

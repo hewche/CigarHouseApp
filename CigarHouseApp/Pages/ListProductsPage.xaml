@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:CigarHouseApp.Pages" 
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
@@ -12,6 +13,7 @@
       FontFamily="Segoe UI Semibold">
 
     <Page.Resources>
+        <helpers:ProductConverter x:Key="ProductConverter"/>
         <SolidColorBrush x:Key="DeepBrown" Color="#4E342E"/>
         <SolidColorBrush x:Key="BeigeLight" Color="#D7CCC8"/>
         <SolidColorBrush x:Key="GoldAccent" Color="#CE9E6E"/>
@@ -28,6 +30,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+
+        
     </Page.Resources>
 
     <Grid Background="#F5F5F5">
@@ -145,18 +151,12 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
 
         <Grid Grid.Row="1" x:Name="loadingGrid" Background="#F5F5F5" Visibility="Visible">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <!-- Вариант 1: ProgressBar (рекомендую) -->
                 <ProgressBar IsIndeterminate="True" 
                         Width="250" 
                         Height="4"
                         Foreground="{StaticResource GoldAccent}"
                         Background="{StaticResource BeigeLight}"/>
 
-                <!-- Вариант 2: MaterialDesign стилизованный ProgressBar -->
-                <!-- <ProgressBar IsIndeterminate="True" 
-                         Width="250" 
-                         Height="4"
-                         Style="{StaticResource MaterialDesignLinearProgressBar}"/> -->
 
                 <TextBlock Text="Загрузка товаров..." 
                        Margin="0,15,0,0" 
@@ -199,7 +199,7 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                             <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.12"/>
                         </materialDesign:Card.Effect>
 
-                        <Grid Margin="20">
+                        <Grid Margin="20" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -225,7 +225,7 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                                         <Run Text="{Binding ProductName}"/>
                                     </Hyperlink>
                                 </TextBlock>
-                                <TextBlock Text="{Binding Cigar.Strength}" Foreground="Gray" FontSize="12" Margin="0,2,0,0"/>
+                                <TextBlock Text="{Binding Converter={StaticResource ProductConverter}}" Foreground="Gray" FontSize="12" Margin="0,2,0,0"/>
                             </StackPanel>
 
                             <Button Grid.Row="2" x:Name="btnImage" Click="btnImage_Click" 
