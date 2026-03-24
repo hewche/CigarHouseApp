@@ -14,6 +14,8 @@
 
     <Page.Resources>
         <helpers:ProductConverter x:Key="ProductConverter"/>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
+
         <SolidColorBrush x:Key="DeepBrown" Color="#4E342E"/>
         <SolidColorBrush x:Key="BeigeLight" Color="#D7CCC8"/>
         <SolidColorBrush x:Key="GoldAccent" Color="#CE9E6E"/>
@@ -238,7 +240,7 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                                 Height="130"
                                 Padding="0" 
                                 Margin="0,10">
-                                <Image Source="/Images/Image_not_available.png" 
+                                <Image Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
                                Stretch="Uniform"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ImagesDB\opus_x.jpg" />
     <None Remove="Images\cigarillo_icon.png" />
     <None Remove="Images\cigar_icon.png" />
     <None Remove="Images\handbag.png" />
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ImagesDB\opus_x.jpg" />
     <Resource Include="Images\cigarillo_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
