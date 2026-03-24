@@ -8,7 +8,7 @@
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
-      Title="ListProductsPage" Loaded="Page_Loaded"
+      Title="ListProductsPage"
       FontFamily="Segoe UI Semibold">
 
     <Page.Resources>
@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <materialDesign:Card Grid.Row="0" Visibility="Visible" x:Name="cardFilters" Margin="15" Padding="15" Background="White" UniformCornerRadius="10">
+        <materialDesign:Card Grid.Row="0" Visibility="Collapsed" x:Name="cardFilters" Margin="15" Padding="15" Background="White" UniformCornerRadius="10">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -142,6 +142,36 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                 </Grid>
             </StackPanel>
         </materialDesign:Card>
+
+        <Grid Grid.Row="1" x:Name="loadingGrid" Background="#F5F5F5" Visibility="Visible">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <!-- Вариант 1: ProgressBar (рекомендую) -->
+                <ProgressBar IsIndeterminate="True" 
+                        Width="250" 
+                        Height="4"
+                        Foreground="{StaticResource GoldAccent}"
+                        Background="{StaticResource BeigeLight}"/>
+
+                <!-- Вариант 2: MaterialDesign стилизованный ProgressBar -->
+                <!-- <ProgressBar IsIndeterminate="True" 
+                         Width="250" 
+                         Height="4"
+                         Style="{StaticResource MaterialDesignLinearProgressBar}"/> -->
+
+                <TextBlock Text="Загрузка товаров..." 
+                       Margin="0,15,0,0" 
+                       Foreground="Gray"
+                       FontSize="14"
+                       FontWeight="SemiBold"/>
+
+                <TextBlock x:Name="loadingStatusText" 
+                       Text="Подключение к базе данных..." 
+                       Margin="0,8,0,0" 
+                       Foreground="#999999"
+                       FontSize="11"/>
+            </StackPanel>
+        </Grid>
+
         <ListView x:Name="listViewProducts" 
                   BorderThickness="0" 
                   Background="Transparent"

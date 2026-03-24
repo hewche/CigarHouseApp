@@ -52,14 +52,30 @@ namespace CigarHouseApp.Pages
         public ListProductsPage()
         {
             InitializeComponent();
+            Loaded += async (s, e) => await Page_LoadedAsync();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async Task Page_LoadedAsync()
         {
-            LoadService();
-            LoadProducts();
-            LoadValues();
-            LoadFilters();
+
+            loadingGrid.Visibility = Visibility.Visible;
+            listViewProducts.Visibility = Visibility.Collapsed;
+
+            try
+            {
+                await LoadDataAsync();
+
+                await LoadFiltersAsync();
+
+                loadingGrid.Visibility = Visibility.Collapsed;
+                cardFilters.Visibility = Visibility.Visible;
+                listViewProducts.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                loadingGrid.Visibility = Visibility.Collapsed;
+                MessageBox.Show($"Ошибка загрузки: {ex.Message}");
+            }
         }
 
         private void LoadService()
@@ -75,19 +91,29 @@ namespace CigarHouseApp.Pages
             categoryFreezer = new Freezer(async ()=> listViewProducts.ItemsSource = await productFilter.ApplyFilters(products),0);
         }
 
-        private void LoadProducts()
-        {
-            using (var _context = new CigarhouseContext())
-            {
-                products = _context.Products
-                .AsNoTracking()
-                .Include(p => p.Brand)
-                .Include(p => p.Cigar)
-                .Include(p=> p.CountryNavigation)
-                .ToList();
 
+
+        private async Task LoadDataAsync()
+        {
+            await Task.Run(() =>
+            {
+                using (var _context = new CigarhouseContext())
+                {
+                    products = _context.Products
+                        .AsNoTracking()
+                        .Include(p => p.Brand)
+                        .Include(p => p.Cigar)
+                        .Include(p => p.CountryNavigation)
+                        .ToList();
+                }
+            });
+
+            await Dispatcher.InvokeAsync(() =>
+            {
                 listViewProducts.ItemsSource = products;
-            }
+                LoadService();
+                LoadValues();
+            });
         }
 
         private void LoadValues()
@@ -129,14 +155,14 @@ namespace CigarHouseApp.Pages
         {
             
         }
-        private void LoadFilters()
+        private async Task LoadFiltersAsync()
         {
             using(CigarhouseContext _context =  new CigarhouseContext())
             {
                 lbBrand.DisplayMemberPath = "Name";
                 lbCountry.DisplayMemberPath = "CountryName";
-                brands = _context.Brands.ToList();
-                countries = _context.Countries.ToList();
+                brands = await _context.Brands.ToListAsync();
+                countries = await _context.Countries.ToListAsync();
 
                 brands.Insert(0, new Brand { BrandId = 0, Name = "Все" });
                 countries.Insert(0, new Country { CountryId = 0, CountryName = "Все" });
