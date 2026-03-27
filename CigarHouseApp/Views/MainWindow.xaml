@@ -5,72 +5,185 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Background="#F5F5F5"
-        FontFamily="Segoe UI Semibold" 
-        Title="Cigar House" Height="700" Width="950" Loaded="Window_Loaded">
+        Background="#FAF7F2"
+        FontFamily="Segoe UI"
+        Title="Cigar House" Height="700" Width="950" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanResize"
+        BorderBrush="#E0D6CC"
+        BorderThickness="1">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="DeepBrown" Color="#4E342E"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#D7CCC8"/>
-        <SolidColorBrush x:Key="GoldAccent" Color="#CE9E6E"/>
+        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
+        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
+        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
+        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
+        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
+        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
+        <SolidColorBrush x:Key="TextLight" Color="#FAF7F2"/>
+        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
 
         <Style TargetType="TabItem">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabItem">
-                        <Border x:Name="BgBorder"
-                                Background="{StaticResource DeepBrown}"
-                                CornerRadius="5"
-                                Margin="4,5"
-                                MinWidth="110"
-                                Height="55">
-                            <ContentPresenter x:Name="ContentSite"
-                                            ContentSource="Header"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"/>
-                        </Border>
+                        <Grid>
+                            <Border x:Name="BgBorder"
+                                    Background="Transparent"
+                                    CornerRadius="8"
+                                    Margin="4,2"
+                                    Padding="16,8"
+                                    BorderThickness="0,0,0,2"
+                                    BorderBrush="Transparent">
+                                <ContentPresenter x:Name="ContentSite"
+                                                ContentSource="Header"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BgBorder" Property="Background" Value="#6D4C41"/>
+                                <Setter TargetName="BgBorder" Property="Background" Value="#E8DDD2"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="BgBorder" Property="Background" Value="{StaticResource BeigeLight}"/>
-                                <Setter Property="Foreground" Value="{StaticResource DeepBrown}"/>
+                                <Setter TargetName="BgBorder" Property="BorderBrush" Value="{StaticResource AccentBrown}"/>
+                                <Setter TargetName="BgBorder" Property="BorderThickness" Value="0,0,0,3"/>
+                                <Setter Property="Foreground" Value="{StaticResource AccentBrown}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid x:Name="Bg">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb Background="{StaticResource AccentBrown}" 
+                                           BorderThickness="0"
+                                           Width="8">
+                                        <Thumb.Resources>
+                                            <Style TargetType="Thumb">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Thumb">
+                                                            <Border Background="{TemplateBinding Background}" 
+                                                                   CornerRadius="4" 
+                                                                   Height="40"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Thumb.Resources>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernIconButton" TargetType="Button">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="25"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#CCCCCC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FloatingButton" TargetType="Button" BasedOn="{StaticResource ModernIconButton}">
+            <Setter Property="Width" Value="55"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
-    <Grid Cursor="">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="White">
+        <Border Grid.Row="0" Background="White" BorderBrush="#E8DDD2" BorderThickness="0,0,0,1">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.1"/>
+                <DropShadowEffect BlurRadius="8" ShadowDepth="0" Opacity="0.05"/>
             </Border.Effect>
-            <Grid Height="75">
+            <Grid Height="80">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="КАТАЛОГ" 
-                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                           Foreground="{StaticResource DeepBrown}" FontSize="18" FontWeight="Black"/>
+                <Border Grid.Column="0" Margin="20,0,0,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="{StaticResource AccentBrown}" 
+                                CornerRadius="8" 
+                                Width="32" 
+                                Height="32"
+                                Margin="0,0,12,0">
+                            <Image Source="/Images/logo_icon.png" Width="20" Height="20" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel>
+                            <TextBlock Text="CIGAR HOUSE" 
+                                       Foreground="{StaticResource DeepBrown}" 
+                                       FontSize="20" 
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="Дом кубинских сигар" 
+                                       Foreground="{StaticResource AccentBrown}" 
+                                       FontSize="9"
+                                       Opacity="0.7"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
 
                 <TabControl Grid.Column="1" 
                             Background="Transparent" 
                             BorderThickness="0"
                             Loaded="tabControlProducts_Loaded"
                             x:Name="tabControlProducts"
-                            SelectionChanged="TabControl_SelectionChanged">
+                            SelectionChanged="TabControl_SelectionChanged"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="40,0,0,0">
                     <TabControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
@@ -79,18 +192,17 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel HorizontalAlignment="Center">
-                                <Image Source="/Images/cigar_icon.png" Width="18" Height="18" Margin="0,0,0,2"/>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/cigar_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
                                 <TextBlock Text="СИГАРЫ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>
 
-
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel HorizontalAlignment="Center">
-                                <Image Source="/Images/lighter_icon.png" Width="18" Height="18" Margin="0,0,0,2"/>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/lighter_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
                                 <TextBlock Text="АКСЕССУАРЫ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -98,8 +210,8 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel HorizontalAlignment="Center">
-                                <Image Source="/Images/sets_icon.png" Width="18" Height="18" Margin="0,0,0,2"/>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/sets_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
                                 <TextBlock Text="НАБОРЫ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
@@ -107,28 +219,53 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <StackPanel HorizontalAlignment="Center">
-                                <Image Source="/Images/ranking_icon.png" Width="18" Height="18" Margin="0,0,0,2"/>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/ranking_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
                                 <TextBlock Text="ЛУЧШЕЕ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>
                 </TabControl>
+
+                <Border Grid.Column="2" Width="1" Height="40" Background="#E8DDD2" Margin="0,0,20,0"/>
             </Grid>
         </Border>
 
+        <Border Grid.Row="1" Background="{StaticResource BeigeLight}">
+            <Frame x:Name="cigarFrame" NavigationUIVisibility="Hidden"/>
+        </Border>
         
-
-        <Frame Grid.Row="1" x:Name="cigarFrame" NavigationUIVisibility="Hidden"/>
-
-        <Button Grid.Row="1" Width="50" Height="50" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" 
-                Background="{StaticResource BeigeLight}" BorderBrush="{StaticResource BeigeLight}" Cursor="Hand" Style="{StaticResource MaterialDesignFloatingActionLightButton}">
-            <Image Width="30" Source="/Images/profile_icon.png"></Image>
+        <Button Grid.Row="1" 
+                Width="52" Height="52" 
+                Margin="25" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Left" 
+                Background="White"
+                BorderBrush="{StaticResource BeigeMedium}"
+                BorderThickness="1"
+                Cursor="Hand" 
+                Style="{StaticResource FloatingButton}">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.15"/>
+            </Button.Effect>
+            <Image Width="30" Source="/Images/profile_icon.png"/>
         </Button>
 
-        <Button Grid.Row="1" Width="60" Height="60" Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                Background="{StaticResource DeepBrown}" BorderBrush="{StaticResource DeepBrown}" Cursor="Hand" Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
-            <Image Width="35" Source="/Images/handbag.png"></Image>
+        <!-- Правая плавающая кнопка (корзина) -->
+        <Button Grid.Row="1" 
+                Width="58" Height="58" 
+                Margin="25" 
+                VerticalAlignment="Bottom" 
+                HorizontalAlignment="Right" 
+                Background="{StaticResource AccentBrown}"
+                BorderBrush="{StaticResource MediumBrown}"
+                BorderThickness="0"
+                Cursor="Hand" 
+                Style="{StaticResource FloatingButton}">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="15" ShadowDepth="4" Opacity="0.25" Color="#6B4C3B"/>
+            </Button.Effect>
+            <Image Width="35" Source="/Images/handbag.png"/>
         </Button>
     </Grid>
 </Window>

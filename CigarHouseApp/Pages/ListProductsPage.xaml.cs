@@ -30,6 +30,7 @@ namespace CigarHouseApp.Pages
         List<Brand> brands = new List<Brand>();
         List<Country> countries = new List<Country>();
 
+        
 
         Freezer searchFreezer;
         Freezer priceFreezer;
@@ -147,7 +148,7 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
-                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product));
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, this));
             }
         }
 
@@ -158,7 +159,7 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
-                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product));
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, this));
             }
         }
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

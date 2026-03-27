@@ -10,15 +10,21 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="ListProductsPage"
-      FontFamily="Segoe UI Semibold">
+      FontFamily="Segoe UI"
+      Background="#FAF7F2">
 
     <Page.Resources>
         <helpers:ProductConverter x:Key="ProductConverter"/>
         <helpers:ImageConverter x:Key="ImageConverter"/>
 
-        <SolidColorBrush x:Key="DeepBrown" Color="#4E342E"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#D7CCC8"/>
-        <SolidColorBrush x:Key="GoldAccent" Color="#CE9E6E"/>
+        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
+        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
+        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
+        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
+        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
+        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
+        <SolidColorBrush x:Key="TextLight" Color="#FAF7F2"/>
+        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
 
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent" />
@@ -33,17 +39,98 @@
             </Setter>
         </Style>
 
+        <Style TargetType="TextBox" x:Key="ModernTextBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,0,2"/>
+                            <Rectangle x:Name="BottomBorder" 
+                                       Height="2" 
+                                       VerticalAlignment="Bottom" 
+                                       Fill="{StaticResource BeigeMedium}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+        <Style TargetType="ComboBox" x:Key="ModernComboBox">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
 
-        
+        <Style TargetType="Slider">
+            <Setter Property="Foreground" Value="{StaticResource AccentBrown}"/>
+            <Setter Property="Background" Value="{StaticResource BeigeMedium}"/>
+            <Setter Property="Height" Value="4"/>
+        </Style>
+
+        <Style x:Key="ModernCounterButton" TargetType="Button">
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentBrown}"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="17.5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F0F0F0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
-    <Grid Background="#F5F5F5">
+    <Grid Background="{StaticResource BeigeLight}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <materialDesign:Card Grid.Row="0" Visibility="Collapsed" x:Name="cardFilters" Margin="15" Padding="15" Background="White" UniformCornerRadius="10">
+
+        <materialDesign:Card Grid.Row="0" Visibility="Collapsed" x:Name="cardFilters" 
+                            Margin="15" Padding="20" 
+                            Background="White" 
+                            UniformCornerRadius="12">
+            <materialDesign:Card.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.08"/>
+            </materialDesign:Card.Effect>
+
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -61,24 +148,42 @@
                     <StackPanel Grid.Row="0" Grid.ColumnSpan="4" x:Name="spFiltersMain1">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Margin="0,0,0,5" Text="Страна" Foreground="Black" FontSize="11"/>
+
+                            <StackPanel Grid.Column="0" Margin="5">
+                                <TextBlock Margin="0,0,0,8" Text="Страна" 
+                                          Foreground="{StaticResource AccentBrown}" 
+                                          FontSize="11" FontWeight="SemiBold"/>
                                 <ComboBox SelectionChanged="lbCountry_SelectionChanged"
-          materialDesign:HintAssist.Hint="Выберите страну"
-          BorderBrush="{StaticResource BeigeLight}" x:Name="lbCountry" Foreground="Black" Margin="5" Height="30"  BorderThickness="1"/>
+                                          materialDesign:HintAssist.Hint="Выберите страну"
+                                          Style="{StaticResource ModernComboBox}"
+                                          x:Name="lbCountry" 
+                                          Foreground="{StaticResource TextDark}"/>
                             </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Margin="0,0,0,5" Text="Марка" Foreground="Black" FontSize="11"/>
-                                <ComboBox SelectionChanged="lbBrand_SelectionChanged" materialDesign:HintAssist.Hint="Выберите страну"
-BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Margin="5" Height="30"  BorderThickness="1"/>
+
+                            <StackPanel Grid.Column="1" Margin="5">
+                                <TextBlock Margin="0,0,0,8" Text="Марка" 
+                                          Foreground="{StaticResource AccentBrown}" 
+                                          FontSize="11" FontWeight="SemiBold"/>
+                                <ComboBox SelectionChanged="lbBrand_SelectionChanged" 
+                                          materialDesign:HintAssist.Hint="Выберите марку"
+                                          Style="{StaticResource ModernComboBox}"
+                                          x:Name="lbBrand" 
+                                          Foreground="{StaticResource TextDark}"/>
                             </StackPanel>
-                            <StackPanel Grid.Column="2" Margin="5" VerticalAlignment="Bottom">
-                                <TextBox TextChanged="tbSearch_TextChanged" Height="30" x:Name="tbSearch" BorderBrush="{StaticResource DeepBrown}" BorderThickness="0,0,0,1"/>
+
+                            <StackPanel Grid.Column="2" Margin="5">
+                                <TextBlock Margin="0,0,0,8" Text="Поиск" 
+                                          Foreground="{StaticResource AccentBrown}" 
+                                          FontSize="11" FontWeight="SemiBold"/>
+                                <TextBox TextChanged="tbSearch_TextChanged" 
+                                         x:Name="tbSearch" 
+                                         Style="{StaticResource ModernTextBox}"
+                                         materialDesign:HintAssist.Hint="Название товара..."/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -86,33 +191,47 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                     <StackPanel Grid.Row="1" Grid.ColumnSpan="4" x:Name="spFiltersMain2">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Margin="5,15,5,0" VerticalAlignment="Center">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
 
-                                    <TextBlock Margin="0 0 10 5" VerticalAlignment="Center" Text="Цена" Foreground="Gray" FontSize="11"/>
-                                    <TextBox x:Name="tbMinPrice" TextChanged="tbMinPrice_TextChanged" BorderBrush="Gray" Width="40" Height="30" FontSize="10"></TextBox>
-                                    <TextBlock Margin="5 0 5 0" VerticalAlignment="Center" Text="-"></TextBlock>
-                                    <TextBox x:Name="tbMaxPrice" TextChanged="tbMaxPrice_TextChanged" BorderBrush="Gray" Width="40" Height="30" FontSize="10"></TextBox>
+                            <StackPanel Grid.Column="0" Margin="5,10,5,0" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Цена" 
+                                               Foreground="{StaticResource AccentBrown}" 
+                                               FontSize="11" FontWeight="SemiBold"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,10,0"/>
+                                    <TextBox x:Name="tbMinPrice" 
+                                             TextChanged="tbMinPrice_TextChanged" 
+                                             Width="55" Height="30"
+                                             TextAlignment="Center"
+                                             Style="{StaticResource ModernTextBox}"/>
+                                    <TextBlock Margin="8,0" VerticalAlignment="Center" Text="-" Foreground="{StaticResource AccentBrown}"/>
+                                    <TextBox x:Name="tbMaxPrice" 
+                                             TextChanged="tbMaxPrice_TextChanged" 
+                                             Width="55" Height="30"
+                                             TextAlignment="Center"
+                                             Style="{StaticResource ModernTextBox}"/>
                                 </StackPanel>
-                                
                             </StackPanel>
-                            <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,15,5,0">
+
+                            <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,10,5,0">
                                 <TextBlock x:Name="tbFilters" Cursor="Hand">
-                                    <Hyperlink Click="tbFilters_Click" Foreground="{StaticResource DeepBrown}"  FontWeight="Bold" TextDecorations="None">
-                                        <Run Text="Доп. фильтры"/>
+                                    <Hyperlink Click="tbFilters_Click" 
+                                               Foreground="{StaticResource AccentBrown}"  
+                                               FontWeight="SemiBold" 
+                                               TextDecorations="None">
+                                        <Run Text="▼ Доп. фильтры"/>
                                     </Hyperlink>
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
 
-
-                    <StackPanel x:Name="additionFilters" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,15,0,0">
+                    <StackPanel x:Name="additionFilters" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,20,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -122,28 +241,40 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0" Margin="5">
-                                <TextBlock Text="Крепость" Foreground="Gray" FontSize="11" Margin="0,0,0,5"/>
-                                <ListBox Height="25" BorderBrush="{StaticResource BeigeLight}" BorderThickness="1"/>
+                                <TextBlock Text="Крепость" 
+                                           Foreground="{StaticResource AccentBrown}" 
+                                           FontSize="11" FontWeight="SemiBold" 
+                                           Margin="0,0,0,8"/>
+                                <ListBox Height="25" 
+                                         BorderBrush="{StaticResource BeigeMedium}" 
+                                         BorderThickness="1"
+                                         Background="Transparent"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Длина" Foreground="Gray" FontSize="11"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                    <TextBlock Text="-" Foreground="Gray"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="Длина" 
+                                               Foreground="{StaticResource AccentBrown}" 
+                                               FontSize="11" FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
+                                    <TextBlock Text="-" Foreground="{StaticResource AccentBrown}"/>
+                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
                                 </StackPanel>
-                                <Slider Minimum="0" Maximum="100" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged" />
+                                <Slider Minimum="0" Maximum="100" ValueChanged="Slider_ValueChanged"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                    <TextBlock Text="Толщина" Foreground="Gray" FontSize="11"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
-                                    <TextBlock Text="-" Foreground="Gray"/>
-                                    <TextBox Width="30" Margin="5,0" FontSize="10"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="Толщина" 
+                                               Foreground="{StaticResource AccentBrown}" 
+                                               FontSize="11" FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
+                                    <TextBlock Text="-" Foreground="{StaticResource AccentBrown}"/>
+                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
                                 </StackPanel>
-                                <Slider Minimum="0" Maximum="100" Foreground="{StaticResource GoldAccent}" ValueChanged="Slider_ValueChanged"/>
+                                <Slider Minimum="0" Maximum="100" ValueChanged="Slider_ValueChanged"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -151,24 +282,21 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
             </StackPanel>
         </materialDesign:Card>
 
-        <Grid Grid.Row="1" x:Name="loadingGrid" Background="#F5F5F5" Visibility="Visible">
+        <Grid Grid.Row="1" x:Name="loadingGrid" Background="{StaticResource BeigeLight}" Visibility="Visible">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ProgressBar IsIndeterminate="True" 
                         Width="250" 
-                        Height="4"
-                        Foreground="{StaticResource GoldAccent}"
-                        Background="{StaticResource BeigeLight}"/>
-
-
+                        Height="3"
+                        Foreground="{StaticResource AccentBrown}"
+                        Background="{StaticResource BeigeMedium}"/>
                 <TextBlock Text="Загрузка товаров..." 
-                       Margin="0,15,0,0" 
-                       Foreground="Gray"
+                       Margin="0,20,0,0" 
+                       Foreground="{StaticResource AccentBrown}"
                        FontSize="14"
                        FontWeight="SemiBold"/>
-
                 <TextBlock x:Name="loadingStatusText" 
                        Text="Подключение к базе данных..." 
-                       Margin="0,8,0,0" 
+                       Margin="0,10,0,0" 
                        Foreground="#999999"
                        FontSize="11"/>
             </StackPanel>
@@ -182,94 +310,136 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
                   ScrollViewer.IsDeferredScrollingEnabled="True"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  VerticalAlignment="Center"
+                  VerticalAlignment="Top"
                   HorizontalAlignment="Center"
-                  MaxWidth="1150" 
+                  MaxWidth="1400" 
                   Grid.Row="1"
-                  >
+                  Margin="0,15,0,0">
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Left" ItemWidth="370"/>
+                    <WrapPanel HorizontalAlignment="Left" ItemWidth="420"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <materialDesign:Card Width="345" Height="550" Margin="10" UniformCornerRadius="15" Background="White">
+                    <materialDesign:Card Width="390" Height="650" Margin="15" UniformCornerRadius="15" Background="White">
                         <materialDesign:Card.Effect>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.12"/>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="2" Opacity="0.1"/>
                         </materialDesign:Card.Effect>
 
-                        <Grid Margin="20" >
+                        <Grid Margin="20">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="220"/>
+                                <RowDefinition Height="320"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <Grid Grid.Row="0">
-                                <TextBlock Text="{Binding Brand.Name}" 
-                                           Foreground="{StaticResource GoldAccent}" 
-                                           FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <Button HorizontalAlignment="Right" Width="36" Height="36" Padding="0"
+                                <Border Background="{StaticResource BeigeLight}" 
+                                        CornerRadius="6" 
+                                        Padding="12,6"
+                                        HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding Brand.Name}" 
+                                               Foreground="{StaticResource AccentBrown}" 
+                                               FontSize="13" 
+                                               FontWeight="SemiBold"/>
+                                </Border>
+                                <Button HorizontalAlignment="Right" Width="40" Height="40" Padding="0"
                                         Background="Transparent" BorderThickness="0" 
-                                        Style="{StaticResource MaterialDesignToolButton}">
-                                    <Image Source="/Images/heart_icon.png" Width="22" Opacity="0.7"/>
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="Transparent" CornerRadius="20">
+                                                <Image Source="/Images/heart_icon.png" Width="24" Opacity="0.6"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
                                 </Button>
                             </Grid>
 
-                            <StackPanel Grid.Row="1" Margin="0,5,0,0" Height="65">
-                                <TextBlock FontSize="19" FontWeight="Black" TextWrapping="Wrap" MaxHeight="50">
-                                    <Hyperlink Click="tbProductName_Click" TextDecorations="None" Foreground="{StaticResource DeepBrown}">
+                            <StackPanel Grid.Row="1" Margin="0,15,0,0">
+                                <TextBlock FontSize="20" FontWeight="Bold" TextWrapping="Wrap" MaxHeight="60">
+                                    <Hyperlink Click="tbProductName_Click" 
+                                               TextDecorations="None" 
+                                               Foreground="{StaticResource DeepBrown}">
                                         <Run Text="{Binding ProductName}"/>
                                     </Hyperlink>
                                 </TextBlock>
-                                <TextBlock Text="{Binding Converter={StaticResource ProductConverter}}" Foreground="Gray" FontSize="12" Margin="0,2,0,0"/>
+                                <TextBlock Text="{Binding Converter={StaticResource ProductConverter}}" 
+                                           Foreground="#888888" 
+                                           FontSize="12" 
+                                           Margin="0,8,0,0"/>
                             </StackPanel>
 
                             <Button Grid.Row="2" x:Name="btnImage" Click="btnImage_Click" 
-                                Background="Transparent" 
-                                BorderBrush="Transparent"
-                                HorizontalAlignment="Stretch" 
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch" 
-                                VerticalContentAlignment="Stretch"
-                                Height="130"
-                                Padding="0" 
-                                Margin="0,10">
+                                    Background="Transparent" 
+                                    BorderBrush="Transparent"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Width="260"
+                                    Height="260"
+                                    Padding="0" 
+                                    Margin="0,10"
+                                    Cursor="Hand">
                                 <Image Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
-                               Stretch="Uniform"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                       Stretch="Uniform"
+                                       Width="260"
+                                       Height="260"
+                                       RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Button>
 
                             <Grid Grid.Row="3" Margin="0,15">
-                                <TextBlock Text="{Binding CostProduct}" 
-                                           Foreground="{StaticResource DeepBrown}" 
-                                           FontSize="24" FontWeight="Black" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="{StaticResource AccentBrown}" 
+                                           FontSize="28" 
+                                           FontWeight="Bold" 
+                                           VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ₽">
+                                            <Binding Path="CostProduct"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
 
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Border BorderBrush="{StaticResource BeigeLight}" BorderThickness="1.5" CornerRadius="20" Height="40">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button x:Name="minusButton" Content="-" Width="35" Height="35" Padding="0"
-                                                    Background="Transparent" BorderThickness="0" 
-                                                    Foreground="{StaticResource DeepBrown}" FontSize="20"/>
-                                            <TextBlock x:Name="tbCountProduct" Text="0" 
-                                                       VerticalAlignment="Center" Margin="15,0" 
-                                                       Foreground="Black" FontSize="16" FontWeight="Bold"/>
-                                            <Button x:Name="plusButton" Content="+" Width="35" Height="35" Padding="0"
-                                                    Background="Transparent" BorderThickness="0" 
-                                                    Foreground="{StaticResource DeepBrown}" FontSize="20"/>
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
+                                <Border BorderBrush="{StaticResource BeigeMedium}" 
+                                        BorderThickness="1.5" 
+                                        CornerRadius="25" 
+                                        Height="46"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="minusButton" 
+                                                Content="−" 
+                                                Width="42" 
+                                                Height="42" 
+                                                Padding="0"
+                                                Style="{StaticResource ModernCounterButton}"/>
+                                        <TextBlock x:Name="tbCountProduct" 
+                                                   Text="0" 
+                                                   VerticalAlignment="Center" 
+                                                   MinWidth="40"
+                                                   TextAlignment="Center"
+                                                   Foreground="{StaticResource TextDark}" 
+                                                   FontSize="18" 
+                                                   FontWeight="SemiBold"/>
+                                        <Button x:Name="plusButton" 
+                                                Content="+" 
+                                                Width="42" 
+                                                Height="42" 
+                                                Padding="0"
+                                                Style="{StaticResource ModernCounterButton}"/>
+                                    </StackPanel>
+                                </Border>
                             </Grid>
 
-                            <Grid Grid.Row="4" Margin="0,5,0,0">
+                            <Grid Grid.Row="4" Margin="0,20,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -277,15 +447,56 @@ BorderBrush="{StaticResource BeigeLight}" x:Name="lbBrand" Foreground="Black" Ma
 
                                 <Button Grid.Column="0" x:Name="tbBuyButton" 
                                         Content="КУПИТЬ В 1 КЛИК" 
-                                        FontSize="13" Height="48" FontWeight="Bold"
-                                        Style="{StaticResource MaterialDesignOutlinedButton}"
-                                        BorderBrush="{StaticResource DeepBrown}"
-                                        Foreground="{StaticResource DeepBrown}"/>
+                                        FontSize="13" 
+                                        Height="48" 
+                                        FontWeight="SemiBold"
+                                        Background="Transparent"
+                                        BorderBrush="{StaticResource AccentBrown}"
+                                        Foreground="{StaticResource AccentBrown}"
+                                        BorderThickness="1.5"
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="24">
+                                                <ContentPresenter HorizontalAlignment="Center" 
+                                                                VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
 
-                                <Button Grid.Column="1" Margin="15,0,0,0" Width="50" Height="50" Padding="12"
-                                        Background="{StaticResource DeepBrown}" BorderBrush="{StaticResource DeepBrown}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
-                                    <Image Source="/Images/handbag.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <Button Grid.Column="1" 
+                                        Margin="15,0,0,0" 
+                                        Width="48" 
+                                        Height="48" 
+                                        Padding="0"
+                                        Background="{StaticResource AccentBrown}" 
+                                        BorderBrush="{StaticResource AccentBrown}"
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="24">
+                                                <Image Source="/Images/handbag.png" 
+                                                       Width="24" 
+                                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource MediumBrown}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
                                 </Button>
                             </Grid>
                         </Grid>

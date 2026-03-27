@@ -17,6 +17,7 @@
     <None Remove="Images\heart_icon.png" />
     <None Remove="Images\Image_not_available.png" />
     <None Remove="Images\lighter_icon.png" />
+    <None Remove="Images\logo_icon.png" />
     <None Remove="Images\profile_icon.png" />
     <None Remove="Images\ranking_icon.png" />
     <None Remove="Images\sets_icon.png" />
@@ -54,6 +55,9 @@
     </Resource>
     <Resource Include="Images\lighter_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logo_icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\profile_icon.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

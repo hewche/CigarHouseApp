@@ -1,4 +1,5 @@
 ﻿using CigarHouseApp.Models;
+using CigarHouseApp.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,17 @@ namespace CigarHouseApp.Pages
     public partial class ProductPage : Page
     {
         List<Review> reviews = new List<Review>();
+        ListProductsPage _listProductsPage;
         public ProductPage()
         {
             InitializeComponent();
         }
 
-        public ProductPage(Product product)
+        public ProductPage(Product product, ListProductsPage listProductsPage)
         {
             InitializeComponent();
-            LoadDataProduct(product);   
+            LoadDataProduct(product);
+            _listProductsPage = listProductsPage;
         }
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
@@ -55,6 +58,10 @@ namespace CigarHouseApp.Pages
             }
         }
 
-        
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.MainWindow as MainWindow;
+            main.cigarFrame.Navigate(_listProductsPage);
+        }
     }
 }
