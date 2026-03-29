@@ -1,5 +1,6 @@
 ﻿using CigarHouseApp.Models;
 using CigarHouseApp.Views;
+using ControlzEx.Standard;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Views.MainWindow;
 
 namespace CigarHouseApp.Pages
 {
@@ -22,17 +24,17 @@ namespace CigarHouseApp.Pages
     public partial class ProductPage : Page
     {
         List<Review> reviews = new List<Review>();
-        ListProductsPage _listProductsPage;
+        ListProductStatus _status;
         public ProductPage()
         {
             InitializeComponent();
         }
 
-        public ProductPage(Product product, ListProductsPage listProductsPage)
+        public ProductPage(Product product, ListProductStatus status)
         {
             InitializeComponent();
             LoadDataProduct(product);
-            _listProductsPage = listProductsPage;
+            _status = status;
         }
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
@@ -61,7 +63,7 @@ namespace CigarHouseApp.Pages
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.MainWindow as MainWindow;
-            main.cigarFrame.Navigate(_listProductsPage);
+            main.cigarFrame.Navigate(new ListProductsPage(_status));
         }
     }
 }
