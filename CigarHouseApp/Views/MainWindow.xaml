@@ -212,7 +212,7 @@
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/sets_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
-                                <TextBlock Text="НАБОРЫ" FontSize="11"/>
+                                <TextBlock Text="ИЗБРАННОЕ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>
@@ -251,7 +251,6 @@
             <Image Width="30" Source="/Images/profile_icon.png"/>
         </Button>
 
-        <!-- Правая плавающая кнопка (корзина) -->
         <Button Grid.Row="1" 
                 Width="58" Height="58" 
                 Margin="25" 
@@ -261,7 +260,8 @@
                 BorderBrush="{StaticResource MediumBrown}"
                 BorderThickness="0"
                 Cursor="Hand" 
-                Style="{StaticResource FloatingButton}">
+                Style="{StaticResource FloatingButton}"
+                Click="Button_Click">
             <Button.Effect>
                 <DropShadowEffect BlurRadius="15" ShadowDepth="4" Opacity="0.25" Color="#6B4C3B"/>
             </Button.Effect>

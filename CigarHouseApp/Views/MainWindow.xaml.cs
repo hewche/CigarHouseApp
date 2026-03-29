@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CigarHouseApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,15 +19,20 @@ namespace CigarHouseApp.Views
     public partial class MainWindow : Window
     {
 
+        User currentUser;
         public enum ListProductStatus
         {
             CIGAR,
             ACCESSORY
         }
         public static Frame frame;
-        public MainWindow()
+        public MainWindow(User user = null)
         {
             InitializeComponent();
+            if(user == null)
+            {
+                currentUser = new User();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,6 +53,9 @@ namespace CigarHouseApp.Views
                     case 1:
                         cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.ACCESSORY));
                         break;
+                    case 2:
+                        cigarFrame.Navigate(new Pages.FavoritesPage());
+                        break;
                 }
             }
         }
@@ -59,6 +68,11 @@ namespace CigarHouseApp.Views
         private void tabControlProducts_Loaded(object sender, RoutedEventArgs e)
         {
             tabControlProducts.SelectedIndex = -1;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            cigarFrame.Navigate(new Pages.CartPage());
         }
     }
 }

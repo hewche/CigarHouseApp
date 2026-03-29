@@ -1,0 +1,187 @@
+﻿<Page x:Class="CigarHouseApp.Pages.FavoritesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="950"
+      Background="#FAF7F2"
+      Title="Избранное">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
+        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
+        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
+        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
+        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
+        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
+        <SolidColorBrush x:Key="HeartRed" Color="#E74C3C"/>
+
+        <Style x:Key="FavoriteCard" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Margin" Value="0,0,20,20"/>
+            <Setter Property="Width" Value="280"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.15"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HeartButton" TargetType="Button">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFF5F5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AddToCartButton" TargetType="Button">
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="40,30,40,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Margin="0,0,0,25">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Width="40" Height="40" Margin="0,0,15,0" Cursor="Hand" Style="{StaticResource HeartButton}">
+                            <Image Source="/Images/back_arrow.png" Width="20" Height="20"/>
+                        </Button>
+                        <TextBlock Text="ИЗБРАННОЕ" FontSize="28" FontWeight="Bold" Foreground="{StaticResource DeepBrown}" VerticalAlignment="Center"/>
+                        <Border Background="{StaticResource HeartRed}" CornerRadius="15" Padding="10,5" Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="0 товаров" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                        </Border>
+                    </StackPanel>
+                    <Rectangle Height="2" Fill="{StaticResource BeigeMedium}" RadiusX="1" RadiusY="1"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Margin="0,15,0,25">
+                <StackPanel Orientation="Horizontal">
+                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
+                        <TextBlock Text="Все товары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
+                        <TextBlock Text="Сигары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
+                        <TextBlock Text="Аксессуары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
+                    </Border>
+                    <Border Background="White" CornerRadius="20" Padding="12,6">
+                        <TextBlock Text="Наборы" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
+                    <ItemsControl>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource FavoriteCard}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="200"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                    
+                                        <StackPanel Grid.Row="0" Background="{StaticResource BeigeLight}">
+                                            <Image Width="140" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
+
+                                            <Button Style="{StaticResource HeartButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10">
+                                                <Image Source="/Images/heart_filled.png" Width="18" Height="18"/>
+                                            </Button>
+
+                                            <Border Background="{StaticResource HeartRed}" CornerRadius="10" Padding="8,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+                                                <TextBlock Text="-20%" FontSize="10" FontWeight="Bold" Foreground="White"/>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1" Margin="15,12,15,15">
+                                            <TextBlock Text="Cohiba" FontSize="11" Foreground="{StaticResource MediumBrown}" Opacity="0.7" Margin="0,0,0,4"/>
+                                            <TextBlock Text="Siglo VI" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}" TextWrapping="Wrap" Margin="0,0,0,8" Height="40"/>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
+                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
+                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
+                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
+                                                <Image Source="/Images/star_half.png" Width="14" Height="14"/>
+                                                <TextBlock Text="(24)" FontSize="10" Foreground="{StaticResource MediumBrown}" Margin="5,0,0,0"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                                <TextBlock Text="12 500 ₽" FontSize="18" FontWeight="Bold" Foreground="{StaticResource AccentBrown}"/>
+                                                <TextBlock Text="15 000 ₽" FontSize="12" Foreground="{StaticResource MediumBrown}" TextDecorations="StrikeThrough" Margin="8,4,0,0" Opacity="0.6"/>
+                                            </StackPanel>
+
+                                            <Button Style="{StaticResource AddToCartButton}" Content="В КОРЗИНУ"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Page>
