@@ -19,20 +19,16 @@ namespace CigarHouseApp.Views
     public partial class MainWindow : Window
     {
 
-        User currentUser;
+        public User currentUser;
         public enum ListProductStatus
         {
             CIGAR,
             ACCESSORY
         }
         public static Frame frame;
-        public MainWindow(User user = null)
+        public MainWindow()
         {
-            InitializeComponent();
-            if(user == null)
-            {
-                currentUser = new User();
-            }
+            InitializeComponent();        
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

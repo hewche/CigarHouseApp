@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -17,17 +17,37 @@ public partial class CigarhouseContext : DbContext
 
     public virtual DbSet<Accessory> Accessories { get; set; }
 
+    public virtual DbSet<AccessoryInfo> AccessoryInfos { get; set; }
+
     public virtual DbSet<Brand> Brands { get; set; }
 
+    public virtual DbSet<BrandProduct> BrandProducts { get; set; }
+
     public virtual DbSet<Cigar> Cigars { get; set; }
+
+    public virtual DbSet<CigarInfo> CigarInfos { get; set; }
 
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<Delivery> Deliveries { get; set; }
 
+    public virtual DbSet<DeliveryProduct> DeliveryProducts { get; set; }
+
+    public virtual DbSet<Itemcart> Itemcarts { get; set; }
+
+    public virtual DbSet<Itemfavorite> Itemfavorites { get; set; }
+
     public virtual DbSet<News> News { get; set; }
 
+    public virtual DbSet<NewsView> NewsViews { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
+
+    public virtual DbSet<OrderBasic> OrderBasics { get; set; }
+
+    public virtual DbSet<OrderContent> OrderContents { get; set; }
+
+    public virtual DbSet<OrderDelivery> OrderDeliveries { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
 
@@ -37,15 +57,23 @@ public partial class CigarhouseContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<ProductReview> ProductReviews { get; set; }
+
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserRole> UserRoles { get; set; }
+
+    public virtual DbSet<Usercart> Usercarts { get; set; }
+
+    public virtual DbSet<Userfavorite> Userfavorites { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost; Port=5050; Database=cigarhouse; Username=postgres; Password=123;");
+        => optionsBuilder.UseNpgsql("Host=localhost; Port=5050; Database=cigarhouse; Username=postgres; Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,6 +99,31 @@ public partial class CigarhouseContext : DbContext
                 .HasConstraintName("accessory_product_id_fkey");
         });
 
+        modelBuilder.Entity<AccessoryInfo>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accessory_info");
+
+            entity.Property(e => e.BrandName)
+                .HasMaxLength(50)
+                .HasColumnName("brand_name");
+            entity.Property(e => e.Color)
+                .HasMaxLength(50)
+                .HasColumnName("color");
+            entity.Property(e => e.Material)
+                .HasMaxLength(100)
+                .HasColumnName("material");
+            entity.Property(e => e.Price)
+                .HasPrecision(8, 3)
+                .HasColumnName("price");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+        });
+
         modelBuilder.Entity<Brand>(entity =>
         {
             entity.HasKey(e => e.BrandId).HasName("brand_pkey");
@@ -84,6 +137,29 @@ public partial class CigarhouseContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
                 .HasColumnName("phone");
+        });
+
+        modelBuilder.Entity<BrandProduct>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("brand_products");
+
+            entity.Property(e => e.BrandId).HasColumnName("brand_id");
+            entity.Property(e => e.BrandName)
+                .HasMaxLength(50)
+                .HasColumnName("brand_name");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .HasColumnName("phone");
+            entity.Property(e => e.Price)
+                .HasPrecision(8, 3)
+                .HasColumnName("price");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
         });
 
         modelBuilder.Entity<Cigar>(entity =>
@@ -112,6 +188,37 @@ public partial class CigarhouseContext : DbContext
                 .HasForeignKey<Cigar>(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cigar_product_id_fkey");
+        });
+
+        modelBuilder.Entity<CigarInfo>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("cigar_info");
+
+            entity.Property(e => e.BrandName)
+                .HasMaxLength(50)
+                .HasColumnName("brand_name");
+            entity.Property(e => e.FlavorProfile)
+                .HasMaxLength(200)
+                .HasColumnName("flavor_profile");
+            entity.Property(e => e.Price)
+                .HasPrecision(8, 3)
+                .HasColumnName("price");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.RingGauge)
+                .HasMaxLength(20)
+                .HasColumnName("ring_gauge");
+            entity.Property(e => e.Strength)
+                .HasMaxLength(50)
+                .HasColumnName("strength");
+            entity.Property(e => e.Vitola)
+                .HasMaxLength(100)
+                .HasColumnName("vitola");
         });
 
         modelBuilder.Entity<Country>(entity =>
@@ -146,6 +253,61 @@ public partial class CigarhouseContext : DbContext
                 .HasConstraintName("delivery_delivery_location_to_fkey");
         });
 
+        modelBuilder.Entity<DeliveryProduct>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("delivery_products");
+
+            entity.Property(e => e.DeliveryDate).HasColumnName("delivery_date");
+            entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+            entity.Property(e => e.DeliveryLocationFrom).HasColumnName("delivery_location_from");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+        });
+
+        modelBuilder.Entity<Itemcart>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("itemcart");
+
+            entity.Property(e => e.CartId).HasColumnName("cart_id");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+            entity.HasOne(d => d.Cart).WithMany()
+                .HasForeignKey(d => d.CartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("itemcart_cart_id_fkey");
+
+            entity.HasOne(d => d.Product).WithMany()
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("itemcart_product_id_fkey");
+        });
+
+        modelBuilder.Entity<Itemfavorite>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("itemfavorites");
+
+            entity.Property(e => e.FavoritesId).HasColumnName("favorites_id");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+            entity.HasOne(d => d.Favorites).WithMany()
+                .HasForeignKey(d => d.FavoritesId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("itemfavorites_favorites_id_fkey");
+
+            entity.HasOne(d => d.Product).WithMany()
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("itemfavorites_product_id_fkey");
+        });
+
         modelBuilder.Entity<News>(entity =>
         {
             entity.HasKey(e => e.NewsId).HasName("news_pkey");
@@ -164,6 +326,24 @@ public partial class CigarhouseContext : DbContext
             entity.HasOne(d => d.Author).WithMany(p => p.News)
                 .HasForeignKey(d => d.AuthorId)
                 .HasConstraintName("news_author_id_fkey");
+        });
+
+        modelBuilder.Entity<NewsView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("news_view");
+
+            entity.Property(e => e.AuthorFullname)
+                .HasMaxLength(100)
+                .HasColumnName("author_fullname");
+            entity.Property(e => e.AuthorName)
+                .HasMaxLength(100)
+                .HasColumnName("author_name");
+            entity.Property(e => e.NewsId).HasColumnName("news_id");
+            entity.Property(e => e.NewsText)
+                .HasMaxLength(300)
+                .HasColumnName("news_text");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -191,6 +371,64 @@ public partial class CigarhouseContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("orders_user_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderBasic>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("order_basic");
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(100)
+                .HasColumnName("address");
+            entity.Property(e => e.Customer)
+                .HasMaxLength(100)
+                .HasColumnName("customer");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.Payment)
+                .HasMaxLength(50)
+                .HasColumnName("payment");
+            entity.Property(e => e.Status)
+                .HasMaxLength(100)
+                .HasColumnName("status");
+        });
+
+        modelBuilder.Entity<OrderContent>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("order_contents");
+
+            entity.Property(e => e.BrandName)
+                .HasMaxLength(50)
+                .HasColumnName("brand_name");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.OrderItemId).HasColumnName("order_item_id");
+            entity.Property(e => e.PricePerUnit)
+                .HasPrecision(8, 3)
+                .HasColumnName("price_per_unit");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.TotalPrice).HasColumnName("total_price");
+        });
+
+        modelBuilder.Entity<OrderDelivery>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("order_delivery");
+
+            entity.Property(e => e.Customer)
+                .HasMaxLength(100)
+                .HasColumnName("customer");
+            entity.Property(e => e.DeliveryDate).HasColumnName("delivery_date");
+            entity.Property(e => e.DeliveryId).HasColumnName("delivery_id");
+            entity.Property(e => e.DeliveryLocationFrom).HasColumnName("delivery_location_from");
+            entity.Property(e => e.DeliveryLocationTo).HasColumnName("delivery_location_to");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -271,6 +509,33 @@ public partial class CigarhouseContext : DbContext
                 .HasConstraintName("product_delivery_id_fkey");
         });
 
+        modelBuilder.Entity<ProductReview>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("product_reviews");
+
+            entity.Property(e => e.Author)
+                .HasMaxLength(100)
+                .HasColumnName("author");
+            entity.Property(e => e.BrandName)
+                .HasMaxLength(50)
+                .HasColumnName("brand_name");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("created_at");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(200)
+                .HasColumnName("product_name");
+            entity.Property(e => e.ReviewId).HasColumnName("review_id");
+            entity.Property(e => e.ReviewText)
+                .HasMaxLength(300)
+                .HasColumnName("review_text");
+            entity.Property(e => e.Title)
+                .HasMaxLength(200)
+                .HasColumnName("title");
+        });
+
         modelBuilder.Entity<Review>(entity =>
         {
             entity.HasKey(e => e.ReviewId).HasName("review_pkey");
@@ -339,44 +604,57 @@ public partial class CigarhouseContext : DbContext
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("users_role_id_fkey");
+        });
 
-            entity.HasMany(d => d.Products).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Basketproduct",
-                    r => r.HasOne<Product>().WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("basketproduct_product_id_fkey"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("basketproduct_user_id_fkey"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "ProductId").HasName("basketproduct_pkey");
-                        j.ToTable("basketproduct");
-                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
-                        j.IndexerProperty<int>("ProductId").HasColumnName("product_id");
-                    });
+        modelBuilder.Entity<UserRole>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("user_roles");
 
-            entity.HasMany(d => d.ProductsNavigation).WithMany(p => p.UsersNavigation)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Favoriteproduct",
-                    r => r.HasOne<Product>().WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("favoriteproduct_product_id_fkey"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("favoriteproduct_user_id_fkey"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "ProductId").HasName("favoriteproduct_pkey");
-                        j.ToTable("favoriteproduct");
-                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
-                        j.IndexerProperty<int>("ProductId").HasColumnName("product_id");
-                    });
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(100)
+                .HasColumnName("first_name");
+            entity.Property(e => e.Login)
+                .HasMaxLength(100)
+                .HasColumnName("login");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(20)
+                .HasColumnName("phone");
+            entity.Property(e => e.RoleName)
+                .HasMaxLength(50)
+                .HasColumnName("role_name");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+        });
+
+        modelBuilder.Entity<Usercart>(entity =>
+        {
+            entity.HasKey(e => e.CartId).HasName("usercart_pkey");
+
+            entity.ToTable("usercart");
+
+            entity.Property(e => e.CartId).HasColumnName("cart_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Usercarts)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("usercart_user_id_fkey");
+        });
+
+        modelBuilder.Entity<Userfavorite>(entity =>
+        {
+            entity.HasKey(e => e.FavoritesId).HasName("userfavorites_pkey");
+
+            entity.ToTable("userfavorites");
+
+            entity.Property(e => e.FavoritesId).HasColumnName("favorites_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Userfavorites)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("userfavorites_user_id_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -348,7 +348,7 @@
                                                FontSize="13" 
                                                FontWeight="SemiBold"/>
                                 </Border>
-                                <Button HorizontalAlignment="Right" Width="40" Height="40" Padding="0"
+                                <Button x:Name="btnAddFavorites" Click="btnAddFavorites_Click" HorizontalAlignment="Right" Width="40" Height="40" Padding="0"
                                         Background="Transparent" BorderThickness="0" 
                                         Cursor="Hand">
                                     <Button.Template>
@@ -446,6 +446,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Button Grid.Column="0" x:Name="tbBuyButton" 
+                                        Click="tbBuyButton_Click"
                                         Content="КУПИТЬ В 1 КЛИК" 
                                         FontSize="13" 
                                         Height="48" 

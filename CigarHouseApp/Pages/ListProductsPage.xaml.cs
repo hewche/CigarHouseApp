@@ -264,6 +264,21 @@ namespace CigarHouseApp.Pages
                 }
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddFavorites_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = Application.Current.MainWindow as MainWindow;
+        }
+
+        private void tbBuyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

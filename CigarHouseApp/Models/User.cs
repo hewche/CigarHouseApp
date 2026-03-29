@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class User
 {
@@ -25,7 +25,7 @@ public partial class User
 
     public virtual Role? Role { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual ICollection<Usercart> Usercarts { get; set; } = new List<Usercart>();
 
-    public virtual ICollection<Product> ProductsNavigation { get; set; } = new List<Product>();
+    public virtual ICollection<Userfavorite> Userfavorites { get; set; } = new List<Userfavorite>();
 }
