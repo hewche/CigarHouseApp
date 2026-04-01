@@ -273,11 +273,22 @@ namespace CigarHouseApp.Pages
         private void btnAddFavorites_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = Application.Current.MainWindow as MainWindow;
+            Button button = sender as Button;
+            if (button.DataContext is Product product)
+            {
+                main.currentUser.FavoritesNavigation.Products.Add(product);
+                MessageBox.Show($"{main.currentUser.FavoritesNavigation.Products.ToList()[0].ProductName}");
+            }
         }
 
         private void tbBuyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow main = Application.Current.MainWindow as MainWindow;
+            Button button = sender as Button;
+            if (button.DataContext is Product product)
+            {
+                main.currentUser.CartNavigation.Products.Add(product);
+            }
         }
     }
 }

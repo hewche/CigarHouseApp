@@ -6,9 +6,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="950"
       Background="#FAF7F2"
-      Title="Избранное">
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
+      Title="Избранное" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <helpers:ProductConverter x:Key="ProductConverter"/>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
         <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
         <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
         <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
@@ -39,28 +42,6 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="HeartButton" TargetType="Button">
-            <Setter Property="Width" Value="36"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="18">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FFF5F5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style x:Key="AddToCartButton" TargetType="Button">
             <Setter Property="Height" Value="36"/>
             <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
@@ -85,7 +66,7 @@
         </Style>
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid Margin="40,30,40,30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -101,7 +82,7 @@
                         </Button>
                         <TextBlock Text="ИЗБРАННОЕ" FontSize="28" FontWeight="Bold" Foreground="{StaticResource DeepBrown}" VerticalAlignment="Center"/>
                         <Border Background="{StaticResource HeartRed}" CornerRadius="15" Padding="10,5" Margin="15,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="0 товаров" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                            <TextBlock x:Name="FavoritesCountText" Text="0 товаров" Foreground="White" FontSize="12" FontWeight="SemiBold"/>
                         </Border>
                     </StackPanel>
                     <Rectangle Height="2" Fill="{StaticResource BeigeMedium}" RadiusX="1" RadiusY="1"/>
@@ -126,11 +107,11 @@
             </Border>
 
             <Border Grid.Row="2">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
-                    <ItemsControl>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="600">
+                    <ItemsControl x:Name="favoriteItemsControl">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel/>
+                                <WrapPanel HorizontalAlignment="Left"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
@@ -139,42 +120,59 @@
                                 <Border Style="{StaticResource FavoriteCard}">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="200"/>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="180"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                    
-                                        <StackPanel Grid.Row="0" Background="{StaticResource BeigeLight}">
-                                            <Image Width="140" Height="140" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
 
-                                            <Button Style="{StaticResource HeartButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10">
-                                                <Image Source="/Images/heart_filled.png" Width="18" Height="18"/>
-                                            </Button>
+                                        <Button Grid.Row="0" 
+                                                Style="{StaticResource HeartButton}"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Top"
+                                                Margin="0,10,10,0"
+                                                Tag="{Binding}"/>
 
-                                            <Border Background="{StaticResource HeartRed}" CornerRadius="10" Padding="8,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
-                                                <TextBlock Text="-20%" FontSize="10" FontWeight="Bold" Foreground="White"/>
-                                            </Border>
-                                        </StackPanel>
+                                        <Image Grid.Row="0" 
+                                               Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
+                                               Stretch="Uniform"
+                                               Margin="15,15,15,5"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Width="140"
+                                               Height="140"/>
 
-                                        <StackPanel Grid.Row="1" Margin="15,12,15,15">
-                                            <TextBlock Text="Cohiba" FontSize="11" Foreground="{StaticResource MediumBrown}" Opacity="0.7" Margin="0,0,0,4"/>
-                                            <TextBlock Text="Siglo VI" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}" TextWrapping="Wrap" Margin="0,0,0,8" Height="40"/>
+                                        <TextBlock Grid.Row="1" 
+                                                   Text="{Binding Brand.Name}" 
+                                                   FontSize="12"
+                                                   Foreground="{StaticResource MediumBrown}"
+                                                   FontWeight="SemiBold"
+                                                   Margin="15,5,15,0"
+                                                   TextTrimming="CharacterEllipsis"/>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
-                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
-                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
-                                                <Image Source="/Images/star_filled.png" Width="14" Height="14"/>
-                                                <Image Source="/Images/star_half.png" Width="14" Height="14"/>
-                                                <TextBlock Text="(24)" FontSize="10" Foreground="{StaticResource MediumBrown}" Margin="5,0,0,0"/>
-                                            </StackPanel>
+                                        <TextBlock Grid.Row="2" 
+                                                   Text="{Binding ProductName}" 
+                                                   FontSize="14"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource DeepBrown}"
+                                                   Margin="15,5,15,0"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxHeight="40"/>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                                <TextBlock Text="12 500 ₽" FontSize="18" FontWeight="Bold" Foreground="{StaticResource AccentBrown}"/>
-                                                <TextBlock Text="15 000 ₽" FontSize="12" Foreground="{StaticResource MediumBrown}" TextDecorations="StrikeThrough" Margin="8,4,0,0" Opacity="0.6"/>
-                                            </StackPanel>
+                                        <TextBlock Grid.Row="3" 
+                                                   Text="{Binding Price, StringFormat={}{0:C}}" 
+                                                   FontSize="18" 
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource AccentBrown}"
+                                                   Margin="15,10,15,0"/>
 
-                                            <Button Style="{StaticResource AddToCartButton}" Content="В КОРЗИНУ"/>
-                                        </StackPanel>
+                                        <Button Grid.Row="4" 
+                                                Style="{StaticResource AddToCartButton}"
+                                                Content="В КОРЗИНУ"
+                                                Margin="15,8,15,12"
+                                                HorizontalAlignment="Stretch"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

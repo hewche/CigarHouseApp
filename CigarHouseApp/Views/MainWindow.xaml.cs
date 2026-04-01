@@ -19,15 +19,22 @@ namespace CigarHouseApp.Views
     public partial class MainWindow : Window
     {
 
-        public User currentUser;
+        public User currentUser = new User() { CartNavigation = new Usercart(), FavoritesNavigation = new Userfavorite()};
         public enum ListProductStatus
         {
             CIGAR,
             ACCESSORY
         }
         public static Frame frame;
+
         public MainWindow()
         {
+            InitializeComponent();
+        }
+        public MainWindow(User user)
+        {
+
+            currentUser = user;
             InitializeComponent();        
         }
 
@@ -50,7 +57,8 @@ namespace CigarHouseApp.Views
                         cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.ACCESSORY));
                         break;
                     case 2:
-                        cigarFrame.Navigate(new Pages.FavoritesPage());
+                        cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.FavoritesNavigation.Products.ToList()));
+                        
                         break;
                 }
             }

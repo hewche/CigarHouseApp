@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CigarHouseApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,19 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class FavoritesPage : Page
     {
-        public FavoritesPage()
+        List<Product> favoriteProducts;
+        public FavoritesPage(List<Product> products)
         {
+            favoriteProducts = products;
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(favoriteProducts != null)
+            {
+                favoriteItemsControl.ItemsSource = favoriteProducts;
+            }
         }
     }
 }
