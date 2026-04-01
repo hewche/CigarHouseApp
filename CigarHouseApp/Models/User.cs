@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class User
 {
@@ -16,6 +16,14 @@ public partial class User
     public string? Phone { get; set; }
 
     public int? RoleId { get; set; }
+
+    public int? Cart { get; set; }
+
+    public int? Favorites { get; set; }
+
+    public virtual Usercart? CartNavigation { get; set; }
+
+    public virtual Userfavorite? FavoritesNavigation { get; set; }
 
     public virtual ICollection<News> News { get; set; } = new List<News>();
 

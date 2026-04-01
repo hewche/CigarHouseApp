@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -32,10 +32,6 @@ public partial class CigarhouseContext : DbContext
     public virtual DbSet<Delivery> Deliveries { get; set; }
 
     public virtual DbSet<DeliveryProduct> DeliveryProducts { get; set; }
-
-    public virtual DbSet<Itemcart> Itemcarts { get; set; }
-
-    public virtual DbSet<Itemfavorite> Itemfavorites { get; set; }
 
     public virtual DbSet<News> News { get; set; }
 
@@ -73,7 +69,7 @@ public partial class CigarhouseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost; Port=5050; Database=cigarhouse; Username=postgres; Password=123");
+        => optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=cigarhouse; Username=postgres; Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -266,46 +262,6 @@ public partial class CigarhouseContext : DbContext
             entity.Property(e => e.ProductName)
                 .HasMaxLength(200)
                 .HasColumnName("product_name");
-        });
-
-        modelBuilder.Entity<Itemcart>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("itemcart");
-
-            entity.Property(e => e.CartId).HasColumnName("cart_id");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-            entity.HasOne(d => d.Cart).WithMany()
-                .HasForeignKey(d => d.CartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("itemcart_cart_id_fkey");
-
-            entity.HasOne(d => d.Product).WithMany()
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("itemcart_product_id_fkey");
-        });
-
-        modelBuilder.Entity<Itemfavorite>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("itemfavorites");
-
-            entity.Property(e => e.FavoritesId).HasColumnName("favorites_id");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-            entity.HasOne(d => d.Favorites).WithMany()
-                .HasForeignKey(d => d.FavoritesId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("itemfavorites_favorites_id_fkey");
-
-            entity.HasOne(d => d.Product).WithMany()
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("itemfavorites_product_id_fkey");
         });
 
         modelBuilder.Entity<News>(entity =>
@@ -587,6 +543,8 @@ public partial class CigarhouseContext : DbContext
             entity.HasIndex(e => e.Login, "users_login_key").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Cart).HasColumnName("cart");
+            entity.Property(e => e.Favorites).HasColumnName("favorites");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(100)
                 .HasColumnName("first_name");
@@ -600,6 +558,14 @@ public partial class CigarhouseContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("phone");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
+
+            entity.HasOne(d => d.CartNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.Cart)
+                .HasConstraintName("users_cart_fkey");
+
+            entity.HasOne(d => d.FavoritesNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.Favorites)
+                .HasConstraintName("users_favorites_fkey");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
@@ -640,6 +606,25 @@ public partial class CigarhouseContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("usercart_user_id_fkey");
+
+            entity.HasMany(d => d.Products).WithMany(p => p.Carts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Itemcart",
+                    r => r.HasOne<Product>().WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("itemcart_product_id_fkey"),
+                    l => l.HasOne<Usercart>().WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("itemcart_cart_id_fkey"),
+                    j =>
+                    {
+                        j.HasKey("CartId", "ProductId").HasName("itemcart_pkey");
+                        j.ToTable("itemcart");
+                        j.IndexerProperty<int>("CartId").HasColumnName("cart_id");
+                        j.IndexerProperty<int>("ProductId").HasColumnName("product_id");
+                    });
         });
 
         modelBuilder.Entity<Userfavorite>(entity =>
@@ -655,6 +640,25 @@ public partial class CigarhouseContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("userfavorites_user_id_fkey");
+
+            entity.HasMany(d => d.Products).WithMany(p => p.Favorites)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Itemfavorite",
+                    r => r.HasOne<Product>().WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("itemfavorites_product_id_fkey"),
+                    l => l.HasOne<Userfavorite>().WithMany()
+                        .HasForeignKey("FavoritesId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("itemfavorites_favorites_id_fkey"),
+                    j =>
+                    {
+                        j.HasKey("FavoritesId", "ProductId").HasName("itemfavorites_pkey");
+                        j.ToTable("itemfavorites");
+                        j.IndexerProperty<int>("FavoritesId").HasColumnName("favorites_id");
+                        j.IndexerProperty<int>("ProductId").HasColumnName("product_id");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);
