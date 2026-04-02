@@ -33,5 +33,10 @@ namespace CigarHouseApp.Pages
                 favoriteItemsControl.ItemsSource = favoriteProducts;
             }
         }
+
+        private void HeartButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace CigarHouseApp.Pages
     public partial class ListProductsPage : Page
     {
 
+        HeartIconConverter heartIconConverter = new HeartIconConverter();
         List<Product> products = new List<Product>();
         List<Brand> brands = new List<Brand>();
         List<Country> countries = new List<Country>();
@@ -289,6 +290,12 @@ namespace CigarHouseApp.Pages
             {
                 main.currentUser.CartNavigation.Products.Add(product);
             }
+        }
+
+        private void HeartButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            heartIconConverter.ToggleHeartColor(button);
         }
     }
 }

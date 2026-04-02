@@ -7,6 +7,7 @@
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Tag" Value="NonSelected"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -14,7 +15,7 @@
                             CornerRadius="18">
                         <Path x:Name="HeartIcon"
                               Data="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3c1.74,0 3.41,0.81 4.5,2.08C13.09,3.81 14.76,3 16.5,3 19.58,3 22,5.41 22,8.5c0,3.77 -3.4,6.86 -8.55,11.54L12,21.35Z"
-                              Fill="#CCCCCC"
+                              Fill="Gray"
                               Width="20" 
                               Height="20"
                               Stretch="Uniform"
@@ -23,7 +24,16 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeartIcon" Property="Fill" Value="#FF9999"/>
+                            <Setter TargetName="HeartIcon" Property="Fill" Value="Red"/>
+                            <Setter TargetName="HeartIcon" Property="Width" Value="25"/>
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="Selected">
+                            <Setter TargetName="HeartIcon" Property="Fill" Value="Red"/>
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="NonSelected">
+                            <Setter TargetName="HeartIcon" Property="Fill" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
