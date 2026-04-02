@@ -1,4 +1,5 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CigarHouseApp.Pages
     public partial class FavoritesPage : Page
     {
         List<Product> favoriteProducts;
+        HeartIconConverter heartIconConverter = new HeartIconConverter();
         public FavoritesPage(List<Product> products)
         {
             favoriteProducts = products;
@@ -36,7 +38,8 @@ namespace CigarHouseApp.Pages
 
         private void HeartButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Button button = sender as Button;
+            heartIconConverter.ToggleHeartColor(button);
         }
     }
 }
