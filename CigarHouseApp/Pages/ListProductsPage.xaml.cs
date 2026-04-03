@@ -27,6 +27,7 @@ namespace CigarHouseApp.Pages
     {
 
         HeartIconConverter heartIconConverter = new HeartIconConverter();
+        CartFavoritesService cartFavoritesService = new CartFavoritesService();
         List<Product> products = new List<Product>();
         List<Brand> brands = new List<Brand>();
         List<Country> countries = new List<Country>();
@@ -271,16 +272,6 @@ namespace CigarHouseApp.Pages
 
         }
 
-        private void btnAddFavorites_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow main = Application.Current.MainWindow as MainWindow;
-            Button button = sender as Button;
-            if (button.DataContext is Product product)
-            {
-                main.currentUser.FavoritesNavigation.Products.Add(product);
-                MessageBox.Show($"{main.currentUser.FavoritesNavigation.Products.ToList()[0].ProductName}");
-            }
-        }
 
         private void tbBuyButton_Click(object sender, RoutedEventArgs e)
         {
@@ -296,7 +287,15 @@ namespace CigarHouseApp.Pages
         {
             var button = sender as Button;
             heartIconConverter.ToggleHeartColor(button);
+
+            if (button.DataContext is Product product)
+            {
+                cartFavoritesService.ToggleFavorites(product);
+            }
         }
+
+
+
     }
 }
 
