@@ -56,8 +56,6 @@ namespace CigarHouseApp.Pages
         private async Task Page_LoadedAsync()
         {
 
-            loadingGrid.Visibility = Visibility.Visible;
-            listViewProducts.Visibility = Visibility.Collapsed;
 
             try
             {
@@ -98,47 +96,66 @@ namespace CigarHouseApp.Pages
 
         private async Task LoadDataAsync()
         {
-            await Task.Run(() =>
+            await Dispatcher.InvokeAsync(() => loadingGrid.Visibility = Visibility.Visible);
+
+            var productsFromDb = await Task.Run(() =>
             {
                 using (var _context = new CigarhouseContext())
                 {
-                    if(productStatus == ListProductStatus.CIGAR)
-                    {
-                        products = _context.Products
-                        .AsNoTracking()
-                        .Where(p => p.Accessory == null)
-                        .Include(p => p.Brand)
-                        .Include(p => p.Cigar)
-                        .Include(p => p.CountryNavigation)
-                        .ToList();
+                    List<Product> loadedProducts;
 
-                    }
-                    if (productStatus == ListProductStatus.ACCESSORY)
+                    if (productStatus == ListProductStatus.CIGAR)
                     {
-                        products = _context.Products
-                        .AsNoTracking()
-                        .Where(p => p.Cigar == null)
-                        .Include(p => p.Brand)
-                        .Include(p => p.Accessory)
-                        .Include(p => p.CountryNavigation)
-                        .ToList();
-                        products = cartFavoritesService.SetFavorites(products);
+                        loadedProducts = _context.Products
+                            .AsNoTracking()
+                            .Where(p => p.Accessory == null)
+                            .Include(p => p.Brand)
+                            .Include(p => p.Cigar)
+                            .Include(p => p.CountryNavigation)
+                            .ToList();
                     }
-                    products = cartFavoritesService.SetFavorites(products);
+                    else
+                    {
+                        loadedProducts = _context.Products
+                            .AsNoTracking()
+                            .Where(p => p.Cigar == null)
+                            .Include(p => p.Brand)
+                            .Include(p => p.Accessory)
+                            .Include(p => p.CountryNavigation)
+                            .ToList();
+                    }
 
+                    return cartFavoritesService.SetFavorites(loadedProducts);
                 }
             });
 
+
+            await Task.Delay(100);
+
             await Dispatcher.InvokeAsync(() =>
             {
+                products = productsFromDb;
                 listViewProducts.ItemsSource = products;
+
                 LoadService();
                 LoadValues();
+
+                loadingGrid.Visibility = Visibility.Collapsed;
+                cardFilters.Visibility = Visibility.Visible;
+                listViewProducts.Visibility = Visibility.Visible;
             });
         }
-
         private void LoadValues()
         {
+            if (products == null || !products.Any())
+            {
+                minPrice = 0;
+                maxPrice = 0;
+                tbMinPrice.Text = "0";
+                tbMaxPrice.Text = "0";
+                return;
+            }
+
             maxPrice = products.Max(p => p.CostProduct);
             minPrice = products.Min(p=> p.CostProduct);
 

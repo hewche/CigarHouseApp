@@ -22,18 +22,15 @@
                           VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Базовое состояние избранного -->
                         <DataTrigger Binding="{Binding IsFavorite}" Value="True">
                             <Setter TargetName="HeartIcon" Property="Fill" Value="Red"/>
                         </DataTrigger>
 
-                        <!-- Наведение -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="HeartIcon" Property="Width" Value="25"/>
                             <Setter TargetName="HeartIcon" Property="Fill" Value="Red"/>
                         </Trigger>
 
-                        <!-- Клик -->
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="HeartIcon" Property="Width" Value="22"/>
                             <Setter TargetName="HeartIcon" Property="Fill" Value="DarkRed"/>
