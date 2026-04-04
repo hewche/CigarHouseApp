@@ -21,7 +21,7 @@ namespace CigarHouseApp.Pages
     public partial class FavoritesPage : Page
     {
         List<Product> favoriteProducts;
-        HeartIconConverter heartIconConverter = new HeartIconConverter();
+        CartFavoritesService cartFavoritesService = new CartFavoritesService();
         public FavoritesPage(List<Product> products)
         {
             favoriteProducts = products;
@@ -38,8 +38,18 @@ namespace CigarHouseApp.Pages
 
         private void HeartButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            heartIconConverter.ToggleHeartColor(button);
+            var button = sender as Button;
+            //heartIconConverter.ToggleHeartColor(button);
+
+            if (button.DataContext is Product product)
+            {
+
+                cartFavoritesService.ToggleFavorites(product);
+                var temp = button.DataContext;
+                button.DataContext = null;
+                button.DataContext = temp;
+
+            }
         }
     }
 }

@@ -26,7 +26,6 @@ namespace CigarHouseApp.Pages
     public partial class ListProductsPage : Page
     {
 
-        HeartIconConverter heartIconConverter = new HeartIconConverter();
         CartFavoritesService cartFavoritesService = new CartFavoritesService();
         List<Product> products = new List<Product>();
         List<Brand> brands = new List<Brand>();
@@ -112,8 +111,9 @@ namespace CigarHouseApp.Pages
                         .Include(p => p.Cigar)
                         .Include(p => p.CountryNavigation)
                         .ToList();
+
                     }
-                    if(productStatus == ListProductStatus.ACCESSORY)
+                    if (productStatus == ListProductStatus.ACCESSORY)
                     {
                         products = _context.Products
                         .AsNoTracking()
@@ -122,7 +122,10 @@ namespace CigarHouseApp.Pages
                         .Include(p => p.Accessory)
                         .Include(p => p.CountryNavigation)
                         .ToList();
+                        products = cartFavoritesService.SetFavorites(products);
                     }
+                    products = cartFavoritesService.SetFavorites(products);
+
                 }
             });
 
@@ -286,11 +289,16 @@ namespace CigarHouseApp.Pages
         private void HeartButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            heartIconConverter.ToggleHeartColor(button);
+            //heartIconConverter.ToggleHeartColor(button);
 
             if (button.DataContext is Product product)
             {
+
                 cartFavoritesService.ToggleFavorites(product);
+                var temp = button.DataContext;
+                button.DataContext = null;
+                button.DataContext = temp;
+
             }
         }
 

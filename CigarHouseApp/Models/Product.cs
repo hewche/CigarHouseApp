@@ -39,4 +39,8 @@ public partial class Product
     public virtual ICollection<Usercart> Carts { get; set; } = new List<Usercart>();
 
     public virtual ICollection<Userfavorite> Favorites { get; set; } = new List<Userfavorite>();
+
+    [NotMapped]
+    public bool IsFavorite { get; set; }
+
 }
