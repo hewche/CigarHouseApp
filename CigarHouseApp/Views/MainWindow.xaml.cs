@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.ProductFilter;
 
 namespace CigarHouseApp.Views
 {
@@ -20,11 +21,7 @@ namespace CigarHouseApp.Views
     {
 
         public User currentUser = new User() { CartNavigation = new Usercart(), FavoritesNavigation = new Userfavorite()};
-        public enum ListProductStatus
-        {
-            CIGAR,
-            ACCESSORY
-        }
+        
         public static Frame frame;
 
         public MainWindow()
@@ -51,10 +48,10 @@ namespace CigarHouseApp.Views
                 switch (tabControlProducts.SelectedIndex)
                 {
                     case 0:
-                        cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.CIGAR));
+                        cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.CIGAR));
                         break;
                     case 1:
-                        cigarFrame.Navigate(new Pages.ListProductsPage(ListProductStatus.ACCESSORY));
+                        cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.ACCESSORY));
                         break;
                     case 2:
                         cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.FavoritesNavigation.Products.ToList()));

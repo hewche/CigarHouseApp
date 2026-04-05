@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.ProductFilter;
 using static CigarHouseApp.Views.MainWindow;
 
 namespace CigarHouseApp.Pages
@@ -39,13 +40,13 @@ namespace CigarHouseApp.Pages
 
         ProductFilter productFilter;
 
-        ListProductStatus productStatus;
+        ProductStatus productStatus;
 
         private decimal minPrice = 0;
         private decimal maxPrice = 0;
 
 
-        public ListProductsPage(ListProductStatus status)
+        public ListProductsPage(ProductStatus status)
         {
             
             InitializeComponent();
@@ -104,7 +105,7 @@ namespace CigarHouseApp.Pages
                 {
                     List<Product> loadedProducts;
 
-                    if (productStatus == ListProductStatus.CIGAR)
+                    if (productStatus == ProductStatus.CIGAR)
                     {
                         loadedProducts = _context.Products
                             .AsNoTracking()

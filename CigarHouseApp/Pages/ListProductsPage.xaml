@@ -315,7 +315,8 @@
                   HorizontalAlignment="Center"
                   MaxWidth="1400" 
                   Grid.Row="1"
-                  Margin="0,15,0,0">
+                  Margin="0,15,0,0"
+                  >
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

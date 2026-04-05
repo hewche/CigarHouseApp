@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.ProductFilter;
 using static CigarHouseApp.Views.MainWindow;
 
 namespace CigarHouseApp.Pages
@@ -24,13 +25,13 @@ namespace CigarHouseApp.Pages
     public partial class ProductPage : Page
     {
         List<Review> reviews = new List<Review>();
-        ListProductStatus _status;
+        ProductStatus _status;
         public ProductPage()
         {
             InitializeComponent();
         }
 
-        public ProductPage(Product product, ListProductStatus status)
+        public ProductPage(Product product, ProductStatus status)
         {
             InitializeComponent();
             LoadDataProduct(product);

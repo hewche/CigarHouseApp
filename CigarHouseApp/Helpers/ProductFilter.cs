@@ -8,6 +8,12 @@ namespace CigarHouseApp.Helpers
     public class ProductFilter
     {
 
+        public enum ProductStatus
+        {
+            CIGAR,
+            ACCESSORY
+        }
+
         public Brand? SelectedBrand {  get; set; }
         Brand? _tempBrand = null;
         public Country? SelectedCountry { get; set; }

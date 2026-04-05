@@ -1,5 +1,6 @@
 ﻿using CigarHouseApp.Helpers;
 using CigarHouseApp.Models;
+using CigarHouseApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.ProductFilter;
 
 namespace CigarHouseApp.Pages
 {
@@ -32,7 +34,7 @@ namespace CigarHouseApp.Pages
         {
             if(favoriteProducts != null)
             {
-                favoriteItemsControl.ItemsSource = favoriteProducts;
+                favoriteListView.ItemsSource = favoriteProducts;
             }
         }
 
@@ -51,5 +53,33 @@ namespace CigarHouseApp.Pages
 
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ToProductPage_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Hyperlink hyperlink)
+            {
+                if (hyperlink.DataContext is Product product)
+                {
+                    favoriteListView.SelectedItem = product;
+                    MainWindow main = Application.Current.MainWindow as MainWindow;
+                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY ));
+                }
+            }
+
+            if(sender is Button button)
+            {
+                if (button.DataContext is Product product)
+                {
+                    favoriteListView.SelectedItem = product;
+                    MainWindow main = Application.Current.MainWindow as MainWindow;
+                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY));
+                }
+            }
+    }
     }
 }
