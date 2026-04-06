@@ -3,14 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="950"
       Background="#FAF7F2"
-      Title="Корзина">
+      Title="Корзина" Loaded="Page_Loaded">
 
     <Page.Resources>
-        
+        <helpers:ProductConverter x:Key="ProductConverter"/>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
     </Page.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -79,7 +81,7 @@
                                                     CornerRadius="8"
                                                     Width="80"
                                                     Height="80">
-                                                <Image Source="{Binding ProductImage}" 
+                                                <Image Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
                                                        Width="60" 
                                                        Height="60"
                                                        HorizontalAlignment="Center" 

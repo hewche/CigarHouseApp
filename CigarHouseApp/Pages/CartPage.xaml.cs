@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CigarHouseApp.Models;
+using CigarHouseApp.Views;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,12 +20,23 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class CartPage : Page
     {
-        public CartPage()
+        List<Product> cartProducts;
+        public CartPage(List<Product> products)
         {
             InitializeComponent();
+            cartProducts = products;
+            LoadData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void LoadData()
+        {
+            itemsControlCart.ItemsSource = cartProducts;
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

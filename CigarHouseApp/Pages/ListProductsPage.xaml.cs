@@ -311,7 +311,12 @@ namespace CigarHouseApp.Pages
 
         private void tbAddToCartButton_Click(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
 
+            if (button.DataContext is Product product)
+            {
+                cartFavoritesService.TogglePurchase(product);
+            }
         }
     }
 }

@@ -33,6 +33,23 @@ namespace CigarHouseApp.Helpers
             }
         }
 
+        public void TogglePurchase(Product product)
+        {
+            var existingProduct = _mainWindow.currentUser.CartNavigation.Products
+                .FirstOrDefault(p => p.ProductId == product.ProductId);
+
+            if (existingProduct != null)
+            {
+                _mainWindow.currentUser.CartNavigation.Products.Remove(existingProduct);
+                existingProduct.IsPurchase = false;
+            }
+            else
+            {
+                _mainWindow.currentUser.CartNavigation.Products.Add(product);
+                product.IsPurchase = true;
+            }
+        }
+
         public List<Product> SetFavorites(List<Product> products)
         {
             List<Product> favoritesProducts = _mainWindow.currentUser.FavoritesNavigation.Products.ToList();

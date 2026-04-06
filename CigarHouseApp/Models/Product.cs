@@ -43,4 +43,10 @@ public partial class Product
     [NotMapped]
     public bool IsFavorite { get; set; }
 
+    [NotMapped]
+    public bool IsPurchase {  get; set; }
+
+    [NotMapped]
+    public int PurchaseAmount { get; set; }
+
 }

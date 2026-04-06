@@ -72,7 +72,7 @@ namespace CigarHouseApp.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            cigarFrame.Navigate(new Pages.CartPage());
+            cigarFrame.Navigate(new Pages.CartPage(currentUser.CartNavigation.Products.ToList()));
         }
     }
 }
