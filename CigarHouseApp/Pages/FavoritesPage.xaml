@@ -39,18 +39,9 @@
 
             <Border Grid.Row="1" Margin="0,15,0,25">
                 <StackPanel Orientation="Horizontal">
-                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
-                        <TextBlock Text="Все товары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
-                    </Border>
-                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
-                        <TextBlock Text="Сигары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
-                    </Border>
-                    <Border Background="White" CornerRadius="20" Padding="12,6" Margin="0,0,10,0">
-                        <TextBlock Text="Аксессуары" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
-                    </Border>
-                    <Border Background="White" CornerRadius="20" Padding="12,6">
-                        <TextBlock Text="Наборы" FontSize="13" Foreground="{StaticResource DeepBrown}"/>
-                    </Border>
+                    <Button x:Name="AllProductsBtn" Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Все товары"/>
+                    <Button x:Name="CigarProductsBtn"  Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Сигары"/>
+                    <Button x:Name="AccesoryProductsBtn" Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Аксессуары"/>
                 </StackPanel>
             </Border>
 

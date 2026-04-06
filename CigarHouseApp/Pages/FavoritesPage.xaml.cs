@@ -32,6 +32,7 @@ namespace CigarHouseApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            AllProductsBtn.Tag = "Selected";
             if(favoriteProducts != null)
             {
                 favoriteListView.ItemsSource = favoriteProducts;
@@ -81,5 +82,36 @@ namespace CigarHouseApp.Pages
                 }
             }
     }
+
+        private void FilterProductsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            ResetBtnTag();
+            button.Tag = "Selected";
+            FilterProducts(button.Name);
+        }
+
+        private void ResetBtnTag()
+        {
+            AllProductsBtn.Tag = "NonSelected";
+            CigarProductsBtn.Tag = "NonSelected";
+            AccesoryProductsBtn.Tag = "NonSelected";
+        }
+
+        private void FilterProducts(string buttonName)
+        {
+            switch(buttonName)
+            {
+                case "AllProductsBtn":
+                    favoriteListView.ItemsSource = favoriteProducts;
+                    break;
+                case "CigarProductsBtn":
+                    favoriteListView.ItemsSource = favoriteProducts.Where(p => p.Cigar != null);
+                    break;
+                case "AccesoryProductsBtn":
+                    favoriteListView.ItemsSource = favoriteProducts.Where(p => p.Accessory != null);
+                    break;
+            }
+        }
     }
 }
