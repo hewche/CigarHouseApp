@@ -15,14 +15,6 @@
         BorderThickness="1">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
-        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
-        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
-        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
-        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
-        <SolidColorBrush x:Key="TextLight" Color="#FAF7F2"/>
-        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
 
         <Style TargetType="TabItem">
             <Setter Property="Foreground" Value="{StaticResource TextDark}"/>

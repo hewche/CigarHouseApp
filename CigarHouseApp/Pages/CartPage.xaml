@@ -10,97 +10,7 @@
       Title="Корзина">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
-        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
-        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
-        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
-        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
-        <SolidColorBrush x:Key="TextLight" Color="#FAF7F2"/>
-        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
-
-        <!-- Стиль для карточки товара в корзине -->
-        <Style x:Key="CartItemCard" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для кнопки количества -->
-        <Style x:Key="QuantityButton" TargetType="Button">
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Background" Value="{StaticResource BeigeLight}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="{StaticResource DeepBrown}"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource BeigeMedium}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для кнопки удаления -->
-        <Style x:Key="RemoveButton" TargetType="Button">
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="15">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FFE5E5"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#FFCCCC"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для пустой корзины -->
-        <Style x:Key="EmptyCartText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="{StaticResource MediumBrown}"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="Opacity" Value="0.6"/>
-        </Style>
+        
     </Page.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -110,7 +20,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок страницы -->
             <Border Grid.Row="0" Margin="0,0,0,25">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
@@ -145,14 +54,13 @@
                 </StackPanel>
             </Border>
 
-            <!-- Основной контент -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="380"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Список товаров -->
+
                 <Border Grid.Column="0" Margin="0,0,25,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
                         <ItemsControl x:Name="itemsControlCart" ItemsSource="{Binding CartItems}">
@@ -252,33 +160,7 @@
                                                                            Margin="0,0,0,10"/>
                                                                 <TextBlock Text="Добавьте товары из каталога" 
                                                                            Style="{StaticResource EmptyCartText}"/>
-                                                                <Button Width="200"
-                                                                        Height="45"
-                                                                        Margin="0,30,0,0"
-                                                                        Background="{StaticResource AccentBrown}"
-                                                                        Foreground="White"
-                                                                        FontSize="14"
-                                                                        FontWeight="SemiBold"
-                                                                        Cursor="Hand">
-                                                                    <Button.Template>
-                                                                        <ControlTemplate TargetType="Button">
-                                                                            <Border Background="{TemplateBinding Background}"
-                                                                                    CornerRadius="10">
-                                                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                                                                VerticalAlignment="Center"/>
-                                                                            </Border>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
-                                                                                </Trigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                    </Button.Template>
-                                                                    <StackPanel Orientation="Horizontal">
-                                                                        <TextBlock Text="ПРОДОЛЖИТЬ ПОКУПКИ" Margin="0,0,10,0"/>
-                                                                        <Image Source="/Images/shop_icon.png" Width="16" Height="16"/>
-                                                                    </StackPanel>
-                                                                </Button>
+                                                                
                                                             </StackPanel>
                                                         </Border>
                                                     </ControlTemplate>
@@ -365,33 +247,12 @@
                                 Height="50"
                                 Background="{StaticResource AccentBrown}"
                                 Foreground="White"
-                                FontSize="16"
+                                FontSize="20"
                                 FontWeight="SemiBold"
                                 Cursor="Hand"
-                                IsEnabled="False">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
-                                            CornerRadius="10">
-                                        <ContentPresenter HorizontalAlignment="Center" 
-                                                        VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Background" Value="{StaticResource BeigeMedium}"/>
-                                            <Setter Property="Foreground" Value="{StaticResource MediumBrown}"/>
-                                            <Setter Property="Cursor" Value="Arrow"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ОФОРМИТЬ ЗАКАЗ" Margin="0,0,10,0"/>
-                                <Image Source="/Images/cigar_icon.png" Width="18" Height="18"/>
-                            </StackPanel>
+                                Content="ОПЛАТИТЬ"
+                                IsEnabled="False"
+                                Style="{StaticResource BasicButton3}">
                         </Button>
 
                         <Border Background="{StaticResource BeigeLight}"

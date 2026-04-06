@@ -17,104 +17,6 @@
         <helpers:ProductConverter x:Key="ProductConverter"/>
         <helpers:ImageConverter x:Key="ImageConverter"/>
 
-        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
-        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
-        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
-        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
-        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
-        <SolidColorBrush x:Key="TextLight" Color="#FAF7F2"/>
-        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
-
-        <Style TargetType="ListViewItem">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <ContentPresenter />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="TextBox" x:Key="ModernTextBox">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Padding" Value="0,5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Grid>
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,0,2"/>
-                            <Rectangle x:Name="BottomBorder" 
-                                       Height="2" 
-                                       VerticalAlignment="Bottom" 
-                                       Fill="{StaticResource BeigeMedium}"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="ComboBox" x:Key="ModernComboBox">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-
-        <Style TargetType="Slider">
-            <Setter Property="Foreground" Value="{StaticResource AccentBrown}"/>
-            <Setter Property="Background" Value="{StaticResource BeigeMedium}"/>
-            <Setter Property="Height" Value="4"/>
-        </Style>
-
-        <Style x:Key="ModernCounterButton" TargetType="Button">
-            <Setter Property="Width" Value="35"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource AccentBrown}"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="17.5">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F0F0F0"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#E0E0E0"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
 
     <Grid Background="{StaticResource BeigeLight}">
@@ -218,66 +120,9 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,10,5,0">
-                                <TextBlock x:Name="tbFilters" Cursor="Hand">
-                                    <Hyperlink Click="tbFilters_Click" 
-                                               Foreground="{StaticResource AccentBrown}"  
-                                               FontWeight="SemiBold" 
-                                               TextDecorations="None">
-                                        <Run Text="▼ Доп. фильтры"/>
-                                    </Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
                         </Grid>
                     </StackPanel>
-
-                    <StackPanel x:Name="additionFilters" Visibility="Hidden" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,20,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0" Margin="5">
-                                <TextBlock Text="Крепость" 
-                                           Foreground="{StaticResource AccentBrown}" 
-                                           FontSize="11" FontWeight="SemiBold" 
-                                           Margin="0,0,0,8"/>
-                                <ListBox Height="25" 
-                                         BorderBrush="{StaticResource BeigeMedium}" 
-                                         BorderThickness="1"
-                                         Background="Transparent"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                    <TextBlock Text="Длина" 
-                                               Foreground="{StaticResource AccentBrown}" 
-                                               FontSize="11" FontWeight="SemiBold"
-                                               VerticalAlignment="Center"/>
-                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
-                                    <TextBlock Text="-" Foreground="{StaticResource AccentBrown}"/>
-                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <Slider Minimum="0" Maximum="100" ValueChanged="Slider_ValueChanged"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2" Margin="5">
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                    <TextBlock Text="Толщина" 
-                                               Foreground="{StaticResource AccentBrown}" 
-                                               FontSize="11" FontWeight="SemiBold"
-                                               VerticalAlignment="Center"/>
-                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
-                                    <TextBlock Text="-" Foreground="{StaticResource AccentBrown}"/>
-                                    <TextBox Width="45" Margin="8,0" FontSize="10" Style="{StaticResource ModernTextBox}"/>
-                                </StackPanel>
-                                <Slider Minimum="0" Maximum="100" ValueChanged="Slider_ValueChanged"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
+ 
                 </Grid>
             </StackPanel>
         </materialDesign:Card>
@@ -434,67 +279,12 @@
                                 </Border>
                             </Grid>
 
-                            <Grid Grid.Row="4" Margin="0,20,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Button Grid.Column="0" x:Name="tbBuyButton" 
-                                        Click="tbBuyButton_Click"
-                                        Content="КУПИТЬ В 1 КЛИК" 
-                                        FontSize="13" 
-                                        Height="48" 
-                                        FontWeight="SemiBold"
-                                        Background="Transparent"
-                                        BorderBrush="{StaticResource AccentBrown}"
-                                        Foreground="{StaticResource AccentBrown}"
-                                        BorderThickness="1.5"
-                                        Cursor="Hand">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="24">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                                VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-
-                                <Button Grid.Column="1" 
-                                        Margin="15,0,0,0" 
-                                        Width="48" 
-                                        Height="48" 
-                                        Padding="0"
-                                        Background="{StaticResource AccentBrown}" 
-                                        BorderBrush="{StaticResource AccentBrown}"
-                                        Cursor="Hand">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                    CornerRadius="24">
-                                                <Image Source="/Images/handbag.png" 
-                                                       Width="24" 
-                                                       RenderOptions.BitmapScalingMode="HighQuality"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource MediumBrown}"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                            </Grid>
+                            <Button Grid.Row="4" Margin="0,20,0,0" 
+                                Width="200"
+                                x:Name="tbAddToCartButton"
+                                Click="tbAddToCartButton_Click"
+                                Content="ДОБАВИТЬ В КОРЗИНУ"
+                                Style="{StaticResource BasicButton}"/>
                         </Grid>
                     </materialDesign:Card>
                 </DataTemplate>

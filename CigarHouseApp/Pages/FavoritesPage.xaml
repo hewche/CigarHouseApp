@@ -12,58 +12,6 @@
     <Page.Resources>
         <helpers:ProductConverter x:Key="ProductConverter"/>
         <helpers:ImageConverter x:Key="ImageConverter"/>
-        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
-        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
-        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
-        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
-        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
-        <SolidColorBrush x:Key="HeartRed" Color="#E74C3C"/>
-
-        <Style x:Key="FavoriteCard" TargetType="Border">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Margin" Value="0,0,20,20"/>
-            <Setter Property="Width" Value="280"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08"/>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="15" ShadowDepth="3" Opacity="0.15"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="AddToCartButton" TargetType="Button">
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
 
     <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -184,7 +132,8 @@
                                Margin="15,10,15,0"/>
 
                                         <Button Grid.Row="4" 
-                            Style="{StaticResource AddToCartButton}"
+                            Style="{StaticResource BasicButton3}"
+                            Height="40"
                             Content="В КОРЗИНУ"
                             Margin="15,8,15,12"
                             HorizontalAlignment="Stretch"/>

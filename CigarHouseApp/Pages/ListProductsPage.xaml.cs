@@ -206,13 +206,6 @@ namespace CigarHouseApp.Pages
                 lbCountry.ItemsSource = countries;
             }
         }
-        private void tbFilters_Click(object sender, RoutedEventArgs e)
-        {
-            if(additionFilters.Visibility == Visibility.Hidden) 
-                additionFilters.Visibility = Visibility.Visible;
-            else
-                additionFilters.Visibility = Visibility.Hidden;
-        }
 
         private void lbCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -316,9 +309,10 @@ namespace CigarHouseApp.Pages
             }
         }
 
-        
-        
+        private void tbAddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }
 

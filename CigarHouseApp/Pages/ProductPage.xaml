@@ -12,46 +12,7 @@
       FontFamily="Segoe UI">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="DeepBrown" Color="#3E2A27"/>
-        <SolidColorBrush x:Key="MediumBrown" Color="#6B4C3B"/>
-        <SolidColorBrush x:Key="WarmBrown" Color="#8B5A4A"/>
-        <SolidColorBrush x:Key="AccentBrown" Color="#9B6B4A"/>
-        <SolidColorBrush x:Key="BeigeLight" Color="#F2E8DF"/>
-        <SolidColorBrush x:Key="BeigeMedium" Color="#E8DDD2"/>
-        <SolidColorBrush x:Key="TextDark" Color="#2C2C2C"/>
-
-        <Style x:Key="BackButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="44"/>
-            <Setter Property="Height" Value="44"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.1"/>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="22"
-                                BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource BeigeMedium}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="{StaticResource BeigeLight}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
 
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent"/>
@@ -126,28 +87,9 @@
 
                                 <Button Width="180" Height="38" 
                                     x:Name="likeButton" Click="likeButton_Click" 
-                                    Content="❤ В ИЗБРАННОЕ" 
-                                    Background="Transparent"
-                                    BorderBrush="{StaticResource BeigeMedium}"
-                                    Foreground="{StaticResource AccentBrown}"
-                                    BorderThickness="1.5"
+                                    Content="В ИЗБРАННОЕ" 
+                                    Style="{StaticResource BasicButton}"
                                     Cursor="Hand">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="19">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                                VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource BeigeLight}"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
                                 </Button>
                             </StackPanel>
 
@@ -192,27 +134,10 @@
 
                             <StackPanel Grid.Row="3" Margin="0,20,0,10">
                                 <Button Width="280" Height="52" 
-                                    Background="{StaticResource AccentBrown}" 
-                                    BorderBrush="{StaticResource AccentBrown}"
-                                    Content="КУПИТЬ" 
+                                    Content="В КОРЗИНУ" 
                                     FontSize="14" 
-                                    FontWeight="Bold"
-                                    Foreground="White"
-                                    Cursor="Hand">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}"
-                                                    CornerRadius="26">
-                                                <ContentPresenter HorizontalAlignment="Center" 
-                                                                VerticalAlignment="Center"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource MediumBrown}"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
+                                    Cursor="Hand"
+                                    Style="{StaticResource BasicButton2}">
                                 </Button>
                             </StackPanel>
                         </Grid>
