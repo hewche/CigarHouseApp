@@ -22,6 +22,9 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class FavoritesPage : Page
     {
+
+        private const string TAG_SELECTED = "Selected";
+        private const string TAG_NON_SELECTED = "NonSelected";
         List<Product> favoriteProducts;
         CartFavoritesService cartFavoritesService = new CartFavoritesService();
         public FavoritesPage(List<Product> products)
@@ -32,7 +35,7 @@ namespace CigarHouseApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            AllProductsBtn.Tag = "Selected";
+            AllProductsBtn.Tag = TAG_SELECTED;
             if(favoriteProducts != null)
             {
                 favoriteListView.ItemsSource = favoriteProducts;
@@ -87,15 +90,15 @@ namespace CigarHouseApp.Pages
         {
             Button button = sender as Button;
             ResetBtnTag();
-            button.Tag = "Selected";
+            button.Tag = TAG_SELECTED;
             FilterProducts(button.Name);
         }
 
         private void ResetBtnTag()
         {
-            AllProductsBtn.Tag = "NonSelected";
-            CigarProductsBtn.Tag = "NonSelected";
-            AccesoryProductsBtn.Tag = "NonSelected";
+            AllProductsBtn.Tag = TAG_NON_SELECTED;
+            CigarProductsBtn.Tag = TAG_NON_SELECTED;
+            AccesoryProductsBtn.Tag = TAG_NON_SELECTED;
         }
 
         private void FilterProducts(string buttonName)
