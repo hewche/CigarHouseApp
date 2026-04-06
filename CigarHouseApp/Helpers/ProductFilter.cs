@@ -14,6 +14,13 @@ namespace CigarHouseApp.Helpers
             ACCESSORY
         }
 
+        public enum PageType
+        {
+            FavoritesPage,
+            ListProductPage
+
+        }
+
         public Brand? SelectedBrand {  get; set; }
         Brand? _tempBrand = null;
         public Country? SelectedCountry { get; set; }
@@ -114,6 +121,23 @@ namespace CigarHouseApp.Helpers
             .Where(p => p.ProductName.ToLower().Contains(SearchText.ToLower()))
             .ToList();
 
+        }
+
+
+        public void Reset()
+        {
+            SelectedBrand = null;
+            SelectedCountry = null;
+            SearchText = "";
+            MinPrice = 0;
+            MaxPrice = 0;
+            _tempBrand = null;
+            _tempCountry = null;
+            _tempSearch = "";
+            _tempMinPrice = 0;
+            _tempMaxPrice = 0;
+            isCategoryChanged = false;
+            isPriceChanged = false;
         }
 
     }

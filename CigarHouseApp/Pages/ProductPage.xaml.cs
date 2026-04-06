@@ -26,16 +26,18 @@ namespace CigarHouseApp.Pages
     {
         List<Review> reviews = new List<Review>();
         ProductStatus _status;
+        PageType _previousPage;
         public ProductPage()
         {
             InitializeComponent();
         }
 
-        public ProductPage(Product product, ProductStatus status)
+        public ProductPage(Product product, ProductStatus status, PageType previousPage)
         {
             InitializeComponent();
             LoadDataProduct(product);
             _status = status;
+            _previousPage = previousPage;
         }
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
@@ -63,8 +65,25 @@ namespace CigarHouseApp.Pages
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = Application.Current.MainWindow as MainWindow;
-            main.cigarFrame.Navigate(new ListProductsPage(_status));
+            if (NavigationService.CanGoBack)
+            {
+                BackToPrevious();
+            }
         }
+
+        private void BackToPrevious()
+        {
+            MainWindow main = Application.Current.MainWindow as MainWindow;
+            switch (_previousPage)
+            {
+                case PageType.FavoritesPage:
+                    main.cigarFrame.Navigate(new FavoritesPage(main.currentUser.FavoritesNavigation.Products.ToList()));
+                    break;
+                case PageType.ListProductPage:
+                    main.cigarFrame.Navigate(new ListProductsPage(_status));
+                    break;
+            }
+        }
+
     }
 }

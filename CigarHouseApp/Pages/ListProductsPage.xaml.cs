@@ -76,10 +76,6 @@ namespace CigarHouseApp.Pages
         }
 
 
-        public async Task ReinitializePage()
-        {
-            await LoadDataAsync();
-        }
         private void LoadService()
         {
             productFilter = new ProductFilter();
@@ -176,7 +172,7 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
-                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus));
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus, PageType.ListProductPage));
             }
         }
 
@@ -187,7 +183,7 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
-                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus));
+                main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus, PageType.ListProductPage));
             }
         }
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -320,7 +316,8 @@ namespace CigarHouseApp.Pages
             }
         }
 
-
+        
+        
 
     }
 }

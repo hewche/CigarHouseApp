@@ -67,7 +67,7 @@ namespace CigarHouseApp.Pages
                 {
                     favoriteListView.SelectedItem = product;
                     MainWindow main = Application.Current.MainWindow as MainWindow;
-                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY ));
+                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY, PageType.FavoritesPage));
                 }
             }
 
@@ -77,7 +77,7 @@ namespace CigarHouseApp.Pages
                 {
                     favoriteListView.SelectedItem = product;
                     MainWindow main = Application.Current.MainWindow as MainWindow;
-                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY));
+                    main.cigarFrame.Navigate(new Pages.ProductPage(favoriteListView.SelectedItem as Product, product.Cigar != null ? ProductStatus.CIGAR : ProductStatus.ACCESSORY, PageType.FavoritesPage));
                 }
             }
     }
