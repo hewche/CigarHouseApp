@@ -50,7 +50,7 @@ namespace CigarHouseApp.Helpers
             }
         }
 
-        public List<Product> SetFavorites(List<Product> products)
+        private List<Product> SetFavorites(List<Product> products)
         {
             List<Product> favoritesProducts = _mainWindow.currentUser.FavoritesNavigation.Products.ToList();
             if (favoritesProducts == null || !favoritesProducts.Any())
@@ -64,6 +64,28 @@ namespace CigarHouseApp.Helpers
             }
 
             return products;
+        }
+
+
+        private List<Product> SetPurchase(List<Product> products)
+        {
+            List<Product> cartProducts = _mainWindow.currentUser.CartNavigation.Products.ToList();
+            if (cartProducts == null || !cartProducts.Any())
+                return products;
+
+            var cartIds = cartProducts.Select(f => f.ProductId).ToHashSet();
+
+            foreach (var product in products)
+            {
+                product.IsPurchase = cartIds.Contains(product.ProductId);
+            }
+
+            return products;
+        }
+
+        public List<Product> SetOptions(List<Product> products)
+        {
+            return SetPurchase(SetFavorites(products));
         }
     }
 }

@@ -11,6 +11,8 @@
                                              PrimaryColor="Brown"
                                              SecondaryColor="Lime" />
                 <ResourceDictionary Source="/Styles/HeartButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Styles/CartButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Styles/FavoriteButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
                 <ResourceDictionary Source="/Styles/MainStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />

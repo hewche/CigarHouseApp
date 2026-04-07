@@ -59,7 +59,7 @@ namespace CigarHouseApp.Pages
             svStatsCigar.DataContext = product;
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
-
+            addToCart.DataContext = product;
             LoadReviews(product);
         }
 
@@ -95,11 +95,21 @@ namespace CigarHouseApp.Pages
             }
         }
 
+        private void UpdateItemContext(FrameworkElement item)
+        {
+            var temp = item.DataContext;
+            item.DataContext = null;
+            item.DataContext = temp;
+        }
         private void addToCart_Click(object sender, RoutedEventArgs e)
         {
             if (_currentProduct != null)
             {
                 cartFavoritesService.TogglePurchase(_currentProduct);
+                if(sender is Button button)
+                {
+                    UpdateItemContext(button);
+                }
             }
         }
     }

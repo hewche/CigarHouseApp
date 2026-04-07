@@ -283,8 +283,8 @@
                                 Width="200"
                                 x:Name="tbAddToCartButton"
                                 Click="tbAddToCartButton_Click"
-                                Content="ДОБАВИТЬ В КОРЗИНУ"
-                                Style="{StaticResource BasicButton}"/>
+                                Style="{StaticResource CartButton}"
+                                Tag="{Binding}"/>
                         </Grid>
                     </materialDesign:Card>
                 </DataTemplate>

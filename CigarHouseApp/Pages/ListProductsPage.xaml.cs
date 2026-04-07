@@ -122,7 +122,7 @@ namespace CigarHouseApp.Pages
                             .ToList();
                     }
 
-                    return cartFavoritesService.SetFavorites(loadedProducts);
+                    return cartFavoritesService.SetOptions(loadedProducts);
                 }
             });
 
@@ -302,13 +302,19 @@ namespace CigarHouseApp.Pages
             {
 
                 cartFavoritesService.ToggleFavorites(product);
-                var temp = button.DataContext;
-                button.DataContext = null;
-                button.DataContext = temp;
-
+                //var temp = button.DataContext;
+                //button.DataContext = null;
+                //button.DataContext = temp;
+                UpdateItemContext(button);
             }
         }
 
+        private void UpdateItemContext(FrameworkElement item)
+        {
+            var temp = item.DataContext;
+            item.DataContext = null;
+            item.DataContext = temp;
+        }
         private void tbAddToCartButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -316,6 +322,7 @@ namespace CigarHouseApp.Pages
             if (button.DataContext is Product product)
             {
                 cartFavoritesService.TogglePurchase(product);
+                UpdateItemContext(button);
             }
         }
     }

@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Styles/MainStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="CartButton" TargetType="Button">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextLight}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource AccentBrown}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="24">
+                        <ContentPresenter HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsPurchase}" Value="True">
+                            <Setter Property="Content" Value="В КОРЗИНЕ"/>
+                            <Setter Property="Background" Value="{StaticResource PressBrown}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPurchase}" Value="False">
+                            <Setter Property="Content" Value="ДОБАВИТЬ В КОРЗИНУ"/>
+                            <Setter Property="Background" Value="{StaticResource AccentBrown}"/>
+                        </DataTrigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource MediumBrown}"/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

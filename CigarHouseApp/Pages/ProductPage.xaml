@@ -136,10 +136,8 @@
                                 <Button Width="280" Height="52" 
                                     x:Name="addToCart"
                                     Click="addToCart_Click"
-                                    Content="В КОРЗИНУ" 
-                                    FontSize="14" 
-                                    Cursor="Hand"
-                                    Style="{StaticResource BasicButton2}">
+                                    Style="{StaticResource CartButton}"
+                                    Tag="{Binding}">
                                 </Button>
                             </StackPanel>
                         </Grid>
