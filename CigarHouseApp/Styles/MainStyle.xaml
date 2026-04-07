@@ -183,7 +183,7 @@
                             <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{StaticResource WarmBrown}"/>
+                            <Setter Property="Background" Value="{StaticResource MediumBrown}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

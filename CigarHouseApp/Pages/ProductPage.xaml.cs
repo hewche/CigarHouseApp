@@ -1,4 +1,5 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
 using CigarHouseApp.Views;
 using ControlzEx.Standard;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,12 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class ProductPage : Page
     {
+        MainWindow _main;
         List<Review> reviews = new List<Review>();
         ProductStatus _status;
         PageType _previousPage;
+        Product _currentProduct;
+        CartFavoritesService cartFavoritesService = new CartFavoritesService();
         public ProductPage()
         {
             InitializeComponent();
@@ -35,13 +39,19 @@ namespace CigarHouseApp.Pages
         public ProductPage(Product product, ProductStatus status, PageType previousPage)
         {
             InitializeComponent();
-            LoadDataProduct(product);
+            _currentProduct = product;
+            LoadDataProduct(_currentProduct);
             _status = status;
-            _previousPage = previousPage;
+            _previousPage = previousPage;            
+            _main = Application.Current.MainWindow as MainWindow;
         }
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_currentProduct != null)
+            {
+                cartFavoritesService.ToggleFavorites(_currentProduct);
+            }
         }
 
         private void LoadDataProduct(Product product)
@@ -73,17 +83,24 @@ namespace CigarHouseApp.Pages
 
         private void BackToPrevious()
         {
-            MainWindow main = Application.Current.MainWindow as MainWindow;
+            //MainWindow main = Application.Current.MainWindow as MainWindow;
             switch (_previousPage)
             {
                 case PageType.FavoritesPage:
-                    main.cigarFrame.Navigate(new FavoritesPage(main.currentUser.FavoritesNavigation.Products.ToList()));
+                    _main.cigarFrame.Navigate(new FavoritesPage(_main.currentUser.FavoritesNavigation.Products.ToList()));
                     break;
                 case PageType.ListProductPage:
-                    main.cigarFrame.Navigate(new ListProductsPage(_status));
+                    _main.cigarFrame.Navigate(new ListProductsPage(_status));
                     break;
             }
         }
 
+        private void addToCart_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentProduct != null)
+            {
+                cartFavoritesService.TogglePurchase(_currentProduct);
+            }
+        }
     }
 }
