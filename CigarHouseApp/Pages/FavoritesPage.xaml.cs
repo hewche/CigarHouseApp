@@ -39,7 +39,14 @@ namespace CigarHouseApp.Pages
             if(favoriteProducts != null)
             {
                 favoriteListView.ItemsSource = favoriteProducts;
+                ProductCount(favoriteListView.Items.Count);
             }
+        }
+
+
+        private void ProductCount(int count)
+        {
+            FavoritesCountText.Text = $"{count} товаров";
         }
 
         private void HeartButton_Click(object sender, RoutedEventArgs e)
@@ -115,6 +122,7 @@ namespace CigarHouseApp.Pages
                     favoriteListView.ItemsSource = favoriteProducts.Where(p => p.Accessory != null);
                     break;
             }
+            ProductCount(favoriteListView.Items.Count);
         }
     }
 }
