@@ -336,6 +336,7 @@ namespace CigarHouseApp.Pages
                 {
                     product.PurchaseAmount--;
                 }
+                UpdateItemContext(button.Parent as FrameworkElement);
             }
         }
 
@@ -349,9 +350,9 @@ namespace CigarHouseApp.Pages
                 {
                     product.PurchaseAmount++;
                 }
-                
+                UpdateItemContext(button.Parent as FrameworkElement);
             }
-            
+
         }
 
     }
