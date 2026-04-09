@@ -119,7 +119,7 @@
                                                         <TextBlock Text="-" FontWeight="Bold"/>
                                                     </Button>
                                                     <TextBlock x:Name="tbQuantity" 
-                                                               Text="{Binding Quantity}" 
+                                                               Text="{Binding PurchaseAmount}" 
                                                                Width="45" 
                                                                TextAlignment="Center"
                                                                FontSize="14" 

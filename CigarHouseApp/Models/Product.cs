@@ -47,6 +47,6 @@ public partial class Product
     public bool IsPurchase {  get; set; }
 
     [NotMapped]
-    public int PurchaseAmount { get; set; }
+    public int PurchaseAmount { get; set; } = 0;
 
 }

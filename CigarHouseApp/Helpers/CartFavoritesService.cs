@@ -25,6 +25,7 @@ namespace CigarHouseApp.Helpers
             {
                 _mainWindow.currentUser.FavoritesNavigation.Products.Remove(existingProduct);
                 existingProduct.IsFavorite = false;
+                product.IsFavorite = false;
             }
             else
             {
@@ -42,6 +43,7 @@ namespace CigarHouseApp.Helpers
             {
                 _mainWindow.currentUser.CartNavigation.Products.Remove(existingProduct);
                 existingProduct.IsPurchase = false;
+                product.IsPurchase = false;
             }
             else
             {

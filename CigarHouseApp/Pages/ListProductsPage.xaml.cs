@@ -325,6 +325,35 @@ namespace CigarHouseApp.Pages
                 UpdateItemContext(button);
             }
         }
+
+        private void minusButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                if (product.PurchaseAmount >0)
+                {
+                    product.PurchaseAmount--;
+                }
+            }
+        }
+
+        private void plusButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                if (product.PurchaseAmount < 100)
+                {
+                    product.PurchaseAmount++;
+                }
+                
+            }
+            
+        }
+
     }
 }
 

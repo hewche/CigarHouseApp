@@ -255,14 +255,15 @@
                                         Height="46"
                                         HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="minusButton" 
+                                        <Button x:Name="minusButton"
+                                                Click="minusButton_Click"
                                                 Content="−" 
                                                 Width="42" 
                                                 Height="42" 
                                                 Padding="0"
                                                 Style="{StaticResource ModernCounterButton}"/>
                                         <TextBlock x:Name="tbCountProduct" 
-                                                   Text="0" 
+                                                   Text="{Binding PurchaseAmount}" 
                                                    VerticalAlignment="Center" 
                                                    MinWidth="40"
                                                    TextAlignment="Center"
@@ -270,6 +271,7 @@
                                                    FontSize="18" 
                                                    FontWeight="SemiBold"/>
                                         <Button x:Name="plusButton" 
+                                                Click="plusButton_Click"
                                                 Content="+" 
                                                 Width="42" 
                                                 Height="42" 
