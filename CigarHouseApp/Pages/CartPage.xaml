@@ -94,7 +94,7 @@
                                                            FontWeight="SemiBold" 
                                                            Foreground="{StaticResource DeepBrown}"
                                                            Margin="0,0,0,5"/>
-                                                <TextBlock Text="{Binding Brand}" 
+                                                <TextBlock Text="{Binding Brand.Name}" 
                                                            FontSize="12" 
                                                            Foreground="{StaticResource MediumBrown}"
                                                            Opacity="0.7"/>
@@ -114,7 +114,7 @@
                                                         VerticalAlignment="Center" 
                                                         HorizontalAlignment="Right">
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <Button Style="{StaticResource QuantityButton}" 
+                                                    <Button x:Name="minusProductButton" Click="minusProductButton_Click" Style="{StaticResource QuantityButton}" 
                                                             Tag="{Binding}">
                                                         <TextBlock Text="-" FontWeight="Bold"/>
                                                     </Button>
@@ -125,8 +125,8 @@
                                                                FontSize="14" 
                                                                FontWeight="SemiBold"
                                                                VerticalAlignment="Center"/>
-                                                    <Button Style="{StaticResource QuantityButton}" 
-                                                            Tag="{Binding}">
+                                                    <Button x:Name="plusProductButton" Style="{StaticResource QuantityButton}" 
+                                                            Tag="{Binding}" Click="plusProductButton_Click">
                                                         <TextBlock Text="+" FontWeight="Bold"/>
                                                     </Button>
                                                 </StackPanel>

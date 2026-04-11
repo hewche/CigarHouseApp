@@ -40,5 +40,40 @@ namespace CigarHouseApp.Pages
         {
 
         }
+
+        private void UpdateItemContext(FrameworkElement item)
+        {
+            var temp = item.DataContext;
+            item.DataContext = null;
+            item.DataContext = temp;
+        }
+
+        private void plusProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                if (product.PurchaseAmount < 100)
+                {
+                    product.PurchaseAmount++;
+                }
+                UpdateItemContext(button.Parent as FrameworkElement);
+            }
+        }
+
+        private void minusProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                if (product.PurchaseAmount < 100)
+                {
+                    product.PurchaseAmount--;
+                }
+                UpdateItemContext(button.Parent as FrameworkElement);
+            }
+        }
     }
 }
