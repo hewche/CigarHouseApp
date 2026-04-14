@@ -21,6 +21,9 @@ namespace CigarHouseApp.Pages
     public partial class CartPage : Page
     {
         List<Product> cartProducts;
+        decimal subTotal = 0;
+        decimal deliveryTotal = 0;
+        decimal total = 0;
         public CartPage(List<Product> products)
         {
             InitializeComponent();
@@ -35,6 +38,21 @@ namespace CigarHouseApp.Pages
         private void LoadData()
         {
             itemsControlCart.ItemsSource = cartProducts;
+            tbItemsCount.Text = $"{cartProducts.Count.ToString()} товаров";
+            CalculateCost();
+            tbDelivery.Text = deliveryTotal.ToString()+ " ₽";
+            tbSubtotal.Text = subTotal.ToString() + " ₽";
+            tbTotal.Text = total.ToString() + " ₽";
+        }
+
+        private void CalculateCost()
+        {
+            subTotal = cartProducts.Sum(p => p.CostProduct);
+            if (cartProducts.Count > 2)
+                deliveryTotal = 125;
+            else
+                deliveryTotal = 0;
+            total = subTotal + deliveryTotal;
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
