@@ -104,7 +104,9 @@ namespace CigarHouseApp.Pages
         {
             if(product != null)
             {
+                MainWindow main = Application.Current.MainWindow as MainWindow;
                 cartProducts.Remove(product);
+                main.currentUser.CartNavigation.Products.Remove(product);
             }
         }
     }

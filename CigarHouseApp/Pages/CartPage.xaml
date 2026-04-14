@@ -103,7 +103,7 @@
                                                                FontSize="13" 
                                                                Foreground="{StaticResource TextDark}"
                                                                Opacity="0.6"/>
-                                                    <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" 
+                                                    <TextBlock Text="{Binding CostProduct}" 
                                                                FontSize="14" 
                                                                FontWeight="SemiBold" 
                                                                Foreground="{StaticResource AccentBrown}"/>
