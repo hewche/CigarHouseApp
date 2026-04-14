@@ -2,6 +2,7 @@
 using CigarHouseApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,14 +21,14 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class CartPage : Page
     {
-        List<Product> cartProducts;
+        ObservableCollection<Product> cartProducts;
         decimal subTotal = 0;
         decimal deliveryTotal = 0;
         decimal total = 0;
         public CartPage(List<Product> products)
         {
             InitializeComponent();
-            cartProducts = products;
+            cartProducts = new ObservableCollection<Product>(products);
             LoadData();
         }
 
@@ -86,11 +87,24 @@ namespace CigarHouseApp.Pages
 
             if (button.DataContext is Product product)
             {
-                if (product.PurchaseAmount < 100)
+                if (product.PurchaseAmount > 1)
                 {
                     product.PurchaseAmount--;
                 }
+                else
+                {
+                    DeleteProduct(product);
+                    LoadData();
+                }
                 UpdateItemContext(button.Parent as FrameworkElement);
+            }
+        }
+
+        private void DeleteProduct(Product product)
+        {
+            if(product != null)
+            {
+                cartProducts.Remove(product);
             }
         }
     }
