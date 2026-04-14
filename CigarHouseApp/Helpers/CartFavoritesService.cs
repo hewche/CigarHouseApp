@@ -47,6 +47,10 @@ namespace CigarHouseApp.Helpers
             }
             else
             {
+                if(product.PurchaseAmount == 0)
+                {
+                    product.PurchaseAmount = 1;
+                }
                 _mainWindow.currentUser.CartNavigation.Products.Add(product);
                 product.IsPurchase = true;
             }
