@@ -38,17 +38,22 @@ namespace CigarHouseApp.Pages
 
         private void LoadData()
         {
-            itemsControlCart.ItemsSource = cartProducts;
+            itemsControlCart.ItemsSource = cartProducts;  
+            UpdateCost();
+        }
+
+        private void UpdateCost()
+        {
             tbItemsCount.Text = $"{cartProducts.Count.ToString()} товаров";
             CalculateCost();
-            tbDelivery.Text = deliveryTotal.ToString()+ " ₽";
+            tbDelivery.Text = deliveryTotal.ToString() + " ₽";
             tbSubtotal.Text = subTotal.ToString() + " ₽";
             tbTotal.Text = total.ToString() + " ₽";
         }
 
         private void CalculateCost()
         {
-            subTotal = cartProducts.Sum(p => p.CostProduct);
+            subTotal = cartProducts.Sum(p => p.CostProduct*p.PurchaseAmount);
             if (cartProducts.Count > 2)
                 deliveryTotal = 125;
             else
@@ -77,6 +82,7 @@ namespace CigarHouseApp.Pages
                 {
                     product.PurchaseAmount++;
                 }
+                UpdateCost();
                 UpdateItemContext(button.Parent as FrameworkElement);
             }
         }
@@ -94,8 +100,8 @@ namespace CigarHouseApp.Pages
                 else
                 {
                     DeleteProduct(product);
-                    LoadData();
                 }
+                UpdateCost();
                 UpdateItemContext(button.Parent as FrameworkElement);
             }
         }
