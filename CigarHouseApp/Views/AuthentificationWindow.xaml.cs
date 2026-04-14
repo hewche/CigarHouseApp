@@ -24,12 +24,33 @@ namespace CigarHouseApp.Views
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
+            RegistrationWindow registrationWindow = new RegistrationWindow();
+            if(registrationWindow.ShowDialog() == true )
+            {
 
+            }
         }
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow main = new MainWindow();
+            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow = main;
+            if (main.ShowDialog() == true)
+            {
 
+            }
+        }
+
+        private void btnIncognito_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow = main;
+            if (main.ShowDialog() == true)
+            {
+
+            }
         }
     }
 }

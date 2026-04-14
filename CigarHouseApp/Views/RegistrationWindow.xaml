@@ -51,7 +51,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
-            <Button x:Name="btnRegister" Click="btnRegister_Click" Content="Зарегистрироваться" Width="150" Height="30" Margin="5"/>
+            <Button x:Name="btnRegister" Click="btnRegister_ClickAsync" Content="Зарегистрироваться" Width="150" Height="30" Margin="5"/>
             <Button x:Name="btnCancel" Click="btnCancel_Click" Content="Отмена" Width="100" Height="30" Margin="5" Background="Transparent" BorderThickness="1" Foreground="#47352B"/>
         </StackPanel>
     </Grid>

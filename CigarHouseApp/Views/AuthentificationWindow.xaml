@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CigarHouseApp.Views"
         mc:Ignorable="d"
-        Title="AuthentificationWindow" Height="300" Width="400">
+        Title="AuthentificationWindow" Height="400" Width="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Логин"></TextBlock>
@@ -23,5 +24,7 @@
         </StackPanel>
         <Button x:Name="btnJoin" Click="btnJoin_Click" Grid.Row="2" Content="Войти" Width="100" Height="30"></Button>
         <Button x:Name="btnRegistration" Click="btnRegistration_Click" Grid.Row="3" Content="Зарегистрироваться" Background="Transparent" BorderThickness="0" Width="200" Height="30" Foreground="#47352B"></Button>
+        <Button x:Name="btnIncognito" Click="btnIncognito_Click" Grid.Row="4" Content="Войти как гость" Background="Transparent" BorderThickness="0" Width="200" Height="30" Foreground="#47352B"></Button>
+
     </Grid>
 </Window>

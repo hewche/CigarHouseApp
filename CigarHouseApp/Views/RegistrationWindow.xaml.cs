@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,19 +19,62 @@ namespace CigarHouseApp.Views
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        CigarhouseContext _context;
+        
         public RegistrationWindow()
         {
             InitializeComponent();
+            _context = new CigarhouseContext();
         }
 
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private async void btnRegister_ClickAsync(object sender, RoutedEventArgs e)
         {
-
+            if (!CheckFields())
+            {
+                if (pbPassword.Password == pbConfirmPassword.Password)
+                {
+                    await AddUser(new User() { FirstName = tbFirstName.Text, Login = tbLogin.Text, Password = PasswordHasher.GetSHA512Hash(pbPassword.Password), RoleId = 2 , Phone="111-222"});
+                }
+                else
+                {
+                    MessageBox.Show("Пароли не совпадают!");
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private bool CheckFields()
+        {
+            return string.IsNullOrWhiteSpace(tbEmail.Text) &&
+                string.IsNullOrWhiteSpace(tbFirstName.Text) &&
+                string.IsNullOrWhiteSpace(tbLastName.Text) &&
+                string.IsNullOrWhiteSpace(tbLogin.Text) &&
+                string.IsNullOrWhiteSpace(pbConfirmPassword.Password) &&
+                string.IsNullOrWhiteSpace(pbPassword.Password);
+        }
+
+        private async Task AddUser(User user)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                user.CartNavigation = new Usercart();
+                user.FavoritesNavigation = new Userfavorite();
+
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                MessageBox.Show("Пользователь добавлен!");
+            }
+            catch(Exception ex) 
+            {
+                await transaction.RollbackAsync();
+                MessageBox.Show($"Ошибка: пользователь не добавлен | {ex.Message}");
+            }
         }
     }
 }
