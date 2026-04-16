@@ -289,7 +289,7 @@ namespace CigarHouseApp.Pages
             Button button = sender as Button;
             if (button.DataContext is Product product)
             {
-                main.currentUser.CartNavigation.Products.Add(product);
+                main.currentUser.Usercart.Products.Add(product);
             }
         }
 

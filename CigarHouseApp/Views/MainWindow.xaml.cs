@@ -20,7 +20,7 @@ namespace CigarHouseApp.Views
     public partial class MainWindow : Window
     {
 
-        public User currentUser = new User() { CartNavigation = new Usercart(), FavoritesNavigation = new Userfavorite()};
+        public User currentUser = new User() { Usercart = new Usercart(), Userfavorite = new Userfavorite()};
         
         public static Frame frame;
 
@@ -54,7 +54,7 @@ namespace CigarHouseApp.Views
                         cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.ACCESSORY));
                         break;
                     case 2:
-                        cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.FavoritesNavigation.Products.ToList()));
+                        cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.Userfavorite.Products.ToList()));
                         break;
                 }
             }
@@ -72,7 +72,7 @@ namespace CigarHouseApp.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            cigarFrame.Navigate(new Pages.CartPage(currentUser.CartNavigation.Products.ToList()));
+            cigarFrame.Navigate(new Pages.CartPage(currentUser.Usercart.Products.ToList()));
         }
     }
 }

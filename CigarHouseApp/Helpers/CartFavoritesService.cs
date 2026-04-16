@@ -18,30 +18,30 @@ namespace CigarHouseApp.Helpers
 
         public void ToggleFavorites(Product product)
         {
-            var existingProduct = _mainWindow.currentUser.FavoritesNavigation.Products
+            var existingProduct = _mainWindow.currentUser.Userfavorite.Products
                 .FirstOrDefault(p => p.ProductId == product.ProductId);
 
             if (existingProduct != null)
             {
-                _mainWindow.currentUser.FavoritesNavigation.Products.Remove(existingProduct);
+                _mainWindow.currentUser.Userfavorite.Products.Remove(existingProduct);
                 existingProduct.IsFavorite = false;
                 product.IsFavorite = false;
             }
             else
             {
-                _mainWindow.currentUser.FavoritesNavigation.Products.Add(product);
+                _mainWindow.currentUser.Userfavorite.Products.Add(product);
                 product.IsFavorite = true;
             }
         }
 
         public void TogglePurchase(Product product)
         {
-            var existingProduct = _mainWindow.currentUser.CartNavigation.Products
+            var existingProduct = _mainWindow.currentUser.Usercart.Products
                 .FirstOrDefault(p => p.ProductId == product.ProductId);
 
             if (existingProduct != null)
             {
-                _mainWindow.currentUser.CartNavigation.Products.Remove(existingProduct);
+                _mainWindow.currentUser.Usercart.Products.Remove(existingProduct);
                 existingProduct.IsPurchase = false;
                 product.IsPurchase = false;
             }
@@ -51,14 +51,14 @@ namespace CigarHouseApp.Helpers
                 {
                     product.PurchaseAmount = 1;
                 }
-                _mainWindow.currentUser.CartNavigation.Products.Add(product);
+                _mainWindow.currentUser.Usercart.Products.Add(product);
                 product.IsPurchase = true;
             }
         }
 
         private List<Product> SetFavorites(List<Product> products)
         {
-            List<Product> favoritesProducts = _mainWindow.currentUser.FavoritesNavigation.Products.ToList();
+            List<Product> favoritesProducts = _mainWindow.currentUser.Userfavorite.Products.ToList();
             if (favoritesProducts == null || !favoritesProducts.Any())
                 return products;
 
@@ -75,7 +75,7 @@ namespace CigarHouseApp.Helpers
 
         private List<Product> SetPurchase(List<Product> products)
         {
-            List<Product> cartProducts = _mainWindow.currentUser.CartNavigation.Products.ToList();
+            List<Product> cartProducts = _mainWindow.currentUser.Usercart.Products.ToList();
             if (cartProducts == null || !cartProducts.Any())
                 return products;
 

@@ -40,13 +40,13 @@ public partial class Product
 
     public virtual ICollection<Userfavorite> Favorites { get; set; } = new List<Userfavorite>();
 
+
     [NotMapped]
     public bool IsFavorite { get; set; }
 
     [NotMapped]
-    public bool IsPurchase {  get; set; }
+    public bool IsPurchase { get; set; }
 
     [NotMapped]
     public int PurchaseAmount { get; set; } = 0;
-
 }

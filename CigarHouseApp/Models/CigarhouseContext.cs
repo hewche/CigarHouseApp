@@ -559,14 +559,6 @@ public partial class CigarhouseContext : DbContext
                 .HasColumnName("phone");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
 
-            entity.HasOne(d => d.CartNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.Cart)
-                .HasConstraintName("users_cart_fkey");
-
-            entity.HasOne(d => d.FavoritesNavigation).WithMany(p => p.Users)
-                .HasForeignKey(d => d.Favorites)
-                .HasConstraintName("users_favorites_fkey");
-
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .HasConstraintName("users_role_id_fkey");
@@ -599,11 +591,13 @@ public partial class CigarhouseContext : DbContext
 
             entity.ToTable("usercart");
 
+            entity.HasIndex(e => e.UserId, "usercart_user_id_key").IsUnique();
+
             entity.Property(e => e.CartId).HasColumnName("cart_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Usercarts)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.User).WithOne(p => p.Usercart)
+                .HasForeignKey<Usercart>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("usercart_user_id_fkey");
 
@@ -633,11 +627,13 @@ public partial class CigarhouseContext : DbContext
 
             entity.ToTable("userfavorites");
 
+            entity.HasIndex(e => e.UserId, "userfavorites_user_id_key").IsUnique();
+
             entity.Property(e => e.FavoritesId).HasColumnName("favorites_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Userfavorites)
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne(d => d.User).WithOne(p => p.Userfavorite)
+                .HasForeignKey<Userfavorite>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("userfavorites_user_id_fkey");
 

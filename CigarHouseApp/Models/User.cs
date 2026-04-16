@@ -21,10 +21,6 @@ public partial class User
 
     public int? Favorites { get; set; }
 
-    public virtual Usercart? CartNavigation { get; set; }
-
-    public virtual Userfavorite? FavoritesNavigation { get; set; }
-
     public virtual ICollection<News> News { get; set; } = new List<News>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
@@ -33,7 +29,7 @@ public partial class User
 
     public virtual Role? Role { get; set; }
 
-    public virtual ICollection<Usercart> Usercarts { get; set; } = new List<Usercart>();
+    public virtual Usercart? Usercart { get; set; }
 
-    public virtual ICollection<Userfavorite> Userfavorites { get; set; } = new List<Userfavorite>();
+    public virtual Userfavorite? Userfavorite { get; set; }
 }

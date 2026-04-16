@@ -112,7 +112,7 @@ namespace CigarHouseApp.Pages
             {
                 MainWindow main = Application.Current.MainWindow as MainWindow;
                 cartProducts.Remove(product);
-                main.currentUser.CartNavigation.Products.Remove(product);
+                main.currentUser.Usercart.Products.Remove(product);
             }
         }
     }

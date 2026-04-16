@@ -87,7 +87,7 @@ namespace CigarHouseApp.Pages
             switch (_previousPage)
             {
                 case PageType.FavoritesPage:
-                    _main.cigarFrame.Navigate(new FavoritesPage(_main.currentUser.FavoritesNavigation.Products.ToList()));
+                    _main.cigarFrame.Navigate(new FavoritesPage(_main.currentUser.Userfavorite.Products.ToList()));
                     break;
                 case PageType.ListProductPage:
                     _main.cigarFrame.Navigate(new ListProductsPage(_status));

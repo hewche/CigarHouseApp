@@ -44,17 +44,18 @@ namespace CigarHouseApp.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.DialogResult = false;
+            this.Close();
         }
 
         private bool CheckFields()
         {
-            return string.IsNullOrWhiteSpace(tbEmail.Text) &&
-                string.IsNullOrWhiteSpace(tbFirstName.Text) &&
-                string.IsNullOrWhiteSpace(tbLastName.Text) &&
-                string.IsNullOrWhiteSpace(tbLogin.Text) &&
-                string.IsNullOrWhiteSpace(pbConfirmPassword.Password) &&
-                string.IsNullOrWhiteSpace(pbPassword.Password);
+            return !string.IsNullOrWhiteSpace(tbFirstName.Text) &&
+                   !string.IsNullOrWhiteSpace(tbLastName.Text) &&
+                   !string.IsNullOrWhiteSpace(tbLogin.Text) &&
+                   !string.IsNullOrWhiteSpace(tbEmail.Text) &&
+                   !string.IsNullOrWhiteSpace(pbPassword.Password) &&
+                   !string.IsNullOrWhiteSpace(pbConfirmPassword.Password);
         }
 
         private async Task AddUser(User user)
@@ -62,18 +63,23 @@ namespace CigarHouseApp.Views
             using var transaction = _context.Database.BeginTransaction();
             try
             {
-                user.CartNavigation = new Usercart();
-                user.FavoritesNavigation = new Userfavorite();
+                var cart = new Usercart();
+                var favorites = new Userfavorite();
+
+                user.Usercart = cart;
+                user.Userfavorite = favorites;
 
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
+
                 await transaction.CommitAsync();
                 MessageBox.Show("Пользователь добавлен!");
             }
             catch(Exception ex) 
             {
                 await transaction.RollbackAsync();
-                MessageBox.Show($"Ошибка: пользователь не добавлен | {ex.Message}");
+                MessageBox.Show($"{ex.Message}");
+                MessageBox.Show(ex.InnerException?.Message);
             }
         }
     }
