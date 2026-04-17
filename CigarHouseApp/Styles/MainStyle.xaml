@@ -82,6 +82,37 @@
         </Setter>
     </Style>
 
+    <Style TargetType="PasswordBox" x:Key="ModernPasswordBox">
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource TextDark}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="0,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Grid>
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0,0,0,2"/>
+                        <Rectangle x:Name="BottomBorder" 
+                           Height="2" 
+                           VerticalAlignment="Bottom" 
+                           Fill="{StaticResource BeigeMedium}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BottomBorder" Property="Fill" Value="{StaticResource AccentBrown}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="ComboBox" x:Key="ModernComboBox">
         <Setter Property="Height" Value="36"/>
         <Setter Property="BorderBrush" Value="{StaticResource BeigeMedium}"/>

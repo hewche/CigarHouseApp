@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,6 +20,8 @@ namespace CigarHouseApp.Views
     /// </summary>
     public partial class AuthentificationWindow : Window
     {
+        CigarhouseContext _context = new CigarhouseContext();
+
         public AuthentificationWindow()
         {
             InitializeComponent();
@@ -33,13 +38,45 @@ namespace CigarHouseApp.Views
 
         private void btnJoin_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            Application.Current.MainWindow.Close();
-            Application.Current.MainWindow = main;
-            if (main.ShowDialog() == true)
+            if (!string.IsNullOrEmpty(tbLogin.Text) && !string.IsNullOrEmpty(pbPassword.Password))
             {
-
+                Authorize(tbLogin.Text, pbPassword.Password);
             }
+            else
+                MessageBox.Show("Введите поля!");
+        }
+
+        private void Authorize(string login, string password)
+        {
+            User user = FindUser(login);
+            if (user !=null)
+            {
+                if (PasswordHasher.VerifySHA512Hash(password, user.Password))
+                {
+                    MainWindow main = new MainWindow(user);
+                    Application.Current.MainWindow.Close();
+                    Application.Current.MainWindow = main;
+                    if (main.ShowDialog() == true)
+                    {
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Неверный пароль!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пользователя не существует!");
+            }
+        }
+
+        private User FindUser(string login)
+        {
+            return _context.Users
+                .Include(u=>u.Usercart)
+                .Include(u=>u.Userfavorite)
+                .FirstOrDefault(u => u.Login == login);
         }
 
         private void btnIncognito_Click(object sender, RoutedEventArgs e)
@@ -49,7 +86,7 @@ namespace CigarHouseApp.Views
             Application.Current.MainWindow = main;
             if (main.ShowDialog() == true)
             {
-
+                    
             }
         }
     }
