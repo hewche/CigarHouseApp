@@ -48,7 +48,7 @@ namespace CigarHouseApp.Helpers
             }
             else
             {
-                var productDb = _context.Products.Find(product.ProductId);
+                var productDb = _context.Products.Include(p=>p.Cigar).Include(p=>p.Accessory).FirstOrDefault(p=> p.ProductId == product.ProductId);
                 productDb.IsFavorite = true;
                 userDb.Userfavorite.Products.Add(productDb);
             }
@@ -77,7 +77,7 @@ namespace CigarHouseApp.Helpers
             }
             else
             {
-                var productDb = _context.Products.Find(product.ProductId);
+                var productDb = _context.Products.Include(p => p.Cigar).Include(p => p.Accessory).FirstOrDefault(p => p.ProductId == product.ProductId);
                 productDb.IsPurchase = true;
                 userDb.Userfavorite.Products.Add(productDb);
             }

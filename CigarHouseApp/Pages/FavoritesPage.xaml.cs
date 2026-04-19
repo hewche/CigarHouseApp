@@ -105,7 +105,7 @@ namespace CigarHouseApp.Pages
         {
             AllProductsBtn.Tag = TAG_NON_SELECTED;
             CigarProductsBtn.Tag = TAG_NON_SELECTED;
-            AccesoryProductsBtn.Tag = TAG_NON_SELECTED;
+            AccessoryProductsBtn.Tag = TAG_NON_SELECTED;
         }
 
         private void FilterProducts(string buttonName)
@@ -118,7 +118,7 @@ namespace CigarHouseApp.Pages
                 case "CigarProductsBtn":
                     favoriteListView.ItemsSource = favoriteProducts.Where(p => p.Cigar != null);
                     break;
-                case "AccesoryProductsBtn":
+                case "AccessoryProductsBtn":
                     favoriteListView.ItemsSource = favoriteProducts.Where(p => p.Accessory != null);
                     break;
             }

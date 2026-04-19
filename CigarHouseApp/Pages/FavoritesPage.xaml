@@ -41,7 +41,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="AllProductsBtn" Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Все товары"/>
                     <Button x:Name="CigarProductsBtn"  Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Сигары"/>
-                    <Button x:Name="AccesoryProductsBtn" Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Аксессуары"/>
+                    <Button x:Name="AccessoryProductsBtn" Click="FilterProductsBtn_Click" Style="{StaticResource ChipButtonStyle}" Content="Аксессуары"/>
                 </StackPanel>
             </Border>
 
