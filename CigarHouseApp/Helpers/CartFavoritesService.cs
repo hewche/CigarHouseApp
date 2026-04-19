@@ -1,5 +1,6 @@
 ﻿using CigarHouseApp.Models;
 using CigarHouseApp.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,49 +12,80 @@ namespace CigarHouseApp.Helpers
     public class CartFavoritesService
     {
         MainWindow _mainWindow;
+        CigarhouseContext _context;
         public CartFavoritesService()
         {
             _mainWindow = Application.Current.MainWindow as MainWindow;
+            _context= new CigarhouseContext();
+        }
+
+        private User? LoadUser()
+        {
+            return _context.Users
+                .Include(u => u.Userfavorite)
+                .ThenInclude(uf => uf.Products)
+                .Include(u=>u.Usercart)
+                .ThenInclude(uc=>uc.Products)
+                .FirstOrDefault(u => u.UserId == _mainWindow.currentUser.UserId);
         }
 
         public void ToggleFavorites(Product product)
         {
-            var existingProduct = _mainWindow.currentUser.Userfavorite.Products
+
+            var userDb = LoadUser();
+            if(userDb==null)
+            {
+                userDb = _mainWindow.currentUser;
+            }
+
+            var existingProduct = userDb.Userfavorite.Products
                 .FirstOrDefault(p => p.ProductId == product.ProductId);
 
             if (existingProduct != null)
             {
-                _mainWindow.currentUser.Userfavorite.Products.Remove(existingProduct);
+                userDb.Userfavorite.Products.Remove(existingProduct);
                 existingProduct.IsFavorite = false;
-                product.IsFavorite = false;
             }
             else
             {
-                _mainWindow.currentUser.Userfavorite.Products.Add(product);
-                product.IsFavorite = true;
+                var productDb = _context.Products.Find(product.ProductId);
+                productDb.IsFavorite = true;
+                userDb.Userfavorite.Products.Add(productDb);
             }
+
+            product.IsFavorite = existingProduct == null;
+            _context.SaveChanges();
+            _mainWindow.currentUser = userDb;
+
         }
 
         public void TogglePurchase(Product product)
         {
-            var existingProduct = _mainWindow.currentUser.Usercart.Products
+            var userDb = LoadUser();
+            if (userDb == null)
+            {
+                userDb = _mainWindow.currentUser;
+            }
+
+            var existingProduct = userDb.Usercart.Products
                 .FirstOrDefault(p => p.ProductId == product.ProductId);
 
             if (existingProduct != null)
             {
-                _mainWindow.currentUser.Usercart.Products.Remove(existingProduct);
+                userDb.Userfavorite.Products.Remove(existingProduct);
                 existingProduct.IsPurchase = false;
-                product.IsPurchase = false;
             }
             else
             {
-                if(product.PurchaseAmount == 0)
-                {
-                    product.PurchaseAmount = 1;
-                }
-                _mainWindow.currentUser.Usercart.Products.Add(product);
-                product.IsPurchase = true;
+                var productDb = _context.Products.Find(product.ProductId);
+                productDb.IsPurchase = true;
+                userDb.Userfavorite.Products.Add(productDb);
             }
+
+            product.IsPurchase = existingProduct == null;
+            _context.SaveChanges();
+            _mainWindow.currentUser = userDb;
+
         }
 
         private List<Product> SetFavorites(List<Product> products)
