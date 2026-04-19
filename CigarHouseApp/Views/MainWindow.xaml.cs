@@ -20,7 +20,7 @@ namespace CigarHouseApp.Views
     public partial class MainWindow : Window
     {
 
-        public User currentUser = new User() { Usercart = new Usercart(), Userfavorite = new Userfavorite()};
+        public User currentUser = new User() {Login="unknown", Usercart = new Usercart(), Userfavorite = new Userfavorite()};
         
         public static Frame frame;
 
@@ -37,6 +37,7 @@ namespace CigarHouseApp.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            tbUserName.DataContext = currentUser;
         }
 
         

@@ -259,5 +259,7 @@
             </Button.Effect>
             <Image Width="35" Source="/Images/handbag.png"/>
         </Button>
+
+        <TextBlock Margin="20 0" HorizontalAlignment="Center" x:Name="tbUserName" Text="{Binding Login}"  Grid.Row="1" VerticalAlignment="Bottom" Foreground="{StaticResource WarmBrown}" ></TextBlock>
     </Grid>
 </Window>
