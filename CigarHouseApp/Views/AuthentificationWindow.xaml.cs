@@ -75,7 +75,9 @@ namespace CigarHouseApp.Views
         {
             return _context.Users
                 .Include(u=>u.Usercart)
+                .ThenInclude(uc=>uc.Products)
                 .Include(u=>u.Userfavorite)
+                .ThenInclude(uf => uf.Products)
                 .FirstOrDefault(u => u.Login == login);
         }
 

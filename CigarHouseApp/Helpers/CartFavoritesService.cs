@@ -45,15 +45,15 @@ namespace CigarHouseApp.Helpers
             {
                 userDb.Userfavorite.Products.Remove(existingProduct);
                 existingProduct.IsFavorite = false;
+                product.IsFavorite = false;
             }
             else
             {
                 var productDb = _context.Products.Include(p=>p.Cigar).Include(p=>p.Accessory).FirstOrDefault(p=> p.ProductId == product.ProductId);
                 productDb.IsFavorite = true;
+                product.IsFavorite = true;
                 userDb.Userfavorite.Products.Add(productDb);
             }
-
-            product.IsFavorite = existingProduct == null;
             _context.SaveChanges();
             _mainWindow.currentUser = userDb;
 
@@ -72,14 +72,14 @@ namespace CigarHouseApp.Helpers
 
             if (existingProduct != null)
             {
-                userDb.Userfavorite.Products.Remove(existingProduct);
+                userDb.Usercart.Products.Remove(existingProduct);
                 existingProduct.IsPurchase = false;
             }
             else
             {
                 var productDb = _context.Products.Include(p => p.Cigar).Include(p => p.Accessory).FirstOrDefault(p => p.ProductId == product.ProductId);
                 productDb.IsPurchase = true;
-                userDb.Userfavorite.Products.Add(productDb);
+                userDb.Usercart.Products.Add(productDb);
             }
 
             product.IsPurchase = existingProduct == null;

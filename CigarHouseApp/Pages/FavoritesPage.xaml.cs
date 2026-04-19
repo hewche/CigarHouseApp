@@ -30,6 +30,7 @@ namespace CigarHouseApp.Pages
         public FavoritesPage(List<Product> products)
         {
             favoriteProducts = products;
+            cartFavoritesService.SetOptions(favoriteProducts);
             InitializeComponent();
         }
 
@@ -123,6 +124,22 @@ namespace CigarHouseApp.Pages
                     break;
             }
             ProductCount(favoriteListView.Items.Count);
+        }
+        private void UpdateItemContext(FrameworkElement item)
+        {
+            var temp = item.DataContext;
+            item.DataContext = null;
+            item.DataContext = temp;
+        }
+        private void tbAddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                cartFavoritesService.TogglePurchase(product);
+                UpdateItemContext(button);
+            }
         }
     }
 }

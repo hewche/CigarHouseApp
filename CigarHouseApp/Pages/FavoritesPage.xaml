@@ -123,9 +123,10 @@
                                Margin="15,10,15,0"/>
 
                                         <Button Grid.Row="4" 
-                            Style="{StaticResource BasicButton3}"
+                            Style="{StaticResource CartButton}"
+                            x:Name="tbAddToCartButton"
+                                                Click="tbAddToCartButton_Click"
                             Height="40"
-                            Content="В КОРЗИНУ"
                             Margin="15,8,15,12"
                             HorizontalAlignment="Stretch"/>
                                     </Grid>
