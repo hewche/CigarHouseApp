@@ -23,9 +23,15 @@ namespace CigarHouseApp.Pages
     public partial class BestProductsPage : Page
     {
         CartFavoritesService cartFavoritesService = new CartFavoritesService();
+        List<Product> bestProducts = new List<Product>();
         public BestProductsPage()
         {
             InitializeComponent();
+        }
+
+        private void LoadData()
+        {
+
         }
         private void tbBuyButton_Click(object sender, RoutedEventArgs e)
         {

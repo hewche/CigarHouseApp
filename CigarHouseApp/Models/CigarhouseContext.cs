@@ -129,19 +129,7 @@ public partial class CigarhouseContext : DbContext
                 .ToView("best_products");
 
             entity.Property(e => e.AvgRating).HasColumnName("avg_rating");
-            entity.Property(e => e.BrandId).HasColumnName("brand_id");
-            entity.Property(e => e.CostProduct)
-                .HasPrecision(8, 3)
-                .HasColumnName("cost_product");
-            entity.Property(e => e.Country).HasColumnName("country");
-            entity.Property(e => e.Image)
-                .HasMaxLength(300)
-                .HasColumnName("image");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
-            entity.Property(e => e.ProductName)
-                .HasMaxLength(200)
-                .HasColumnName("product_name");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.ReviewCount).HasColumnName("review_count");
         });
 
