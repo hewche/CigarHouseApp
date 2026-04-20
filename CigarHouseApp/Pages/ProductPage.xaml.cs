@@ -41,9 +41,9 @@ namespace CigarHouseApp.Pages
             InitializeComponent();
             RatingComboBox.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
             _currentProduct = product;
-            LoadDataProduct(_currentProduct);
             _status = status;
-            _previousPage = previousPage;            
+            _previousPage = previousPage;
+            LoadDataProduct(_currentProduct);
             _main = Application.Current.MainWindow as MainWindow;
         }
 
@@ -57,7 +57,16 @@ namespace CigarHouseApp.Pages
 
         private void LoadDataProduct(Product product)
         {
-            svStatsCigar.DataContext = product;
+            if(_status == ProductStatus.ACCESSORY)
+            {
+                svStatsCigar.ContentTemplate = this.FindResource("AccessoryStatsTemplate") as DataTemplate;
+                svStatsCigar.Content = product;
+            }
+            else
+            {
+                svStatsCigar.ContentTemplate = this.FindResource("CigarStatsTemplate") as DataTemplate;
+                svStatsCigar.Content = product;
+            }
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
             addToCart.DataContext = product;
