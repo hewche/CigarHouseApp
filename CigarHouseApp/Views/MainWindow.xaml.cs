@@ -57,6 +57,9 @@ namespace CigarHouseApp.Views
                     case 2:
                         cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.Userfavorite.Products.ToList()));
                         break;
+                    case 3:
+                        cigarFrame.Navigate(new Pages.BestProductsPage());
+                        break;
                 }
             }
         }

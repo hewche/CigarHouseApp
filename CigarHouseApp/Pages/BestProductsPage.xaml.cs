@@ -1,6 +1,7 @@
 ﻿using CigarHouseApp.Helpers;
 using CigarHouseApp.Models;
 using CigarHouseApp.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,15 +24,31 @@ namespace CigarHouseApp.Pages
     public partial class BestProductsPage : Page
     {
         CartFavoritesService cartFavoritesService = new CartFavoritesService();
-        List<Product> bestProducts = new List<Product>();
+        List<Product> products = new List<Product>();
         public BestProductsPage()
         {
             InitializeComponent();
+            LoadData();
+            listViewProducts.ItemsSource = products;
         }
 
         private void LoadData()
         {
+            using (CigarhouseContext cigarhouseContext = new CigarhouseContext())
+            {
+                var bestProducts = cigarhouseContext.BestProducts;
+                var bestProductIds = bestProducts.Select(b => b.ProductId).ToHashSet();
 
+                products = cigarhouseContext.Products.Where(p => bestProductIds.Contains(p.ProductId)).Include(p => p.Brand)
+                            .Include(p => p.Cigar)
+                            .Include(p=> p.Accessory)
+                            .Include(p => p.CountryNavigation)
+                            .ToList().ToList();
+                //for (int i = 0; i < bestProductIds.Count; i++)
+                //{
+                //    products=cigarhouseContext.Products.Where(p => bestProductIds.Contains(p.ProductId));
+                //}
+            }
         }
         private void tbBuyButton_Click(object sender, RoutedEventArgs e)
         {

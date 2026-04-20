@@ -85,19 +85,20 @@
 
         <!-- Список товаров -->
         <ListView x:Name="listViewProducts" 
-                  BorderThickness="0" 
-                  Background="Transparent"
-                  VirtualizingPanel.IsVirtualizing="True"
-                  VirtualizingPanel.VirtualizationMode="Recycling"
-                  VirtualizingPanel.ScrollUnit="Pixel"
-                  ScrollViewer.IsDeferredScrollingEnabled="True"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  VerticalAlignment="Top"
-                  HorizontalAlignment="Center"
-                  MaxWidth="1400" 
-                  Grid.Row="1"
-                  Margin="0,10,0,20">
+          BorderThickness="0" 
+          Background="Transparent"
+          VirtualizingPanel.IsVirtualizing="True"
+          VirtualizingPanel.VirtualizationMode="Recycling"
+          VirtualizingPanel.ScrollUnit="Pixel"
+          ScrollViewer.IsDeferredScrollingEnabled="True"
+          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+          ScrollViewer.VerticalScrollBarVisibility="Auto"
+          VerticalAlignment="Top"
+          HorizontalAlignment="Center"
+          MaxWidth="1400" 
+          Grid.Row="1"
+          Margin="0,15,0,0"
+          >
 
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -121,147 +122,108 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <!-- Рейтинг и бренд -->
                             <Grid Grid.Row="0">
                                 <Border Background="{StaticResource BeigeLight}" 
-                                        CornerRadius="6" 
-                                        Padding="12,6"
-                                        HorizontalAlignment="Left">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="⭐ " Foreground="#FFB800" FontSize="12"/>
-                                        <TextBlock Text="{Binding Rating}" 
-                                                   Foreground="{StaticResource AccentBrown}" 
-                                                   FontSize="12" 
-                                                   FontWeight="Bold"
-                                                   Margin="0,0,5,0"/>
-                                        <TextBlock Text="{Binding Brand.Name}" 
-                                                   Foreground="{StaticResource AccentBrown}" 
-                                                   FontSize="12" 
-                                                   FontWeight="SemiBold"/>
-                                    </StackPanel>
+                                CornerRadius="6" 
+                                Padding="12,6"
+                                HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding Brand.Name}" 
+                                       Foreground="{StaticResource AccentBrown}" 
+                                       FontSize="13" 
+                                       FontWeight="SemiBold"/>
                                 </Border>
-
-                                <!-- Топ значок -->
-                                <Border Background="{StaticResource AccentBrown}" 
-                                        CornerRadius="15" 
-                                        Width="32" Height="32"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top">
-                                    <TextBlock Text="{Binding RankNumber}" 
-                                               Foreground="White" 
-                                               FontSize="14" 
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
-                                </Border>
-
                                 <Button Grid.Row="0" 
-                                        x:Name="HeartButton"
-                                        Click="HeartButton_Click"   
-                                        Style="{StaticResource HeartButton}"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Margin="0,40,10,0"
-                                        Tag="{Binding}"/>
+                            x:Name="HeartButton"
+                            Click="HeartButton_Click"   
+                            Style="{StaticResource HeartButton}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,10,10,0"
+                            Tag="{Binding}"
+                            />
                             </Grid>
 
-                            <!-- Название товара -->
                             <StackPanel Grid.Row="1" Margin="0,15,0,0">
                                 <TextBlock FontSize="20" FontWeight="Bold" TextWrapping="Wrap" MaxHeight="60">
-                                    <Hyperlink Click="tbProductName_Click" 
-                                               TextDecorations="None" 
-                                               Foreground="{StaticResource DeepBrown}">
-                                        <Run Text="{Binding ProductName}"/>
-                                    </Hyperlink>
+                            <Hyperlink Click="tbProductName_Click" 
+                                       TextDecorations="None" 
+                                       Foreground="{StaticResource DeepBrown}">
+                                <Run Text="{Binding ProductName}"/>
+                            </Hyperlink>
                                 </TextBlock>
                                 <TextBlock Text="{Binding Converter={StaticResource ProductConverter}}" 
-                                           Foreground="#888888" 
-                                           FontSize="12" 
-                                           Margin="0,8,0,0"/>
+                                   Foreground="#888888" 
+                                   FontSize="12" 
+                                   Margin="0,8,0,0"/>
                             </StackPanel>
-                            
+
                             <Button Grid.Row="2" x:Name="btnImage" Click="btnImage_Click" 
-                                    Background="Transparent" 
-                                    BorderBrush="Transparent"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Width="260"
-                                    Height="260"
-                                    Padding="0" 
-                                    Margin="0,10"
-                                    Cursor="Hand">
+                            Background="Transparent" 
+                            BorderBrush="Transparent"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="260"
+                            Height="260"
+                            Padding="0" 
+                            Margin="0,10"
+                            Cursor="Hand">
                                 <Image Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
-                                       Stretch="Uniform"
-                                       Width="260"
-                                       Height="260"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                               Stretch="Uniform"
+                               Width="260"
+                               Height="260"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                             </Button>
 
-                            <!-- Цена и счетчик -->
                             <Grid Grid.Row="3" Margin="0,15">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <TextBlock Foreground="{StaticResource AccentBrown}" 
-                                               FontSize="28" 
-                                               FontWeight="Bold">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} ₽">
-                                                <Binding Path="CostProduct"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-
-                                    <!-- Золотая медаль для топ-1 -->
-                                    <Border Background="#FFB800" 
-                                            CornerRadius="12" 
-                                            Padding="8,3"
-                                            Margin="10,0,0,0"
-                                            Visibility="{Binding IsTopOne, FallbackValue=Collapsed}">
-                                        <TextBlock Text="ТОП 1" 
-                                                   Foreground="White" 
-                                                   FontSize="9" 
-                                                   FontWeight="Bold"/>
-                                    </Border>
-                                </StackPanel>
+                                <TextBlock Foreground="{StaticResource AccentBrown}" 
+                                   FontSize="28" 
+                                   FontWeight="Bold" 
+                                   VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ₽">
+                                            <Binding Path="CostProduct"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
 
                                 <Border BorderBrush="{StaticResource BeigeMedium}" 
-                                        BorderThickness="1.5" 
-                                        CornerRadius="25" 
-                                        Height="46"
-                                        HorizontalAlignment="Right">
+                                BorderThickness="1.5" 
+                                CornerRadius="25" 
+                                Height="46"
+                                HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal">
                                         <Button x:Name="minusButton"
-                                                Click="minusButton_Click"
-                                                Content="−" 
-                                                Width="42" 
-                                                Height="42" 
-                                                Padding="0"
-                                                Style="{StaticResource ModernCounterButton}"/>
+                                        Click="minusButton_Click"
+                                        Content="−" 
+                                        Width="42" 
+                                        Height="42" 
+                                        Padding="0"
+                                        Style="{StaticResource ModernCounterButton}"/>
                                         <TextBlock x:Name="tbCountProduct" 
-                                                   Text="{Binding PurchaseAmount}" 
-                                                   VerticalAlignment="Center" 
-                                                   MinWidth="40"
-                                                   TextAlignment="Center"
-                                                   Foreground="{StaticResource TextDark}" 
-                                                   FontSize="18" 
-                                                   FontWeight="SemiBold"/>
+                                           Text="{Binding PurchaseAmount}" 
+                                           VerticalAlignment="Center" 
+                                           MinWidth="40"
+                                           TextAlignment="Center"
+                                           Foreground="{StaticResource TextDark}" 
+                                           FontSize="18" 
+                                           FontWeight="SemiBold"/>
                                         <Button x:Name="plusButton" 
-                                                Click="plusButton_Click"
-                                                Content="+" 
-                                                Width="42" 
-                                                Height="42" 
-                                                Padding="0"
-                                                Style="{StaticResource ModernCounterButton}"/>
+                                        Click="plusButton_Click"
+                                        Content="+" 
+                                        Width="42" 
+                                        Height="42" 
+                                        Padding="0"
+                                        Style="{StaticResource ModernCounterButton}"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
 
-                            <!-- Кнопка добавления в корзину -->
                             <Button Grid.Row="4" Margin="0,20,0,0" 
-                                    Width="200"
-                                    x:Name="tbAddToCartButton"
-                                    Click="tbAddToCartButton_Click"
-                                    Style="{StaticResource CartButton}"
-                                    Tag="{Binding}"/>
+                        Width="200"
+                        x:Name="tbAddToCartButton"
+                        Click="tbAddToCartButton_Click"
+                        Style="{StaticResource CartButton}"
+                        Tag="{Binding}"/>
                         </Grid>
                     </materialDesign:Card>
                 </DataTemplate>
