@@ -39,6 +39,7 @@ namespace CigarHouseApp.Pages
         public ProductPage(Product product, ProductStatus status, PageType previousPage)
         {
             InitializeComponent();
+            RatingComboBox.ItemsSource = new List<int> { 1, 2, 3, 4, 5 };
             _currentProduct = product;
             LoadDataProduct(_currentProduct);
             _status = status;
@@ -147,6 +148,11 @@ namespace CigarHouseApp.Pages
                 MessageBox.Show("Заголовок не должен превышать 300 символов.");
                 return;
             }
+            if(RatingComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Чтобы оставить отзыв необходимо оценить товар");
+                return;
+            }
 
             try
             {
@@ -168,6 +174,7 @@ namespace CigarHouseApp.Pages
                     ProductId = _currentProduct.ProductId,
                     Title = string.IsNullOrWhiteSpace(tbHeader.Text) ? "Отзыв на товар" : tbHeader.Text,
                     ReviewText = tbWriteReview.Text,
+                    Rating = (int)RatingComboBox.SelectedItem,
                     CreatedAt = DateTime.Now
                 };
 
@@ -177,6 +184,7 @@ namespace CigarHouseApp.Pages
 
             tbWriteReview.Clear();
             tbHeader.Clear();
+            RatingComboBox.SelectedIndex = -1;
             LoadReviews(_currentProduct);
         }
 
