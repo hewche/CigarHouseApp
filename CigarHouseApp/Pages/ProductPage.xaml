@@ -151,6 +151,22 @@
                            HorizontalAlignment="Center"
                            Margin="0,20,0,10"/>
 
+                <StackPanel Orientation="Vertical" Width="550">
+                    <TextBox
+                         Width="500"
+                        Height="Auto"
+                         x:Name="tbWriteReview"
+                         Style="{StaticResource ModernTextBox}"
+                         materialDesign:HintAssist.Hint="Оставить отзыв"
+                        TextWrapping="Wrap"/>
+                    <Button Content="Отправить"
+                            Width="95"
+                            HorizontalAlignment="Right"
+                            Height="30"
+                            Margin="15"
+                            FontSize="12"
+                            Click="btnAddReview_Click"/>
+                </StackPanel>
                 <ListView x:Name="listReview" 
                           BorderThickness="0" 
                           Background="Transparent"

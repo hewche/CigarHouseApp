@@ -112,5 +112,70 @@ namespace CigarHouseApp.Pages
                 }
             }
         }
+
+        private void btnAddReview_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+            if (_main?.currentUser == null || _main.currentUser.Login == "unknown")
+            {
+                MessageBox.Show("Чтобы оставить отзыв, нужно авторизоваться.");
+                return;
+            }
+
+            if (_currentProduct == null)
+            {
+                MessageBox.Show("Не удалось определить товар для отзыва.");
+                return;
+            }
+
+            string reviewText = tbWriteReview.Text ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(reviewText))
+            {
+                MessageBox.Show("Введите текст отзыва.");
+                return;
+            }
+
+            if (reviewText.Length > 300)
+            {
+                MessageBox.Show("Отзыв не должен превышать 300 символов.");
+                return;
+            }
+
+            try
+            {
+                SaveReview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении отзыва: {ex.Message}");
+            }
+        }
+
+        private void SaveReview()
+        {
+                using (CigarhouseContext context = new CigarhouseContext())
+                {
+                    Review review = new Review
+                    {
+                        UserId = _main.currentUser.UserId,
+                        ProductId = _currentProduct.ProductId,
+                        Title = "Отзыв пользователя",
+                        ReviewText = tbWriteReview.Text,
+                        CreatedAt = DateTime.Now
+                    };
+
+                    context.Reviews.Add(review);
+                    context.SaveChanges();
+                }
+
+                tbWriteReview.Clear();
+                LoadReviews(_currentProduct);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
