@@ -130,6 +130,7 @@ namespace CigarHouseApp.Pages
             }
 
             string reviewText = tbWriteReview.Text ?? string.Empty;
+            string headerText = tbHeader.Text;
             if (string.IsNullOrWhiteSpace(reviewText))
             {
                 MessageBox.Show("Введите текст отзыва.");
@@ -139,6 +140,11 @@ namespace CigarHouseApp.Pages
             if (reviewText.Length > 300)
             {
                 MessageBox.Show("Отзыв не должен превышать 300 символов.");
+                return;
+            }
+            if (headerText.Length > 100)
+            {
+                MessageBox.Show("Заголовок не должен превышать 300 символов.");
                 return;
             }
 
@@ -154,28 +160,25 @@ namespace CigarHouseApp.Pages
 
         private void SaveReview()
         {
-                using (CigarhouseContext context = new CigarhouseContext())
+            using (CigarhouseContext context = new CigarhouseContext())
+            {
+                Review review = new Review
                 {
-                    Review review = new Review
-                    {
-                        UserId = _main.currentUser.UserId,
-                        ProductId = _currentProduct.ProductId,
-                        Title = "Отзыв пользователя",
-                        ReviewText = tbWriteReview.Text,
-                        CreatedAt = DateTime.Now
-                    };
+                    UserId = _main.currentUser.UserId,
+                    ProductId = _currentProduct.ProductId,
+                    Title = string.IsNullOrWhiteSpace(tbHeader.Text) ? "Отзыв на товар" : tbHeader.Text,
+                    ReviewText = tbWriteReview.Text,
+                    CreatedAt = DateTime.Now
+                };
 
-                    context.Reviews.Add(review);
-                    context.SaveChanges();
-                }
+                context.Reviews.Add(review);
+                context.SaveChanges();
+            }
 
-                tbWriteReview.Clear();
-                LoadReviews(_currentProduct);
+            tbWriteReview.Clear();
+            tbHeader.Clear();
+            LoadReviews(_currentProduct);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
