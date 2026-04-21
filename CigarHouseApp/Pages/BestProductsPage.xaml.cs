@@ -28,27 +28,60 @@ namespace CigarHouseApp.Pages
         public BestProductsPage()
         {
             InitializeComponent();
-            LoadData();
+            Loaded += async (s, e) => await Page_LoadedAsync();
             listViewProducts.ItemsSource = products;
         }
 
-        private void LoadData()
-        {
-            using (CigarhouseContext cigarhouseContext = new CigarhouseContext())
-            {
-                var bestProducts = cigarhouseContext.BestProducts;
-                var bestProductIds = bestProducts.Select(b => b.ProductId).ToHashSet();
 
-                products = cigarhouseContext.Products.Where(p => bestProductIds.Contains(p.ProductId)).Include(p => p.Brand)
-                            .Include(p => p.Cigar)
-                            .Include(p=> p.Accessory)
-                            .Include(p => p.CountryNavigation)
-                            .ToList().ToList();
-                //for (int i = 0; i < bestProductIds.Count; i++)
-                //{
-                //    products=cigarhouseContext.Products.Where(p => bestProductIds.Contains(p.ProductId));
-                //}
+        private async Task Page_LoadedAsync()
+        {
+            try
+            {
+                await LoadDataAsync();
+                loadingGrid.Visibility = Visibility.Collapsed;
+                listViewProducts.Visibility = Visibility.Visible;
             }
+            catch (Exception ex)
+            {
+                loadingGrid.Visibility = Visibility.Collapsed;
+                MessageBox.Show($"Ошибка загрузки: {ex.Message}");
+            }
+        }
+        private async Task LoadDataAsync()
+        {
+            await Dispatcher.InvokeAsync(() => loadingGrid.Visibility = Visibility.Visible);
+
+            var bestProducts = await Task.Run(() =>
+            {
+                using (var _context = new CigarhouseContext())
+                {
+                    List<Product> loadedProducts;
+
+                    var bestProductIds = _context.BestProducts.Select(b => b.ProductId).ToHashSet();
+
+                    loadedProducts = _context.Products.Where(p => bestProductIds.Contains(p.ProductId))
+                        .Include(p => p.Brand)
+                        .Include(p => p.Cigar)
+                        .Include(p => p.Accessory)
+                        .Include(p => p.CountryNavigation)
+                        .ToList();
+
+                    return cartFavoritesService.SetOptions(loadedProducts);
+                }
+            });
+
+
+            await Task.Delay(100);
+
+            await Dispatcher.InvokeAsync(() =>
+            {
+                products = bestProducts;
+                listViewProducts.ItemsSource = products;
+
+
+                loadingGrid.Visibility = Visibility.Collapsed;
+                listViewProducts.Visibility = Visibility.Visible;
+            });
         }
         private void tbBuyButton_Click(object sender, RoutedEventArgs e)
         {

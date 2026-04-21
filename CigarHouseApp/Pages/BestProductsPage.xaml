@@ -61,8 +61,6 @@
                            Opacity="0.7"/>
             </Grid>
         </materialDesign:Card>
-
-        <!-- Загрузка -->
         <Grid Grid.Row="1" x:Name="loadingGrid" Background="{StaticResource BeigeLight}" Visibility="Collapsed">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <ProgressBar IsIndeterminate="True" 
@@ -83,7 +81,6 @@
             </StackPanel>
         </Grid>
 
-        <!-- Список товаров -->
         <ListView x:Name="listViewProducts" 
           BorderThickness="0" 
           Background="Transparent"
