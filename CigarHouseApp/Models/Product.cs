@@ -48,4 +48,7 @@ public partial class Product
 
     [NotMapped]
     public int PurchaseAmount { get; set; } = 0;
+
+    [NotMapped]
+    public int AvgRating { get; set; } = 0;
 }
