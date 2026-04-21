@@ -153,8 +153,8 @@ namespace CigarHouseApp.Pages
                 return;
             }
 
-            maxPrice = products.Max(p => p.CostProduct);
-            minPrice = products.Min(p=> p.CostProduct);
+            maxPrice = Math.Round(products.Max(p => p.CostProduct));
+            minPrice = Math.Round(products.Min(p=> p.CostProduct));
 
             tbMaxPrice.Text = maxPrice.ToString();
             tbMinPrice.Text = minPrice.ToString();
