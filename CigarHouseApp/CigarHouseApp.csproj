@@ -21,6 +21,7 @@
     <None Remove="Images\profile_icon.png" />
     <None Remove="Images\ranking_icon.png" />
     <None Remove="Images\sets_icon.png" />
+    <None Remove="Images\trash_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +67,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\sets_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\trash_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

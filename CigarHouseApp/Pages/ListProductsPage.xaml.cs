@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.NavigateService;
 using static CigarHouseApp.Helpers.ProductFilter;
 using static CigarHouseApp.Views.MainWindow;
 
@@ -172,10 +173,18 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
+                SetPreviousPage(main);
                 main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus, PageType.ListProductPage));
             }
         }
 
+        private void SetPreviousPage(MainWindow main)
+        {
+            if (productStatus == ProductStatus.CIGAR)
+                main.previousPage = PageType.ListProductPage;
+            else
+                main.previousPage = PageType.ListProductPageAccessories;
+        }
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -183,6 +192,7 @@ namespace CigarHouseApp.Pages
             {
                 listViewProducts.SelectedItem = product;
                 MainWindow main = Application.Current.MainWindow as MainWindow;
+                SetPreviousPage(main);
                 main.cigarFrame.Navigate(new Pages.ProductPage(listViewProducts.SelectedItem as Product, productStatus, PageType.ListProductPage));
             }
         }

@@ -8,18 +8,7 @@ namespace CigarHouseApp.Helpers
     public class ProductFilter
     {
 
-        public enum ProductStatus
-        {
-            CIGAR,
-            ACCESSORY
-        }
-
-        public enum PageType
-        {
-            FavoritesPage,
-            ListProductPage
-
-        }
+        
 
         public Brand? SelectedBrand {  get; set; }
         Brand? _tempBrand = null;

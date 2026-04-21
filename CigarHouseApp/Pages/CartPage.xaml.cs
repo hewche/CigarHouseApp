@@ -1,8 +1,10 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
 using CigarHouseApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.ProductFilter;
 
 namespace CigarHouseApp.Pages
 {
@@ -22,6 +25,9 @@ namespace CigarHouseApp.Pages
     public partial class CartPage : Page
     {
         ObservableCollection<Product> cartProducts;
+        MainWindow _main = Application.Current.MainWindow as MainWindow;
+        CartFavoritesService cartFavoritesService = new CartFavoritesService();
+        NavigateService navigateService = new NavigateService();
         decimal subTotal = 0;
         decimal deliveryTotal = 0;
         decimal total = 0;
@@ -46,9 +52,9 @@ namespace CigarHouseApp.Pages
         {
             tbItemsCount.Text = $"{cartProducts.Count.ToString()} товаров";
             CalculateCost();
-            tbDelivery.Text = deliveryTotal.ToString() + " ₽";
-            tbSubtotal.Text = subTotal.ToString() + " ₽";
-            tbTotal.Text = total.ToString() + " ₽";
+            tbDelivery.Text = Math.Round(deliveryTotal).ToString() + " ₽";
+            tbSubtotal.Text = Math.Round(subTotal).ToString() + " ₽";
+            tbTotal.Text = Math.Round(total).ToString() + " ₽";
         }
 
         private void CalculateCost()
@@ -113,7 +119,30 @@ namespace CigarHouseApp.Pages
                 MainWindow main = Application.Current.MainWindow as MainWindow;
                 cartProducts.Remove(product);
                 main.currentUser.Usercart.Products.Remove(product);
+                cartFavoritesService.TogglePurchase(product);
             }
         }
+
+        private void btnRemoveFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                product.PurchaseAmount = 0;
+                DeleteProduct(product);
+                UpdateCost();
+                UpdateItemContext(button.Parent as FrameworkElement);
+            }
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                navigateService.BackToPrevious(_main.currentPage);
+            }
+        }
+
     }
 }

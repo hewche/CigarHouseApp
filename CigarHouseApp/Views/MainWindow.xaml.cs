@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.NavigateService;
 using static CigarHouseApp.Helpers.ProductFilter;
 
 namespace CigarHouseApp.Views
@@ -23,6 +24,8 @@ namespace CigarHouseApp.Views
         public User currentUser = new User() {Login="unknown", Usercart = new Usercart(), Userfavorite = new Userfavorite()};
         
         public static Frame frame;
+        public PageType previousPage;
+        public PageType currentPage;
 
         public MainWindow()
         {
@@ -50,15 +53,19 @@ namespace CigarHouseApp.Views
                 {
                     case 0:
                         cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.CIGAR));
+                        currentPage = PageType.ListProductPage;
                         break;
                     case 1:
                         cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.ACCESSORY));
+                        currentPage = PageType.ListProductPageAccessories;
                         break;
                     case 2:
                         cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.Userfavorite.Products.ToList()));
+                        currentPage = PageType.FavoritesPage;
                         break;
                     case 3:
                         cigarFrame.Navigate(new Pages.BestProductsPage());
+                        currentPage = PageType.BestProductsPage;
                         break;
                 }
             }

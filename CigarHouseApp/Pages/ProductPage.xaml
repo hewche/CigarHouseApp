@@ -115,17 +115,22 @@
                             </Grid.RowDefinitions>
 
                             <Button x:Name="btnBack" 
-                            Style="{StaticResource BackButtonStyle}"
-                            Width="44" 
-                            Height="44"
-                            Margin="20,20,0,0"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Click="btnBack_Click"
-                            Cursor="Hand">
-                                <Viewbox Width="20" Height="20">
-                                    <Path Fill="{StaticResource DeepBrown}" Data="M20,11H7.83L13.42,5.41L12,4L4,12L12,20L13.41,18.59L7.83,13H20V11Z"/>
-                                </Viewbox>
+                                Style="{StaticResource BackButtonStyle}"
+                                Width="44" 
+                                Height="44"
+                                Margin="20,20,0,0"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Click="btnBack_Click"
+                                Cursor="Hand"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Padding="0">
+                                <Grid Width="20" Height="20">
+                                    <Path Fill="{StaticResource DeepBrown}" 
+                                            Data="M20,11H7.83L13.42,5.41L12,4L4,12L12,20L13.41,18.59L7.83,13H20V11Z"
+                                            Stretch="Fill"/>
+                                </Grid>
                             </Button>
                             <TextBlock Grid.Row="0" x:Name="tbBrandName" 
                                    Text="{Binding Brand.Name}" 

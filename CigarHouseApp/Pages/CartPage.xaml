@@ -25,6 +25,22 @@
             <Border Grid.Row="0" Margin="0,0,0,25">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button x:Name="btnBack" 
+                            Width="44" 
+                            Height="44"
+                            Margin="0,0,15,0"
+                            Cursor="Hand"
+                            Style="{StaticResource BackButtonStyle}"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Padding="0"
+                            Click="btnBack_Click">
+                            <Grid Width="20" Height="20">
+                                <Path Fill="{StaticResource DeepBrown}" 
+                                      Data="M20,11H7.83L13.42,5.41L12,4L4,12L12,20L13.41,18.59L7.83,13H20V11Z"
+                                      Stretch="Fill"/>
+                            </Grid>
+                        </Button>
                         <Button Width="40" 
                                 Height="40" 
                                 Margin="0,0,15,0"
@@ -32,6 +48,7 @@
                                 Style="{StaticResource RemoveButton}">
                             <Image Source="/Images/cigar_icon.png" Width="20" Height="20"/>
                         </Button>
+
                         <TextBlock Text="КОРЗИНА" 
                                    FontSize="28" 
                                    FontWeight="Bold" 
@@ -43,16 +60,17 @@
                                 Margin="15,0,0,0"
                                 VerticalAlignment="Center">
                             <TextBlock x:Name="tbItemsCount" 
-                                       Text="0 товаров" 
-                                       Foreground="White" 
-                                       FontSize="12"
-                                       FontWeight="SemiBold"/>
+                                               Text="0 товаров" 
+                                               Foreground="White" 
+                                               FontSize="12"
+                                               FontWeight="SemiBold"/>
                         </Border>
                     </StackPanel>
+
                     <Rectangle Height="2" 
-                               Fill="{StaticResource BeigeMedium}" 
-                               RadiusX="1" 
-                               RadiusY="1"/>
+                   Fill="{StaticResource BeigeMedium}" 
+                   RadiusX="1" 
+                   RadiusY="1"/>
                 </StackPanel>
             </Border>
 
@@ -131,6 +149,8 @@
                                                     </Button>
                                                 </StackPanel>
                                                 <Button Style="{StaticResource RemoveButton}"
+                                                        x:Name="btnRemoveFromCart"
+                                                        Click="btnRemoveFromCart_Click"
                                                         Tag="{Binding}"
                                                         HorizontalAlignment="Right">
                                                     <Image Source="/Images/trash_icon.png" Width="16" Height="16"/>

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static CigarHouseApp.Helpers.NavigateService;
 using static CigarHouseApp.Helpers.ProductFilter;
 using static CigarHouseApp.Views.MainWindow;
 
@@ -25,12 +26,13 @@ namespace CigarHouseApp.Pages
     /// </summary>
     public partial class ProductPage : Page
     {
-        MainWindow _main;
+        MainWindow _main = Application.Current.MainWindow as MainWindow;
         List<Review> reviews = new List<Review>();
         ProductStatus _status;
         PageType _previousPage;
         Product _currentProduct;
         CartFavoritesService cartFavoritesService = new CartFavoritesService();
+        NavigateService navigateService = new NavigateService();
         public ProductPage()
         {
             InitializeComponent();
@@ -95,21 +97,7 @@ namespace CigarHouseApp.Pages
         {
             if (NavigationService.CanGoBack)
             {
-                BackToPrevious();
-            }
-        }
-
-        private void BackToPrevious()
-        {
-            //MainWindow main = Application.Current.MainWindow as MainWindow;
-            switch (_previousPage)
-            {
-                case PageType.FavoritesPage:
-                    _main.cigarFrame.Navigate(new FavoritesPage(_main.currentUser.Userfavorite.Products.ToList()));
-                    break;
-                case PageType.ListProductPage:
-                    _main.cigarFrame.Navigate(new ListProductsPage(_status));
-                    break;
+                navigateService.BackToPrevious(_main.previousPage);
             }
         }
 
