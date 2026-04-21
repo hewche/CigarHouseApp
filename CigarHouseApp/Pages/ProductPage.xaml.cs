@@ -73,7 +73,10 @@ namespace CigarHouseApp.Pages
             spProductInfo.DataContext = product;
             tbBrandName.DataContext = product;
             addToCart.DataContext = product;
-            product.AvgRating = _currentProduct.Reviews.Average(r => r.Rating).Value;
+            if(_currentProduct.Reviews.Any())
+            {
+                product.AvgRating = _currentProduct.Reviews.Average(r => r.Rating).Value;
+            }
             tbCostProduct.DataContext = product;
             LoadReviews(product);
         }
