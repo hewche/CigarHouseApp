@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -327,6 +327,9 @@ public partial class CigarhouseContext : DbContext
                 .HasColumnName("address");
             entity.Property(e => e.OrderStatusId).HasColumnName("order_status_id");
             entity.Property(e => e.PaymentMethod).HasColumnName("payment_method");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.OrderStatus).WithMany(p => p.Orders)

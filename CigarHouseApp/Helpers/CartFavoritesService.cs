@@ -1,4 +1,4 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp;
 using CigarHouseApp.Views;
 using Microsoft.EntityFrameworkCore;
 using System;

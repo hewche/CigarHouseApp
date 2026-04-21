@@ -1,5 +1,5 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp.Models;
+using CigarHouseApp;
 using CigarHouseApp.Views;
 using ControlzEx.Standard;
 using MaterialDesignColors;

@@ -1,5 +1,5 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp.Models;
+using CigarHouseApp;
 using CigarHouseApp.Views;
 using ControlzEx.Standard;
 using Microsoft.EntityFrameworkCore;
@@ -77,7 +77,7 @@ namespace CigarHouseApp.Pages
             addToCart.DataContext = product;
             if(_currentProduct.Reviews.Any())
             {
-                product.AvgRating = _currentProduct.Reviews.Average(r => r.Rating).Value;
+                product.AvgRating = _currentProduct.Reviews.Average(r => r.Rating);
             }
             tbCostProduct.DataContext = product;
             LoadReviews(product);

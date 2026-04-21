@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class OrderBasic
 {

@@ -1,5 +1,5 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp.Models;
+using CigarHouseApp;
 using CigarHouseApp.Views;
 using System;
 using System.Collections.Generic;
@@ -141,6 +141,29 @@ namespace CigarHouseApp.Pages
             if (NavigationService.CanGoBack)
             {
                 navigateService.BackToPrevious(_main.currentPage);
+            }
+        }
+
+        private void btnCheckout_Click(object sender, RoutedEventArgs e)
+        {
+            if (cartProducts.Count <= 0)
+            {
+                MessageBox.Show("Корзина пустая");
+                return;
+            }
+            if (_main.currentUser.Login == "unknown")
+            {
+                MessageBox.Show("Авторизуйтесь для покупки");
+                return;
+            }
+            CheckoutWindow checkoutWindow = new CheckoutWindow(cartProducts.ToList());
+            if(checkoutWindow.ShowDialog() == true)
+            {
+
+            }
+            else
+            {
+
             }
         }
 

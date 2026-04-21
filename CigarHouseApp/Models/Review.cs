@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp.Models;
+namespace CigarHouseApp;
 
 public partial class Review
 {
@@ -17,7 +17,7 @@ public partial class Review
 
     public DateTime? CreatedAt { get; set; }
 
-    public int? Rating { get; set; }
+    public int Rating { get; set; }
 
     public virtual Product? Product { get; set; }
 

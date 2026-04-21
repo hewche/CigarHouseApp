@@ -266,6 +266,7 @@
                         </Grid>
 
                         <Button x:Name="btnCheckout"
+                                Click="btnCheckout_Click"
                                 Height="50"
                                 Background="{StaticResource AccentBrown}"
                                 Foreground="White"
@@ -273,7 +274,6 @@
                                 FontWeight="SemiBold"
                                 Cursor="Hand"
                                 Content="ОПЛАТИТЬ"
-                                IsEnabled="False"
                                 Style="{StaticResource BasicButton3}">
                         </Button>
 

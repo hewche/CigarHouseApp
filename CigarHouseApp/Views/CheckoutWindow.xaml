@@ -3,10 +3,361 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CigarHouseApp.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CheckoutWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Оформление заказа"
+        Height="700" 
+        Width="950"
+        MinHeight="600"
+        MinWidth="800"
+        WindowStartupLocation="CenterOwner"
+        Background="#FAF7F2"
+        ResizeMode="CanResizeWithGrip">
+
+    <Window.Resources>
+        <!-- Тени для окон -->
+        <DropShadowEffect x:Key="WindowShadow" BlurRadius="15" ShadowDepth="2" Opacity="0.15"/>
+    </Window.Resources>
+
+    <Border Effect="{StaticResource WindowShadow}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Верхняя панель с заголовком и кнопкой закрытия -->
+            <Border Grid.Row="0" Background="White" Padding="25,15,25,15">
+
+                <TextBlock Grid.Column="1" 
+                               Text="ОФОРМЛЕНИЕ ЗАКАЗА" 
+                               FontSize="22" 
+                               FontWeight="Bold" 
+                               Foreground="{StaticResource DeepBrown}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+            </Border>
+
+            <!-- Основная область с прокруткой -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <Grid Margin="25,20,25,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="380"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая часть: Форма заказа -->
+                    <Border Grid.Column="0" Margin="0,0,20,0" Background="White" CornerRadius="12" Padding="25">
+                        <StackPanel>
+                            <TextBlock Text="ДАННЫЕ ПОЛУЧАТЕЛЯ" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource DeepBrown}"
+                                       Margin="0,0,0,20"/>
+
+                            <!-- Имя получателя -->
+                            <TextBlock Text="Имя получателя *" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbName" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <!-- Телефон -->
+                            <TextBlock Text="Телефон *" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbPhone" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <!-- Email -->
+                            <TextBlock Text="Email" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbEmail" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <!-- Разделитель -->
+                            <Border Height="1" Background="{StaticResource BeigeMedium}" Margin="0,10,0,20"/>
+
+                            <TextBlock Text="АДРЕС ДОСТАВКИ" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource DeepBrown}"
+                                       Margin="0,0,0,20"/>
+
+                            <!-- Город -->
+                            <TextBlock Text="Город *" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbCity" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <!-- Улица -->
+                            <TextBlock Text="Улица *" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbStreet" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <Grid Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Дом -->
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Дом *" 
+                                               FontSize="13" 
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Margin="0,0,0,5"/>
+                                    <TextBox x:Name="tbHouse" 
+                                             Style="{StaticResource ModernTextBox}"
+                                             Height="40"/>
+                                </StackPanel>
+
+                                <!-- Квартира -->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Квартира" 
+                                               FontSize="13" 
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Margin="0,0,0,5"/>
+                                    <TextBox x:Name="tbApartment" 
+                                             Style="{StaticResource ModernTextBox}"
+                                             Height="40"/>
+                                </StackPanel>
+
+                                <!-- Подъезд -->
+                                <StackPanel Grid.Column="4">
+                                    <TextBlock Text="Подъезд" 
+                                               FontSize="13" 
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Margin="0,0,0,5"/>
+                                    <TextBox x:Name="tbEntrance" 
+                                             Style="{StaticResource ModernTextBox}"
+                                             Height="40"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Этаж -->
+                            <TextBlock Text="Этаж" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource MediumBrown}"
+                                       Margin="0,0,0,5"/>
+                            <TextBox x:Name="tbFloor" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Margin="0,0,0,15"
+                                     Height="40"/>
+
+                            <!-- Комментарий -->
+                            <Border Height="1" Background="{StaticResource BeigeMedium}" Margin="0,10,0,20"/>
+
+                            <TextBlock Text="КОММЕНТАРИЙ К ЗАКАЗУ" 
+                                       FontSize="16" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource DeepBrown}"
+                                       Margin="0,0,0,15"/>
+
+                            <TextBox x:Name="tbComment" 
+                                     Style="{StaticResource ModernTextBox}"
+                                     Height="80"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Правая часть: Сводка и оплата -->
+                    <Border Grid.Column="1" 
+                            Background="White" 
+                            CornerRadius="12"
+                            Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="ВАШ ЗАКАЗ" 
+                                       FontSize="18" 
+                                       FontWeight="Bold" 
+                                       Foreground="{StaticResource DeepBrown}"
+                                       Margin="0,0,0,15"/>
+
+                            <!-- Список товаров -->
+                            <ItemsControl x:Name="itemsOrderSummary" MaxHeight="150">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="{StaticResource BeigeMedium}" 
+                                                BorderThickness="0,0,0,1" 
+                                                Padding="0,8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Column="0" 
+                                                           Text="{Binding Quantity}" 
+                                                           FontSize="12" 
+                                                           Foreground="{StaticResource AccentBrown}"
+                                                           FontWeight="Bold"
+                                                           Width="25"/>
+                                                <TextBlock Grid.Column="1" 
+                                                           Text="{Binding ProductName}" 
+                                                           FontSize="12" 
+                                                           Foreground="{StaticResource MediumBrown}"
+                                                           Margin="5,0,5,0"/>
+                                                <TextBlock Grid.Column="2" 
+                                                           Text="{Binding Total, StringFormat={}{0:F0} ₽}" 
+                                                           FontSize="12" 
+                                                           Foreground="{StaticResource DeepBrown}"
+                                                           FontWeight="SemiBold"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <Border Height="1" Background="{StaticResource BeigeMedium}" Margin="0,10,0,15"/>
+
+                            <!-- Суммы -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" 
+                                           Text="Товары:" 
+                                           FontSize="13"/>
+                                <TextBlock x:Name="tbSubtotal" 
+                                           Grid.Row="0" Grid.Column="1" 
+                                           Text="0 ₽" 
+                                           FontSize="13" 
+                                           FontWeight="SemiBold"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" 
+                                           Text="Доставка:" 
+                                           FontSize="13"
+                                           Margin="0,8,0,0"/>
+                                <TextBlock x:Name="tbDelivery" 
+                                           Grid.Row="1" Grid.Column="1" 
+                                           Text="0 ₽" 
+                                           FontSize="13" 
+                                           FontWeight="SemiBold"
+                                           Margin="0,8,0,0"/>
+                            </Grid>
+
+                            <Border Height="1" Background="{StaticResource BeigeMedium}" Margin="0,5,0,15"/>
+
+                            <!-- Итого -->
+                            <Grid Margin="0,0,0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" 
+                                           Text="ИТОГО:" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource DeepBrown}"/>
+                                <TextBlock x:Name="tbTotal" 
+                                           Grid.Column="1" 
+                                           Text="0 ₽" 
+                                           FontSize="22" 
+                                           FontWeight="Bold" 
+                                           Foreground="{StaticResource AccentBrown}"/>
+                            </Grid>
+
+                            <!-- Способ оплаты -->
+                            <TextBlock Text="СПОСОБ ОПЛАТЫ" 
+                                       FontSize="14" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="{StaticResource DeepBrown}"
+                                       Margin="0,0,0,12"/>
+
+                            <RadioButton x:Name="rbCard" 
+                                         Tag="1"
+                                         GroupName="PaymentMethod"
+                                         Margin="0,6"
+                                         Foreground="{StaticResource MediumBrown}"
+                                         IsChecked="True">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💳 " FontSize="14"/>
+                                    <TextBlock Text="Банковская карта" FontSize="14"/>
+                                </StackPanel>
+                            </RadioButton>
+
+                            <RadioButton x:Name="rbCash" 
+                                         Tag="2"
+                                         GroupName="PaymentMethod"
+                                         Margin="0,6"
+                                         Foreground="{StaticResource MediumBrown}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="💰 " FontSize="14"/>
+                                    <TextBlock Text="Наличными при получении" FontSize="14"/>
+                                </StackPanel>
+                            </RadioButton>
+
+                            <RadioButton x:Name="rbSbp" 
+                                         Tag="3"
+                                         GroupName="PaymentMethod"
+                                         Margin="0,6"
+                                         Foreground="{StaticResource MediumBrown}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🏦 " FontSize="14"/>
+                                    <TextBlock Text="СБП" FontSize="14"/>
+                                </StackPanel>
+                            </RadioButton>
+
+                            <!-- Кнопка подтверждения -->
+                            <Button x:Name="btnConfirmOrder"
+                                    Height="50"
+                                    Margin="0,25,0,0"
+                                    Background="{StaticResource AccentBrown}"
+                                    Foreground="White"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Cursor="Hand"
+                                    Content="ПОДТВЕРДИТЬ ЗАКАЗ"
+                                    Style="{StaticResource BasicButton3}"
+                                    Click="btnConfirmOrder_Click"/>
+
+                            <!-- Инфо -->
+                            <Border Background="{StaticResource BeigeLight}"
+                                    CornerRadius="8"
+                                    Padding="12"
+                                    Margin="0,15,0,0">
+                                <TextBlock Text="ℹ️ Нажимая «Подтвердить заказ», вы соглашаетесь с условиями доставки и обработки персональных данных" 
+                                           FontSize="10" 
+                                           Foreground="{StaticResource MediumBrown}"
+                                           TextWrapping="Wrap"
+                                           Opacity="0.8"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </Window>

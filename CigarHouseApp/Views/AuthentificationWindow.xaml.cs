@@ -1,5 +1,5 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp.Models;
+using CigarHouseApp;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
