@@ -50,5 +50,5 @@ public partial class Product
     public int PurchaseAmount { get; set; } = 0;
 
     [NotMapped]
-    public int AvgRating { get; set; } = 0;
+    public double AvgRating { get; set; } = 0;
 }
