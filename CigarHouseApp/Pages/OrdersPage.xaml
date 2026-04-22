@@ -1,0 +1,181 @@
+﻿<Page x:Class="CigarHouseApp.Pages.OrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="950"
+      Background="#FAF7F2"
+      Title="Мои заказы">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="40,30,40,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок страницы -->
+            <Border Grid.Row="0" Margin="0,0,0,25">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+
+                        <TextBlock Text="МОИ ЗАКАЗЫ" FontSize="28" FontWeight="Bold" 
+                                   Foreground="{StaticResource DeepBrown}" VerticalAlignment="Center"/>
+
+                        <Border Background="{StaticResource AccentBrown}" CornerRadius="15"
+                                Padding="10,5" Margin="15,0,0,0" VerticalAlignment="Center">
+                            <TextBlock x:Name="tbOrdersCount" Text="0 заказов" 
+                                       Foreground="White" FontSize="12" FontWeight="SemiBold"/>
+                        </Border>
+                    </StackPanel>
+
+                    <Rectangle Height="2" Fill="{StaticResource BeigeMedium}" RadiusX="1" RadiusY="1"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Список заказов -->
+            <Border Grid.Row="1">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
+                    <ItemsControl x:Name="itemsControlOrders">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Карточка заказа -->
+                                <Border Style="{StaticResource CartItemCard}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Шапка заказа -->
+                                        <Border Grid.Row="0" Background="{StaticResource BeigeLight}"
+                                                CornerRadius="12,12,0,0" Padding="15,12">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Заказ №" FontSize="14" 
+                                                                   Foreground="{StaticResource MediumBrown}" Opacity="0.7"/>
+                                                        <TextBlock Text="{Binding OrderId}" FontSize="14" 
+                                                                   FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}"/>
+                                                    </StackPanel>
+                                                    <TextBlock Text="{Binding UpdatedAt, StringFormat=dd.MM.yyyy HH:mm}" 
+                                                               FontSize="11" Foreground="{StaticResource MediumBrown}"
+                                                               Opacity="0.5" Margin="0,3,0,0"/>
+                                                </StackPanel>
+
+                                                <!-- Статус заказа -->
+                                                <Border Grid.Column="1" CornerRadius="15" Padding="10,4"
+                                                        Margin="0,0,15,0" VerticalAlignment="Center"
+                                                        Background="{StaticResource AccentBrown}">
+                                                    <TextBlock Text="{Binding OrderStatus.Name}" FontSize="11"
+                                                               FontWeight="SemiBold" Foreground="White"/>
+                                                </Border>
+
+                                                <!-- Сумма заказа -->
+                                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                                    <TextBlock Text="Сумма заказа" FontSize="10" 
+                                                               Foreground="{StaticResource MediumBrown}" Opacity="0.6"
+                                                               HorizontalAlignment="Right"/>
+                                                    <TextBlock Text="{Binding TotalCost, StringFormat={}{0:F0} ₽}"
+                                                               FontSize="16" FontWeight="Bold" 
+                                                               Foreground="{StaticResource AccentBrown}"
+                                                               HorizontalAlignment="Right"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Тело заказа -->
+                                        <Border Grid.Row="1" Background="White" CornerRadius="0,0,12,12" Padding="15">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!-- Список товаров (только названия) -->
+                                                <ItemsControl Grid.Row="0" ItemsSource="{Binding OrderItems}" Margin="0,0,0,15">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Margin="0,2">
+                                                                <Run Text="• "/>
+                                                                <Run Text="{Binding Product.ProductName}"/>
+                                                                <Run Text=" - "/>
+                                                                <Run Text="{Binding Quantity}"/>
+                                                                <Run Text=" шт."/>
+                                                            </TextBlock>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+
+                                                <Separator Grid.Row="1" Background="{StaticResource BeigeMedium}" Margin="0,5,0,15"/>
+
+                                                <!-- Нижняя панель -->
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Column="0">
+                                                        <TextBlock Text="Доставка" FontSize="11" FontWeight="SemiBold"
+                                                                   Foreground="{StaticResource MediumBrown}" Margin="0,0,0,3"/>
+                                                        <TextBlock HorizontalAlignment="Left" Text="{Binding Address}" FontSize="11" 
+                                                                   Foreground="{StaticResource TextDark}" Opacity="0.7"
+                                                                   TextWrapping="Wrap" MaxWidth="300"/>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                                        <Button x:Name="btnCancelOrder" Click="btnCancelOrder_Click"
+                                                                Style="{StaticResource RemoveButton}" Tag="{Binding}"
+                                                                ToolTip="Отменить заказ" Content="✕">
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                        <ItemsControl.Style>
+                            <Style TargetType="ItemsControl">
+                                <Style.Triggers>
+                                    <Trigger Property="HasItems" Value="False">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ItemsControl">
+                                                    <Border Style="{StaticResource CartItemCard}" Padding="60">
+                                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <Image Source="/Images/empty_cart.png" Width="120" Height="120" 
+                                                                   Opacity="0.5" Margin="0,0,0,20"/>
+                                                            <TextBlock Text="У вас пока нет заказов" FontSize="18" 
+                                                                       FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}"
+                                                                       Margin="0,0,0,10"/>
+                                                            <TextBlock Text="Перейдите в каталог и сделайте первый заказ" 
+                                                                       Style="{StaticResource EmptyCartText}"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ItemsControl.Style>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Page>

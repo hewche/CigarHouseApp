@@ -213,7 +213,7 @@
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/ranking_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
-                                <TextBlock Text="ЛУЧШЕЕ" FontSize="11"/>
+                                <TextBlock Text="МОИ ЗАКАЗЫ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>

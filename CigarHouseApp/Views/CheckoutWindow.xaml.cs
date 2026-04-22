@@ -50,7 +50,7 @@ namespace CigarHouseApp.Views
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                //this.DialogResult = false;
+                MessageBox.Show(ex.InnerException.Message);
             }
         }
 
@@ -61,7 +61,7 @@ namespace CigarHouseApp.Views
                 Order order = new Order();
                 foreach (Product product in orderProducts)
                 {
-                    order.OrderItems.Add(new OrderItem() { ProductId = product.ProductId, OrderId = order.OrderId, Quantity = product.PurchaseAmount });
+                    order.OrderItems.Add(new OrderItem() { ProductId = product.ProductId, Quantity = product.PurchaseAmount });
                 }
                 order.OrderStatusId = 1;
                 order.UserId = _main.currentUser.UserId;
@@ -80,6 +80,7 @@ namespace CigarHouseApp.Views
 
                 context.Orders.Add(order);
                 context.SaveChanges();
+
             }
         }
         private bool CheckFields()

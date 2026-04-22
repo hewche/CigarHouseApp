@@ -74,10 +74,15 @@ namespace CigarHouseApp.Views
         private User FindUser(string login)
         {
             return _context.Users
-                .Include(u=>u.Usercart)
-                .ThenInclude(uc=>uc.Products)
-                .Include(u=>u.Userfavorite)
-                .ThenInclude(uf => uf.Products)
+                .Include(u => u.Usercart)
+                    .ThenInclude(uc => uc.Products)
+                .Include(u => u.Userfavorite)
+                    .ThenInclude(uf => uf.Products)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderStatus)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(i => i.Product)
                 .FirstOrDefault(u => u.Login == login);
         }
 

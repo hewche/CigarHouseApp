@@ -64,7 +64,7 @@ namespace CigarHouseApp.Views
                         currentPage = PageType.FavoritesPage;
                         break;
                     case 3:
-                        cigarFrame.Navigate(new Pages.BestProductsPage());
+                        cigarFrame.Navigate(new Pages.OrdersPage(currentUser));
                         currentPage = PageType.BestProductsPage;
                         break;
                 }
