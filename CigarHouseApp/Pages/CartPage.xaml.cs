@@ -156,14 +156,18 @@ namespace CigarHouseApp.Pages
                 MessageBox.Show("Авторизуйтесь для покупки");
                 return;
             }
-            CheckoutWindow checkoutWindow = new CheckoutWindow(cartProducts.ToList());
+            CheckoutWindow checkoutWindow = new CheckoutWindow(cartProducts.ToList(),total, subTotal, deliveryTotal);
             if(checkoutWindow.ShowDialog() == true)
             {
-
+                foreach(var product in cartProducts.ToList())
+                {
+                    DeleteProduct(product);
+                    MessageBox.Show("Заказ сформирован");
+                }
             }
             else
             {
-
+                MessageBox.Show("Не удалось сформировать заказ");
             }
         }
 

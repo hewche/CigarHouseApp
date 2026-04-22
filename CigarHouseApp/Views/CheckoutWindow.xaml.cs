@@ -22,12 +22,19 @@ namespace CigarHouseApp.Views
     {
         List<Product> orderProducts = new List<Product>();
         MainWindow _main = Application.Current.MainWindow as MainWindow;
-        public CheckoutWindow(List<Product> products)
+        decimal total = 0;
+        decimal subTotal = 0;
+        decimal deliveryTotal = 0;
+        public CheckoutWindow(List<Product> products, decimal total, decimal subTotal, decimal deliveryTotal)
         {
             InitializeComponent();
             orderProducts = products;
+            this.total = total;
+            this.subTotal = subTotal;
+            this.deliveryTotal = deliveryTotal;
         }
 
+        
         private void btnConfirmOrder_Click(object sender, RoutedEventArgs e)
         {
             if (!CheckFields())
@@ -78,6 +85,13 @@ namespace CigarHouseApp.Views
                 && !string.IsNullOrEmpty(tbCity.Text)
                 && !string.IsNullOrEmpty(tbStreet.Text)
                 && !string.IsNullOrEmpty(tbHouse.Text);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbTotal.Text = Math.Round(total).ToString();
+            tbSubtotal.Text = Math.Round(subTotal).ToString();
+            tbDelivery.Text = Math.Round(deliveryTotal).ToString();
         }
     }
 }
