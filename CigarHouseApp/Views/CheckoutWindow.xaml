@@ -160,23 +160,7 @@
                             </Grid>
 
 
-                            <!-- Комментарий -->
-                            <Border Height="1" Background="{StaticResource BeigeMedium}" Margin="0,10,0,20"/>
-
-                            <TextBlock Text="КОММЕНТАРИЙ К ЗАКАЗУ" 
-                                       FontSize="16" 
-                                       FontWeight="Bold" 
-                                       Foreground="{StaticResource DeepBrown}"
-                                       Margin="0,0,0,15"/>
-
-                            <TextBox x:Name="tbComment" 
-                                     Style="{StaticResource ModernTextBox}"
-                                     Height="80"
-                                     TextWrapping="Wrap"
-                                     AcceptsReturn="True"
-                                     VerticalScrollBarVisibility="Auto"/>
-                        </StackPanel>
-                    </Border>
+                           
 
                     <!-- Правая часть: Сводка и оплата -->
                     <Border Grid.Column="1" 

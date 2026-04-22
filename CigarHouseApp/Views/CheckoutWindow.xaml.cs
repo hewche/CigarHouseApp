@@ -67,6 +67,7 @@ namespace CigarHouseApp.Views
                 order.UserId = _main.currentUser.UserId;
                 order.UpdatedAt = DateTime.Now;
                 order.Address = $"{tbCity.Text} {tbStreet.Text} {tbHouse.Text} {tbEntrance.Text} {tbApartment.Text}";
+                order.TotalCost = total;
                 if (rbCard.IsChecked == true)
                     order.PaymentMethod = 1;
                 else if (rbCash.IsChecked == true)
@@ -89,9 +90,12 @@ namespace CigarHouseApp.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            tbTotal.Text = Math.Round(total).ToString();
-            tbSubtotal.Text = Math.Round(subTotal).ToString();
-            tbDelivery.Text = Math.Round(deliveryTotal).ToString();
+            tbTotal.Text = Math.Round(total).ToString() + " ₽";
+            tbSubtotal.Text = Math.Round(subTotal).ToString() + " ₽";
+            tbDelivery.Text = Math.Round(deliveryTotal).ToString() + " ₽";
+            tbName.Text = _main.currentUser.LastName + " " + _main.currentUser.FirstName;
+            tbPhone.Text = _main.currentUser.Phone;
+            tbEmail.Text = _main.currentUser.Email;
         }
     }
 }

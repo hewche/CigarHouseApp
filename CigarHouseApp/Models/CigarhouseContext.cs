@@ -327,6 +327,9 @@ public partial class CigarhouseContext : DbContext
                 .HasColumnName("address");
             entity.Property(e => e.OrderStatusId).HasColumnName("order_status_id");
             entity.Property(e => e.PaymentMethod).HasColumnName("payment_method");
+            entity.Property(e => e.TotalCost)
+                .HasPrecision(8, 3)
+                .HasColumnName("total_cost");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("updated_at");
@@ -559,11 +562,20 @@ public partial class CigarhouseContext : DbContext
             entity.HasIndex(e => e.Login, "users_login_key").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Birthday)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("birthday");
             entity.Property(e => e.Cart).HasColumnName("cart");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
             entity.Property(e => e.Favorites).HasColumnName("favorites");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(100)
                 .HasColumnName("first_name");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(100)
+                .HasColumnName("last_name");
             entity.Property(e => e.Login)
                 .HasMaxLength(100)
                 .HasColumnName("login");

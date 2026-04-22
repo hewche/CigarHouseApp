@@ -21,6 +21,12 @@ public partial class User
 
     public int? Favorites { get; set; }
 
+    public string? Email { get; set; }
+
+    public string? LastName { get; set; }
+
+    public DateTime? Birthday { get; set; }
+
     public virtual ICollection<News> News { get; set; } = new List<News>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

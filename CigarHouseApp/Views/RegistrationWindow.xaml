@@ -5,54 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CigarHouseApp.Views"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="550" Width="400">
-    <Grid>
+        Title="RegistrationWindow" 
+        Height="Auto"
+        Width="500"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Background="White">
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Регистрация" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+        <TextBlock Grid.Row="0" Text="Регистрация" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,25" Foreground="{StaticResource DeepBrown}"/>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Имя" HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbFirstName" Width="200" Height="20"/>
-        </StackPanel>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Имя" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbFirstName" Width="180"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Фамилия" HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbLastName" Width="200" Height="20"/>
-        </StackPanel>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Фамилия" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbLastName" Width="180"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Email" HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbEmail" Width="200" Height="20"/>
-        </StackPanel>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Телефон" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbPhone" Width="180"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Логин" HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbLogin" Width="200" Height="20"/>
-        </StackPanel>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Email" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbEmail" Width="180"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Пароль" HorizontalAlignment="Center"/>
-            <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="pbPassword" Width="200" Height="20"/>
-        </StackPanel>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Дата рождения" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <DatePicker x:Name="dpBirthDate" Width="180" Height="36" 
+                            VerticalContentAlignment="Center"
+                            FontSize="12"
+                            Background="Transparent"
+                            BorderBrush="{StaticResource BeigeMedium}"
+                            BorderThickness="0,0,0,1"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10">
-            <TextBlock Text="Подтверждение пароля" HorizontalAlignment="Center"/>
-            <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="pbConfirmPassword" Width="200" Height="20"/>
-        </StackPanel>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Логин" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <TextBox Style="{StaticResource ModernTextBox}" x:Name="tbLogin" Width="180"/>
+            </StackPanel>
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
-            <Button x:Name="btnRegister" Click="btnRegister_ClickAsync" Content="Зарегистрироваться" Width="150" Height="30" Margin="5"/>
-            <Button x:Name="btnCancel" Click="btnCancel_Click" Content="Отмена" Width="100" Height="30" Margin="5" Background="Transparent" BorderThickness="1" Foreground="#47352B"/>
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Пароль" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="pbPassword" Width="180"/>
+            </StackPanel>
+
+            <StackPanel Width="180" Margin="10,5">
+                <TextBlock Text="Подтверждение пароля" HorizontalAlignment="Center" Foreground="{StaticResource MediumBrown}" FontSize="12"/>
+                <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="pbConfirmPassword" Width="180"/>
+            </StackPanel>
+        </WrapPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,25,0,10">
+            <Button x:Name="btnRegister" Click="btnRegister_ClickAsync" Content="Зарегистрироваться" Style="{StaticResource BasicButton2}" Width="160" Height="40"/>
+            <Button x:Name="btnCancel" Click="btnCancel_Click" Content="Отмена" Style="{StaticResource BasicButton}" Width="100" Height="40" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Window>
