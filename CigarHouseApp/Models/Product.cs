@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class Product
 {

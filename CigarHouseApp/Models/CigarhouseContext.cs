@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class CigarhouseContext : DbContext
 {
@@ -327,6 +327,15 @@ public partial class CigarhouseContext : DbContext
                 .HasColumnName("address");
             entity.Property(e => e.OrderStatusId).HasColumnName("order_status_id");
             entity.Property(e => e.PaymentMethod).HasColumnName("payment_method");
+            entity.Property(e => e.PersonEmail)
+                .HasMaxLength(100)
+                .HasColumnName("person_email");
+            entity.Property(e => e.PersonName)
+                .HasMaxLength(300)
+                .HasColumnName("person_name");
+            entity.Property(e => e.PersonPhone)
+                .HasMaxLength(20)
+                .HasColumnName("person_phone");
             entity.Property(e => e.TotalCost)
                 .HasPrecision(8, 3)
                 .HasColumnName("total_cost");

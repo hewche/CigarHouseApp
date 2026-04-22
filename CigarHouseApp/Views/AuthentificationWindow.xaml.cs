@@ -1,5 +1,4 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CigarHouseApp.Models;
 
 namespace CigarHouseApp.Views
 {

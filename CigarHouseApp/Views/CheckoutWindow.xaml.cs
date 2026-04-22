@@ -1,4 +1,4 @@
-﻿using CigarHouseApp;
+﻿using CigarHouseApp.Models;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
@@ -68,6 +68,9 @@ namespace CigarHouseApp.Views
                 order.UpdatedAt = DateTime.Now;
                 order.Address = $"{tbCity.Text} {tbStreet.Text} {tbHouse.Text} {tbEntrance.Text} {tbApartment.Text}";
                 order.TotalCost = total;
+                order.PersonName = tbName.Text;
+                order.PersonPhone = tbPhone.Text;
+                order.PersonEmail = tbEmail.Text;
                 if (rbCard.IsChecked == true)
                     order.PaymentMethod = 1;
                 else if (rbCash.IsChecked == true)

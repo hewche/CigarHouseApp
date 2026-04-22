@@ -1,5 +1,4 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp;
 using CigarHouseApp.Views;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static CigarHouseApp.Helpers.NavigateService;
 using static CigarHouseApp.Helpers.ProductFilter;
+using CigarHouseApp.Models;
 
 namespace CigarHouseApp.Pages
 {

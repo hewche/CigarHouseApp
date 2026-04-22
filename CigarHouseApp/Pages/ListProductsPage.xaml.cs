@@ -1,5 +1,4 @@
 ﻿using CigarHouseApp.Helpers;
-using CigarHouseApp;
 using CigarHouseApp.Views;
 using ControlzEx.Standard;
 using MaterialDesignColors;
@@ -19,6 +18,7 @@ using System.Windows.Shapes;
 using static CigarHouseApp.Helpers.NavigateService;
 using static CigarHouseApp.Helpers.ProductFilter;
 using static CigarHouseApp.Views.MainWindow;
+using CigarHouseApp.Models;
 
 namespace CigarHouseApp.Pages
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CigarHouseApp;
+namespace CigarHouseApp.Models;
 
 public partial class Order
 {
@@ -18,6 +18,12 @@ public partial class Order
     public DateTime? UpdatedAt { get; set; }
 
     public decimal? TotalCost { get; set; }
+
+    public string PersonName { get; set; } = null!;
+
+    public string PersonPhone { get; set; } = null!;
+
+    public string? PersonEmail { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
