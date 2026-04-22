@@ -161,6 +161,8 @@
 
 
                            
+                        </StackPanel>
+                    </Border>
 
                     <!-- Правая часть: Сводка и оплата -->
                     <Border Grid.Column="1" 
