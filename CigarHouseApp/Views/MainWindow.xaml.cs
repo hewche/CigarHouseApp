@@ -1,4 +1,6 @@
 ﻿using CigarHouseApp.Models;
+using ControlzEx.Standard;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -84,6 +86,38 @@ namespace CigarHouseApp.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             cigarFrame.Navigate(new Pages.CartPage(currentUser.Usercart.Products.ToList()));
+        }
+
+        private void btnUserProfile_Click(object sender, RoutedEventArgs e)
+        {
+            
+            UserUpdateProfileWindow userUpdateProfileWindow = new UserUpdateProfileWindow(currentUser);
+            if(userUpdateProfileWindow.ShowDialog() == true )
+            {
+                UpdateUser(currentUser.UserId);
+            }
+            else
+            {
+
+            }
+        }
+
+        private void UpdateUser(int userId)
+        {
+            using (var context = new CigarhouseContext())
+            {
+                currentUser =  context.Users
+                .Include(u => u.Usercart)
+                    .ThenInclude(uc => uc.Products)
+                .Include(u => u.Userfavorite)
+                    .ThenInclude(uf => uf.Products)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderStatus)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(i => i.Product)
+                .FirstOrDefault(u => u.UserId == userId);
+            }
         }
     }
 }

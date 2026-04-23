@@ -37,11 +37,6 @@ namespace CigarHouseApp.Pages
             tbOrdersCount.Text = $"{_orders.Count} заказов";
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoBack)
-                NavigationService.GoBack();
-        }
 
         private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
         {

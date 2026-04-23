@@ -228,6 +228,8 @@
         </Border>
         
         <Button Grid.Row="1" 
+                x:Name="btnUserProfile"
+                Click="btnUserProfile_Click"
                 Width="52" Height="52" 
                 Margin="25" 
                 VerticalAlignment="Bottom" 
