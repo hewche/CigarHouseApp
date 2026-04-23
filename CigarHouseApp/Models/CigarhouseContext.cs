@@ -337,7 +337,7 @@ public partial class CigarhouseContext : DbContext
                 .HasMaxLength(20)
                 .HasColumnName("person_phone");
             entity.Property(e => e.TotalCost)
-                .HasPrecision(8, 3)
+                .HasPrecision(9, 3)
                 .HasColumnName("total_cost");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("timestamp without time zone")
@@ -582,6 +582,9 @@ public partial class CigarhouseContext : DbContext
             entity.Property(e => e.FirstName)
                 .HasMaxLength(100)
                 .HasColumnName("first_name");
+            entity.Property(e => e.Image)
+                .HasMaxLength(100)
+                .HasColumnName("image");
             entity.Property(e => e.LastName)
                 .HasMaxLength(100)
                 .HasColumnName("last_name");

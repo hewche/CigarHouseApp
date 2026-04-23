@@ -20,11 +20,13 @@ namespace CigarHouseApp.Views
     public partial class UserUpdateProfileWindow : Window
     {
         User _currentUser;
+        ImageService _imageService;
         bool IsPasswordChanged = false;
         public UserUpdateProfileWindow(User currentUser)
         {
             InitializeComponent();
             _currentUser = currentUser;
+            _imageService = new ImageService();
             LoadData();
         }
         private void LoadData()
@@ -119,5 +121,31 @@ namespace CigarHouseApp.Views
             }
         }
 
-    }
-}
+        private void UploadAvatarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filename = _imageService.UploadPhoto(_currentUser.UserId);
+            if (!string.IsNullOrEmpty(filename))
+            {
+                UpdateAvatar(filename);
+               
+            }
+        }
+
+        private void UpdateAvatar(string filename)
+        {
+            using (var context = new CigarhouseContext())
+            {
+                _currentUser.Image = filename;
+
+                context.Users.Update(_currentUser);
+                context.SaveChanges();
+            }
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\ImagesUser\" + filename);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+
+            imgBrushAvatar.ImageSource = bitmap;
+        }
+}}

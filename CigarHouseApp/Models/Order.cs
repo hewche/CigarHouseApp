@@ -17,7 +17,7 @@ public partial class Order
 
     public DateTime? UpdatedAt { get; set; }
 
-    public decimal? TotalCost { get; set; }
+    public decimal TotalCost { get; set; }
 
     public string PersonName { get; set; } = null!;
 

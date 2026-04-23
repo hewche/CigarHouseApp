@@ -27,6 +27,8 @@ public partial class User
 
     public DateTime? Birthday { get; set; }
 
+    public string? Image { get; set; }
+
     public virtual ICollection<News> News { get; set; } = new List<News>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

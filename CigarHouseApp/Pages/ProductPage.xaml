@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:CigarHouseApp.Pages"
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
       Title="ProductPage"
@@ -12,6 +13,7 @@
       FontFamily="Segoe UI">
 
     <Page.Resources>
+        <helpers:AvatarsConverter x:Key="AvatarsConverter"/>
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="0"/>
@@ -90,6 +92,9 @@
                 </Border>
             </StackPanel>
         </DataTemplate>
+
+        <helpers:ProductConverter x:Key="ProductConverter"/>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -149,9 +154,9 @@
                                        FontWeight="Bold" 
                                        TextAlignment="Center" 
                                        Margin="0,0,0,15"/>
-                                
 
-                                <Image Source="/Images/Image_not_available.png" 
+
+                                <Image Source="{Binding Image, Converter={StaticResource ImageConverter}}" 
                                    Width="380" Height="180" 
                                    Stretch="Uniform"
                                    x:Name="imgProduct" 
@@ -281,15 +286,16 @@
                                     </Grid.RowDefinitions>
 
                                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
-                                        <Border Background="{StaticResource AccentBrown}" 
+                                        <Border 
                                                 CornerRadius="20" 
                                                 Width="36" 
                                                 Height="36"
                                                 HorizontalAlignment="Left">
-                                            <TextBlock Text="👤" 
-                                                       FontSize="18" 
-                                                       HorizontalAlignment="Center" 
-                                                       VerticalAlignment="Center"/>
+                                            <Border.Background>
+                                                <ImageBrush x:Name="imgBrushAvatar" ImageSource="{Binding User.Image, Converter={StaticResource AvatarsConverter}}"
+                                            Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                            <Image></Image>
                                         </Border>
                                         <TextBlock x:Name="tbLogin"  
                                                    VerticalAlignment="Center" 
