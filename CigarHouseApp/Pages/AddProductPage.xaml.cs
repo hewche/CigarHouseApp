@@ -4,18 +4,46 @@ using CigarHouseApp.Views;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace CigarHouseApp.Pages
 {
-    public partial class AddProductPage : Page
+    public partial class AddProductPage : Page, INotifyPropertyChanged
     {
         ImageService _imageService;
+        Product currentProduct;
         string? _selectedImage = null;
+        bool IsUpdate = false;
+
+
+        private Cigar _cigarStats = new Cigar();
+        private Accessory _accessoryStats = new Accessory();
+
+        public Cigar CigarStats
+        {
+            get => _cigarStats;
+            set
+            {
+                _cigarStats = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Accessory AccessoryStats
+        {
+            get => _accessoryStats;
+            set
+            {
+                _accessoryStats = value;
+                OnPropertyChanged();
+            }
+        }
         private class ProductTypeItem
         {
             public string Name { get; set; } = string.Empty;
@@ -24,8 +52,74 @@ namespace CigarHouseApp.Pages
         public AddProductPage()
         {
             InitializeComponent();
-            Loaded += AddProductPage_Loaded;
+            LoadValues();
+
             _imageService = new ImageService();
+            currentProduct = new Product();
+            tbHeader.Text = "ДОБАВЛЕНИЕ ТОВАРА";
+            tbDesc.Text = "Создайте новый товар, загрузите изображение и сохраните в базу.";
+        }
+
+        public AddProductPage(Product product)
+        {
+            InitializeComponent();
+            //Loaded -= AddProductPage_Loaded;
+            LoadValues();
+
+            _imageService = new ImageService();
+
+            tbHeader.Text = "ИЗМЕНИТЬ ТОВАР";
+            tbDesc.Text = "Изменить товар и сохранить в БД";
+            btnSaveProduct.Content = "Изменить товар";
+
+            IsUpdate = true;
+            currentProduct = product;
+            _selectedImage = product.Image;
+            if(product != null)
+                SetProductValues(product);
+        }
+
+        private void SetProductValues(Product product)
+        {
+            tbProductName.Text = product.ProductName;
+            lbBrand.SelectedItem = lbBrand.ItemsSource
+                                        .Cast<Brand>()
+                                        .FirstOrDefault(b => b.BrandId == product.BrandId);
+            lbCountry.SelectedItem = lbCountry.ItemsSource.Cast<Country>().FirstOrDefault(c=>c.CountryId == product.CountryNavigation.CountryId);
+
+            tbCost.Text = product.CostProduct.ToString();
+            tbQuantity.Text = product.Quantity.ToString();
+
+            if (product.Cigar != null)
+            {
+                lbProductType.SelectedIndex = 0;
+                _cigarStats = product.Cigar;
+                SetProductStats(0);
+            }
+            else
+            {
+                lbProductType.SelectedIndex = 1;
+                _accessoryStats = product.Accessory;
+                SetProductStats(1);
+            }
+
+
+            lbProductType.IsEditable = false;
+            tbSelectedImage.Text = product.Image;
+
+            imgPreview.DataContext = product;
+        }
+
+        private void SetProductStats(int index)
+        {
+            if(index == 0)
+            {
+                spStats.Content = CigarStats;
+            }
+            else
+            {
+                spStats.Content = AccessoryStats;
+            }
         }
 
         private void AddProductPage_Loaded(object sender, RoutedEventArgs e)
@@ -37,16 +131,16 @@ namespace CigarHouseApp.Pages
         {
             using (var context = new CigarhouseContext())
             {
-                cbBrand.ItemsSource = context.Brands.OrderBy(b => b.Name).ToList();
-                cbCountry.ItemsSource = context.Countries.OrderBy(c => c.CountryName).ToList();
+                lbBrand.ItemsSource = context.Brands.OrderBy(b => b.Name).ToList();
+                lbCountry.ItemsSource = context.Countries.OrderBy(c => c.CountryName).ToList();
             }
 
-            cbProductType.ItemsSource = new List<ProductTypeItem>
+            lbProductType.ItemsSource = new List<ProductTypeItem>
             {
                 new ProductTypeItem { Name = "Сигара", IsCigar = true },
                 new ProductTypeItem { Name = "Аксессуар", IsCigar = false }
             };
-            cbProductType.SelectedIndex = 0;
+            lbProductType.SelectedIndex = 0;
         }
 
 
@@ -70,14 +164,67 @@ namespace CigarHouseApp.Pages
 
             try
             {
-                SaveProduct(productName, cost, quantity, brandId, countryId, isCigar);
+                if (IsUpdate)
+                {
+                    UpdateProduct(productName, cost, quantity, brandId, countryId, isCigar);
+                    MessageBox.Show("Товар успешно обновлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                MessageBox.Show("Товар успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                ClearForm();
+                }
+                else
+                {
+                    SaveProduct(productName, cost, quantity, brandId, countryId, isCigar);
+                    MessageBox.Show("Товар успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearForm();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при добавлении товара: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка при добавлении товара: {ex.Message} {ex.InnerException.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateProduct(string productName, decimal cost, int quantity, int brandId, int countryId, bool isCigar)
+        {
+            using (var context = new CigarhouseContext())
+            {
+                var product = context.Products.FirstOrDefault(p=>p.ProductId == currentProduct.ProductId);
+
+                product.ProductName = productName;
+                product.CostProduct = cost;
+                product.Quantity = quantity;
+                product.BrandId = brandId;
+                product.Country = countryId;
+                product.Image = _selectedImage;
+
+                context.Products.Update(product);
+                context.SaveChanges();
+
+                if (isCigar)
+                {
+                    var cigar = context.Cigars.FirstOrDefault(c=>c.ProductId == product.ProductId);
+                    if (cigar != null)
+                    {
+                        cigar.RingGauge = CigarStats.RingGauge;
+                        cigar.Strength = CigarStats.Strength;
+                        cigar.FlavorProfile = CigarStats.FlavorProfile;
+                        cigar.Vitola = CigarStats.Vitola;
+                        context.Cigars.Update(cigar);
+
+                    }
+                }
+                else
+                {
+                    var accessory = context.Accessories.FirstOrDefault(c => c.ProductId == product.ProductId);
+                    if(accessory != null)
+                    {
+                        accessory.Material=AccessoryStats.Material;
+                        accessory.Color = AccessoryStats.Color;
+                        context.Accessories.Update(AccessoryStats);
+
+                    }
+                }
+
+                context.SaveChanges();
             }
         }
 
@@ -85,6 +232,7 @@ namespace CigarHouseApp.Pages
         {
             using (var context = new CigarhouseContext())
             {
+                var transaction = context.Database.BeginTransaction();
                 var nextProductId = context.Products
                     .Select(p => p.ProductId)
                     .Max() + 1;
@@ -99,19 +247,19 @@ namespace CigarHouseApp.Pages
                     Country = countryId,
                     Image = _selectedImage
                 };
-
                 context.Products.Add(product);
                 context.SaveChanges();
 
                 if (isCigar)
-                {
-                    context.Cigars.Add(new Cigar { ProductId = product.ProductId });
+                {   CigarStats.ProductId = product.ProductId;
+                    context.Cigars.Add(CigarStats);
                 }
                 else
                 {
-                    context.Accessories.Add(new Accessory { ProductId = product.ProductId });
+                    AccessoryStats.ProductId = product.ProductId;
+                    context.Accessories.Add(AccessoryStats);
                 }
-
+                transaction.Commit();
                 context.SaveChanges();
             }
         }
@@ -143,19 +291,19 @@ namespace CigarHouseApp.Pages
                 return false;
             }
 
-            if (cbBrand.SelectedItem is not Brand brand)
+            if (lbBrand.SelectedItem is not Brand brand)
             {
                 MessageBox.Show("Выберите марку.");
                 return false;
             }
 
-            if (cbCountry.SelectedItem is not Country country)
+            if (lbCountry.SelectedItem is not Country country)
             {
                 MessageBox.Show("Выберите страну.");
                 return false;
             }
 
-            if (cbProductType.SelectedItem is not ProductTypeItem productType)
+            if (lbProductType.SelectedItem is not ProductTypeItem productType)
             {
                 MessageBox.Show("Выберите тип товара.");
                 return false;
@@ -193,17 +341,19 @@ namespace CigarHouseApp.Pages
             imgPreview.Source = null;
             _selectedImage = null;
 
-            if (cbBrand.Items.Count > 0)
+            if (lbBrand.Items.Count > 0)
             {
-                cbBrand.SelectedIndex = 0;
+                lbBrand.SelectedIndex = -1;
             }
 
-            if (cbCountry.Items.Count > 0)
+            if (lbCountry.Items.Count > 0)
             {
-                cbCountry.SelectedIndex = 0;
+                lbCountry.SelectedIndex = -1;
             }
 
-            cbProductType.SelectedIndex = 0;
+            lbProductType.SelectedIndex = -1;
+            _accessoryStats = new Accessory();
+            _cigarStats = new Cigar();
         }
 
         private void addBrandlink_Click(object sender, RoutedEventArgs e)
@@ -218,6 +368,35 @@ namespace CigarHouseApp.Pages
             {
                 return;
             }
+        }
+
+        private void addStatslink_Click(object sender, RoutedEventArgs e)
+        {
+            if(spStats.Visibility == Visibility.Collapsed)
+            {
+                spStats.Visibility = Visibility.Visible;
+                
+            }            
+            else
+                spStats.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void lbProductType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lbProductType.SelectedIndex == 0)
+                spStats.ContentTemplate = this.FindResource("CigarStatsTemplate") as DataTemplate;
+            if (lbProductType.SelectedIndex == 1)
+                spStats.ContentTemplate = this.FindResource("AccessoryStatsTemplate") as DataTemplate;
+            SetProductStats(lbProductType.SelectedIndex);
+
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

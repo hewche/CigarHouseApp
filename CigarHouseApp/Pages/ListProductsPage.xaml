@@ -248,6 +248,8 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
+
+                                <Button Style="{StaticResource BasicButton3}" Margin="20 0" Content="Изменить" Height="30" Width="120" HorizontalAlignment="Right" x:Name="btnUpdateProduct" Click="btnUpdateProduct_Click"></Button>
                             </Grid>
 
                             <Button Grid.Row="4" Margin="0,20,0,0" 

@@ -110,6 +110,7 @@ namespace CigarHouseApp.Pages
                             .Include(p => p.Brand)
                             .Include(p => p.Cigar)
                             .Include(p => p.CountryNavigation)
+                            .OrderBy(p => p.ProductId)
                             .ToList();
                     }
                     else
@@ -120,6 +121,7 @@ namespace CigarHouseApp.Pages
                             .Include(p => p.Brand)
                             .Include(p => p.Accessory)
                             .Include(p => p.CountryNavigation)
+                            .OrderBy(p=>p.ProductId)
                             .ToList();
                     }
 
@@ -365,6 +367,17 @@ namespace CigarHouseApp.Pages
 
         }
 
+        private void btnUpdateProduct_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button.DataContext is Product product)
+            {
+                MainWindow main = Application.Current.MainWindow as MainWindow;
+                SetPreviousPage(main);
+                main.cigarFrame.Navigate(new Pages.AddProductPage(product));
+            }
+        }
     }
 }
 

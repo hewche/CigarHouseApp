@@ -3,12 +3,111 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
       mc:Ignorable="d"
       d:DesignHeight="700"
       d:DesignWidth="950"
       Title="AddProductPage"
       Background="{StaticResource BeigeLight}">
 
+    <Page.Resources>
+        <helpers:ProductConverter x:Key="ProductConverter"/>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
+
+        <DataTemplate x:Key="CigarStatsTemplate">
+            <StackPanel Width="300" Height="200" x:Name="spStats" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="20">
+                            <TextBlock Text="Крепость" 
+                            FontFamily="B612 Mono" 
+                            FontSize="12" 
+                            Foreground="{StaticResource MediumBrown}"
+                            Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbStrength" Text="{Binding Strength, UpdateSourceTrigger=PropertyChanged}"
+      Style="{StaticResource ModernTextBox}"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="20" Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Ring rauge" 
+                        FontFamily="B612 Mono" 
+                        FontSize="12" 
+                        Foreground="{StaticResource MediumBrown}"
+                        Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbRingGauege" Text="{Binding RingGauge, UpdateSourceTrigger=PropertyChanged}" 
+      Style="{StaticResource ModernTextBox}"/>
+                        </StackPanel>
+                    
+                    
+                        <StackPanel Margin="20" Grid.Row="1" Grid.Column="1">
+                            <TextBlock Text="Витола" 
+                        FontFamily="B612 Mono" 
+                        FontSize="12" 
+                        Foreground="{StaticResource MediumBrown}"
+                        Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbVitola" Text="{Binding Vitola, UpdateSourceTrigger=PropertyChanged}" 
+                        Style="{StaticResource ModernTextBox}"/>
+                        </StackPanel>
+                    
+                    
+                    <StackPanel Margin="20" Grid.Row="0" Grid.Column="1">
+                        <TextBlock Text="Вкусовой профиль" 
+                        FontFamily="B612 Mono" 
+                        FontSize="12" 
+                        Foreground="{StaticResource MediumBrown}"
+                        Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbFlavor" Text="{Binding FlavorProfile, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+
+
+        <DataTemplate x:Key="AccessoryStatsTemplate">
+            <StackPanel Width="300" Height="200"  x:Name="spStats" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Margin="20">
+                        <TextBlock Text="Материал" 
+                            FontFamily="B612 Mono" 
+                            FontSize="12" 
+                            Foreground="{StaticResource MediumBrown}"
+                            Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbMaterial" Text="{Binding Material, UpdateSourceTrigger=PropertyChanged}"
+      Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+
+                    <StackPanel Margin="20" Grid.Column="1">
+                        <TextBlock Text="Цвет" 
+                        FontFamily="B612 Mono" 
+                        FontSize="12" 
+                        Foreground="{StaticResource MediumBrown}"
+                        Margin="0,0,0,5"/>
+                        <TextBox x:Name="tbColor" Text="{Binding Color,UpdateSourceTrigger=PropertyChanged}"
+      Style="{StaticResource ModernTextBox}"/>
+                    </StackPanel>
+
+
+                   
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+        
+    </Page.Resources>
+        
+        
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid Margin="35">
             <Grid.RowDefinitions>
@@ -17,11 +116,12 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                <TextBlock Text="ДОБАВЛЕНИЕ ТОВАРА"
+                <TextBlock x:Name="tbHeader"
+                    Text="ДОБАВЛЕНИЕ ТОВАРА"
                            FontSize="28"
                            FontWeight="Bold"
                            Foreground="{StaticResource DeepBrown}"/>
-                <TextBlock Text="Создайте новый товар, загрузите изображение и сохраните в базу."
+                <TextBlock x:Name="tbDesc"  Text="Создайте новый товар, загрузите изображение и сохраните в базу."
                            Margin="0,8,0,0"
                            Foreground="{StaticResource MediumBrown}"/>
             </StackPanel>
@@ -49,33 +149,41 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Название" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
                     <TextBox Grid.Row="1" Grid.Column="0" x:Name="tbProductName" Style="{StaticResource ModernTextBox}" Margin="0,5,15,10"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип товара" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
-                    <ComboBox Grid.Row="3" Grid.Column="0" x:Name="cbProductType" Style="{StaticResource ModernComboBox}" Margin="0,5,15,10" DisplayMemberPath="Name"/>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                        <TextBlock Text="Тип товара" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
+                        <TextBlock FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}" Margin="0 5">
+                            <Hyperlink x:Name="addStatslink" Click="addStatslink_Click"  FontSize="8" Foreground="{StaticResource AccentBrown}">Характеристики</Hyperlink>
+                        </TextBlock>
+                        <ContentControl x:Name="spStats" Visibility="Collapsed" Margin="0,15" />
 
+ 
+                    </StackPanel>
+                    <ComboBox Grid.Row="3" Grid.Column="0" x:Name="lbProductType" SelectionChanged="lbProductType_SelectionChanged" Style="{StaticResource ModernComboBox}" Margin="0,5,15,10" DisplayMemberPath="Name"/>
                     <StackPanel Grid.Row="4" Grid.Column="0">
                         <TextBlock Text="Бренд" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
                         <TextBlock FontWeight="SemiBold" Foreground="{StaticResource DeepBrown}">
                             <Hyperlink x:Name="addBrandlink" Click="addBrandlink_Click" FontSize="8" Foreground="{StaticResource AccentBrown}">Добавить бренд</Hyperlink>
                         </TextBlock>
                     </StackPanel>
-                    <ComboBox Grid.Row="5" Grid.Column="0" x:Name="cbBrand" Style="{StaticResource ModernComboBox}" Margin="0,5,15,10" DisplayMemberPath="Name"/>
+                    <ComboBox Grid.Row="5" Grid.Column="0" x:Name="lbBrand" Style="{StaticResource ModernComboBox}" Margin="0,5,15,10" DisplayMemberPath="Name"/>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Страна" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
-                    <ComboBox Grid.Row="7" Grid.Column="0" x:Name="cbCountry" Style="{StaticResource ModernComboBox}" Margin="0,5,15,0" DisplayMemberPath="CountryName"/>
+                    <ComboBox Grid.Row="7" Grid.Column="0" x:Name="lbCountry" Style="{StaticResource ModernComboBox}" Margin="0,5,15,0" DisplayMemberPath="CountryName"/>
 
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="Цена" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCost" Style="{StaticResource ModernTextBox}" Margin="0,5,0,10"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Количество" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbQuantity" Style="{StaticResource ModernTextBox}" Margin="0,5,0,10"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Количество" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbQuantity" Style="{StaticResource ModernTextBox}" Margin="0,5,0,10"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="Изображение" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
-                    <StackPanel Grid.Row="5" Grid.Column="1" Margin="0,5,0,10">
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="Изображение" FontWeight="SemiBold" Foreground="{StaticResource AccentBrown}"/>
+                    <StackPanel Grid.Row="6" Grid.Column="1" Margin="0,5,0,10">
                         <Button Content="Выбрать изображение"
                                 Click="btnLoadImage_Click"
                                 Style="{StaticResource BasicButton}"
@@ -86,9 +194,9 @@
                                    TextWrapping="Wrap"/>
                     </StackPanel>
 
-                    <Border Grid.Row="6" Grid.RowSpan="3" Grid.Column="1" Margin="0,15,0,0"
+                    <Border Grid.Row="7" Grid.RowSpan="3" Grid.Column="1" Margin="0,15,0,0"
                             BorderBrush="{StaticResource BeigeMedium}" BorderThickness="1" CornerRadius="10" Height="180">
-                        <Image x:Name="imgPreview" Stretch="Uniform" Margin="8"/>
+                        <Image x:Name="imgPreview" Stretch="Uniform" Margin="8" Source="{Binding Image,Converter={StaticResource ImageConverter}}"/>
                     </Border>
                     <StackPanel Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,20,0,0">
                         <Button Content="Очистить"
@@ -96,7 +204,8 @@
                             Style="{StaticResource BasicButton}"
                             Width="150"
                             Margin="0,0,10,0"/>
-                                        <Button Content="Добавить товар"
+                                        <Button x:Name="btnSaveProduct"
+                                            Content="Добавить товар"
                             Click="btnAddProduct_Click"
                             Style="{StaticResource BasicButton2}"
                             Width="180"/>
