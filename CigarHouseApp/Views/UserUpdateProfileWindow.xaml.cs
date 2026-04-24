@@ -123,11 +123,10 @@ namespace CigarHouseApp.Views
 
         private void UploadAvatarButton_Click(object sender, RoutedEventArgs e)
         {
-            string filename = _imageService.UploadPhoto(_currentUser.UserId);
+            string filename = _imageService.UploadPhoto("ImagesUser");
             if (!string.IsNullOrEmpty(filename))
             {
-                UpdateAvatar(filename);
-               
+                UpdateAvatar(filename);               
             }
         }
 

@@ -36,7 +36,7 @@ namespace CigarHouseApp.Helpers
             return null;
         }
 
-        public string UploadPhoto(int userId, string sourceFilePath = null)
+        public string UploadPhoto(string folder)
         {
 
             try
@@ -49,7 +49,7 @@ namespace CigarHouseApp.Helpers
                     FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
 
                     string picFileName = Path.GetFileName(openFileDialog.FileName);
-                    string distinPath = @"..\..\..\ImagesUser\" + picFileName;
+                    string distinPath = @"..\..\..\"+folder +@"\" + picFileName;
 
                     if (!File.Exists(distinPath))
                     {

@@ -182,7 +182,7 @@
                         </ItemsPanelTemplate>
                     </TabControl.ItemsPanel>
 
-                    <TabItem>
+                    <TabItem x:Name="tabCigars">
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/cigar_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
@@ -191,7 +191,7 @@
                         </TabItem.Header>
                     </TabItem>
 
-                    <TabItem>
+                    <TabItem x:Name="tabAccessories">
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/lighter_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
@@ -200,7 +200,7 @@
                         </TabItem.Header>
                     </TabItem>
 
-                    <TabItem>
+                    <TabItem x:Name="tabFavorites">
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/sets_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
@@ -209,11 +209,29 @@
                         </TabItem.Header>
                     </TabItem>
 
-                    <TabItem>
+                    <TabItem x:Name="tabMyOrders">
                         <TabItem.Header>
                             <StackPanel HorizontalAlignment="Center" Margin="4">
                                 <Image Source="/Images/ranking_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
                                 <TextBlock Text="МОИ ЗАКАЗЫ" FontSize="11"/>
+                            </StackPanel>
+                        </TabItem.Header>
+                    </TabItem>
+
+                    <TabItem x:Name="tabAddProduct" Visibility="Collapsed">
+                        <TabItem.Header>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/logo_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
+                                <TextBlock Text="ДОБАВИТЬ ТОВАР" FontSize="11"/>
+                            </StackPanel>
+                        </TabItem.Header>
+                    </TabItem>
+
+                    <TabItem x:Name="tabOrderManagement" Visibility="Collapsed">
+                        <TabItem.Header>
+                            <StackPanel HorizontalAlignment="Center" Margin="4">
+                                <Image Source="/Images/ranking_icon.png" Width="18" Height="18" Margin="0,0,0,4"/>
+                                <TextBlock Text="УПРАВЛЕНИЕ ЗАКАЗАМИ" FontSize="11"/>
                             </StackPanel>
                         </TabItem.Header>
                     </TabItem>

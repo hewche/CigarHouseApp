@@ -1,0 +1,89 @@
+<Page x:Class="CigarHouseApp.Pages.OrderManagmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="700"
+      d:DesignWidth="950"
+      Title="OrderManagmentPage"
+      Background="{StaticResource BeigeLight}">
+
+    <Grid Margin="35">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="УПРАВЛЕНИЕ ЗАКАЗАМИ"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource DeepBrown}"/>
+            <TextBlock Text="Изменяйте статус заказа или удаляйте заказ."
+                       Margin="0,8,0,0"
+                       Foreground="{StaticResource MediumBrown}"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="14" Padding="15">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.08"/>
+            </Border.Effect>
+
+            <ListView x:Name="lvOrders" HorizontalAlignment="Center"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CartItemCard}" Padding="15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock FontWeight="SemiBold" FontSize="15" Foreground="{StaticResource DeepBrown}">
+                                        <Run Text="Заказ №"/>
+                                        <Run Text="{Binding OrderId}"/>
+                                    </TextBlock>
+                                    <TextBlock FontSize="12" Foreground="{StaticResource MediumBrown}">
+                                        <Run Text="{Binding PersonName}"/>
+                                        <Run Text=" | "/>
+                                        <Run Text="{Binding PersonPhone}"/>
+                                    </TextBlock>
+                                    <TextBlock FontSize="12" Foreground="{StaticResource MediumBrown}">
+                                        <Run Text="Сумма: "/>
+                                        <Run Text="{Binding TotalCost, StringFormat={}{0:F0} ₽}"/>
+                                    </TextBlock>
+                                    <TextBlock FontSize="12" Foreground="{StaticResource MediumBrown}" Text="{Binding Address}" TextWrapping="Wrap"/>
+                                </StackPanel>
+
+                                <ComboBox Grid.Column="1"
+                                          Margin="10,0"
+                                          VerticalAlignment="Center"
+                                          Width="170"
+                                          DisplayMemberPath="Name"
+                                          Loaded="cbStatus_Loaded"
+                                          SelectionChanged="cbStatus_SelectionChanged"
+                                          Tag="{Binding}"
+                                          Style="{StaticResource ModernComboBox}"/>
+
+                                <Button Grid.Column="2"
+                                        Content="Удалить"
+                                        Width="110"
+                                        Height="36"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BasicButton3}"
+                                        Tag="{Binding}"
+                                        Click="btnDeleteOrder_Click"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</Page>

@@ -1,4 +1,5 @@
-﻿using CigarHouseApp.Models;
+﻿using CigarHouseApp.Helpers;
+using CigarHouseApp.Models;
 using ControlzEx.Standard;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,6 +44,7 @@ namespace CigarHouseApp.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             tbUserName.DataContext = currentUser;
+            ConfigureRoleTabs();
         }
 
         
@@ -51,24 +53,33 @@ namespace CigarHouseApp.Views
         {
             if (e.Source is TabControl tc && tc.IsLoaded)
             {
-                switch (tabControlProducts.SelectedIndex)
+                if (tabControlProducts.SelectedItem == tabCigars)
                 {
-                    case 0:
-                        cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.CIGAR));
-                        currentPage = PageType.ListProductPage;
-                        break;
-                    case 1:
-                        cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.ACCESSORY));
-                        currentPage = PageType.ListProductPageAccessories;
-                        break;
-                    case 2:
-                        cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.Userfavorite.Products.ToList()));
-                        currentPage = PageType.FavoritesPage;
-                        break;
-                    case 3:
-                        cigarFrame.Navigate(new Pages.OrdersPage(currentUser));
-                        currentPage = PageType.BestProductsPage;
-                        break;
+                    cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.CIGAR));
+                    currentPage = PageType.ListProductPage;
+                }
+                else if (tabControlProducts.SelectedItem == tabAccessories)
+                {
+                    cigarFrame.Navigate(new Pages.ListProductsPage(ProductStatus.ACCESSORY));
+                    currentPage = PageType.ListProductPageAccessories;
+                }
+                else if (tabControlProducts.SelectedItem == tabFavorites)
+                {
+                    cigarFrame.Navigate(new Pages.FavoritesPage(currentUser.Userfavorite.Products.ToList()));
+                    currentPage = PageType.FavoritesPage;
+                }
+                else if (tabControlProducts.SelectedItem == tabMyOrders)
+                {
+                    cigarFrame.Navigate(new Pages.OrdersPage(currentUser));
+                    currentPage = PageType.BestProductsPage;
+                }
+                else if (tabControlProducts.SelectedItem == tabAddProduct)
+                {
+                    cigarFrame.Navigate(new Pages.AddProductPage());
+                }
+                else if (tabControlProducts.SelectedItem == tabOrderManagement)
+                {
+                    cigarFrame.Navigate(new Pages.OrderManagmentPage());
                 }
             }
         }
@@ -83,10 +94,18 @@ namespace CigarHouseApp.Views
             tabControlProducts.SelectedIndex = -1;
         }
 
+        private void ConfigureRoleTabs()
+        {
+            bool hasManagementAccess = currentUser?.RoleId == 1 || currentUser?.RoleId == 3;
+            tabAddProduct.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
+            tabOrderManagement.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             cigarFrame.Navigate(new Pages.CartPage(currentUser.Usercart.Products.ToList()));
         }
+
 
         private void btnUserProfile_Click(object sender, RoutedEventArgs e)
         {
