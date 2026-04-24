@@ -367,17 +367,6 @@ namespace CigarHouseApp.Pages
 
         }
 
-        private void btnUpdateProduct_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-
-            if (button.DataContext is Product product)
-            {
-                MainWindow main = Application.Current.MainWindow as MainWindow;
-                SetPreviousPage(main);
-                main.cigarFrame.Navigate(new Pages.AddProductPage(product));
-            }
-        }
     }
 }
 

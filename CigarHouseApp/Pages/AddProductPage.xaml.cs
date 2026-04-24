@@ -105,6 +105,7 @@ namespace CigarHouseApp.Pages
 
 
             lbProductType.IsEditable = false;
+            lbProductType.IsEnabled = false; 
             tbSelectedImage.Text = product.Image;
 
             imgPreview.DataContext = product;

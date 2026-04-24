@@ -46,6 +46,7 @@ namespace CigarHouseApp.Pages
             _previousPage = previousPage;
             LoadDataProduct(product);
             _main = Application.Current.MainWindow as MainWindow;
+            btnUpdateProduct.DataContext = _main.currentUser;
         }
 
         private void likeButton_Click(object sender, RoutedEventArgs e)
@@ -193,5 +194,35 @@ namespace CigarHouseApp.Pages
             LoadReviews(_currentProduct);
         }
 
+
+        private void btnUpdateProduct_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                UpdateProduct();
+            }
+            catch
+            {
+                MessageBox.Show("Не удалость изменить продукт");
+            }
+        }
+
+        private void UpdateProduct()
+        {
+            using (var context = new CigarhouseContext())
+            {
+                var product = context.Products
+                    .Include(p => p.CountryNavigation)
+                    .Include(p => p.Cigar)
+                    .Include(p => p.Accessory)
+                    .Include(p => p.Brand)
+                    .FirstOrDefault(p => p.ProductId == _currentProduct.ProductId);
+                if (product !=null)
+                {
+                    _main.tabControlProducts.SelectedItem = _main.tabAddProduct;
+                    _main.cigarFrame.Navigate(new Pages.AddProductPage(product));
+                }
+            }
+        }
     }
 }

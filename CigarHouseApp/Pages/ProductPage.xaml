@@ -14,6 +14,8 @@
 
     <Page.Resources>
         <helpers:AvatarsConverter x:Key="AvatarsConverter"/>
+        <helpers:UsersConverter x:Key="UsersConverter"/>
+
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="0"/>
@@ -195,6 +197,8 @@
                                     Style="{StaticResource CartButton}"
                                     Tag="{Binding}">
                                 </Button>
+                                <Button Style="{StaticResource BasicButton}" Margin="20 0" Content="Изменить продукт" Height="30" Width="150" Visibility="{Binding Converter={StaticResource UsersConverter}}" HorizontalAlignment="Right" x:Name="btnUpdateProduct" Click="btnUpdateProduct_Click"></Button>
+
                             </StackPanel>
                         </Grid>
                     </materialDesign:Card>

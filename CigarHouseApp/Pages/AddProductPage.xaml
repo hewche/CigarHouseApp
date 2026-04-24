@@ -115,7 +115,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel Grid.Row="0" Margin="0,0,0,20" Cursor="">
                 <TextBlock x:Name="tbHeader"
                     Text="ДОБАВЛЕНИЕ ТОВАРА"
                            FontSize="28"
@@ -124,6 +124,7 @@
                 <TextBlock x:Name="tbDesc"  Text="Создайте новый товар, загрузите изображение и сохраните в базу."
                            Margin="0,8,0,0"
                            Foreground="{StaticResource MediumBrown}"/>
+                
             </StackPanel>
 
             <Border Grid.Row="1"
