@@ -44,12 +44,18 @@ namespace CigarHouseApp.Helpers
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Title = "Выберите фото";
                 openFileDialog.Filter = "Изображения|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
-                if (openFileDialog.ShowDialog()==true)
+                if (openFileDialog.ShowDialog() == true)
                 {
                     FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
 
                     string picFileName = Path.GetFileName(openFileDialog.FileName);
-                    string distinPath = @"..\..\..\"+folder +@"\" + picFileName;
+                    string distinPath = GetImagePath(folder, picFileName);
+                    string? directoryPath = Path.GetDirectoryName(distinPath);
+
+                    if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
 
                     if (!File.Exists(distinPath))
                     {
@@ -64,6 +70,16 @@ namespace CigarHouseApp.Helpers
                 System.Diagnostics.Debug.WriteLine($"Ошибка загрузки фото: {ex.Message}");
                 return null;
             }
+        }
+
+        public string GetImagePath(string folder, string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return null;
+            }
+
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\", folder, fileName);
         }
     }
 }

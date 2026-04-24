@@ -45,6 +45,7 @@ namespace CigarHouseApp.Views
         {
             tbUserName.DataContext = currentUser;
             ConfigureRoleTabs();
+            NavigateToWelcomePage();
         }
 
         
@@ -96,9 +97,12 @@ namespace CigarHouseApp.Views
 
         private void ConfigureRoleTabs()
         {
-            bool hasManagementAccess = currentUser?.RoleId == 1 || currentUser?.RoleId == 3;
+            bool hasManagementAccess = currentUser?.RoleId == 1;
             tabAddProduct.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
             tabOrderManagement.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
+
+            bool isContentModerator = currentUser?.RoleId == 3;
+            moderatorButtonsPanel.Visibility = isContentModerator ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -137,6 +141,31 @@ namespace CigarHouseApp.Views
                         .ThenInclude(i => i.Product)
                 .FirstOrDefault(u => u.UserId == userId);
             }
+        }
+
+        private void btnOpenReviews_Click(object sender, RoutedEventArgs e)
+        {
+            var reviewsWindow = new ReviewsWindow();
+            reviewsWindow.Owner = this;
+            reviewsWindow.ShowDialog();
+        }
+
+        private void btnOpenUsers_Click(object sender, RoutedEventArgs e)
+        {
+            var allUsersWindow = new AllUsersWindow(currentUser.UserId);
+            allUsersWindow.Owner = this;
+            allUsersWindow.ShowDialog();
+        }
+
+        private void btnOpenWelcomePage_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToWelcomePage();
+        }
+
+        private void NavigateToWelcomePage()
+        {
+            tabControlProducts.SelectedIndex = -1;
+            cigarFrame.Navigate(new Pages.WelcomePage());
         }
     }
 }

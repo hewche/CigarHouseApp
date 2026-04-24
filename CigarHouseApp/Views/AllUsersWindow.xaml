@@ -1,0 +1,117 @@
+<Window x:Class="CigarHouseApp.Views.AllUsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
+        mc:Ignorable="d"
+        Title="Все пользователи"
+        Height="650"
+        Width="900"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BeigeLight}">
+    <Window.Resources>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
+        <Style x:Key="FlatListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20" HorizontalAlignment="Center" MaxWidth="840">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Пользователи"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="{StaticResource DeepBrown}"
+                   HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Row="1" Margin="0,10,0,14" HorizontalAlignment="Center">
+            <TextBlock Text="Поиск по login"
+                       Foreground="{StaticResource MediumBrown}"
+                       Margin="2,0,0,4"
+                       HorizontalAlignment="Center"/>
+            <TextBox x:Name="tbSearchLogin"
+                     Width="280"
+                     HorizontalAlignment="Center"
+                     Style="{StaticResource ModernTextBox}"
+                     TextChanged="tbSearchLogin_TextChanged"/>
+        </StackPanel>
+
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="14"
+                Padding="10">
+            <ListView x:Name="lvUsers"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource FlatListViewItemStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,10"
+                                Padding="14"
+                                BorderBrush="{StaticResource BeigeMedium}"
+                                BorderThickness="1"
+                                CornerRadius="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="56"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Width="46"
+                                        Height="46"
+                                        CornerRadius="23"
+                                        ClipToBounds="True"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource BeigeMedium}">
+                                    <Image Source="{Binding Image, Converter={StaticResource ImageConverter}, ConverterParameter=ImagesUser}"
+                                           Stretch="UniformToFill"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" Margin="12,0,12,0">
+                                    <TextBlock FontWeight="SemiBold"
+                                               FontSize="14"
+                                               Foreground="{StaticResource DeepBrown}"
+                                               Text="{Binding Login}"/>
+                                    <TextBlock Margin="0,2,0,0"
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Text="{Binding FirstName, StringFormat=Имя: {0}, TargetNullValue=Имя: не указано}"/>
+                                    <TextBlock Margin="0,2,0,0"
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Text="{Binding LastName, StringFormat=Фамилия: {0}, TargetNullValue=Фамилия: не указана}"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="2"
+                                        Width="110"
+                                        Height="34"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource BasicButton3}"
+                                        Click="DeleteUser_Click"
+                                        Tag="{Binding UserId}"
+                                        Content="Удалить"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</Window>

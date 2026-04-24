@@ -1,0 +1,120 @@
+<Window x:Class="CigarHouseApp.Views.ReviewsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:CigarHouseApp.Helpers"
+        mc:Ignorable="d"
+        Title="Модерация отзывов"
+        Height="650"
+        Width="920"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BeigeLight}">
+    <Window.Resources>
+        <helpers:ImageConverter x:Key="ImageConverter"/>
+        <Style x:Key="FlatListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20" HorizontalAlignment="Center" MaxWidth="860">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Отзывы пользователей"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="{StaticResource DeepBrown}"
+                   HorizontalAlignment="Center"/>
+
+        <TextBlock Grid.Row="1"
+                   Margin="0,6,0,14"
+                   Text="Удаляйте комментарии, которые нарушают правила."
+                   FontSize="13"
+                   Foreground="{StaticResource MediumBrown}"
+                   HorizontalAlignment="Center"/>
+
+        <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="14"
+                Padding="10">
+            <ListView x:Name="lvReviews"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      ItemContainerStyle="{StaticResource FlatListViewItemStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,10"
+                                Padding="14"
+                                BorderBrush="{StaticResource BeigeMedium}"
+                                BorderThickness="1"
+                                CornerRadius="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="56"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="120"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Width="46"
+                                        Height="46"
+                                        CornerRadius="23"
+                                        ClipToBounds="True"
+                                        VerticalAlignment="Top"
+                                        Background="{StaticResource BeigeMedium}">
+                                    <Image Source="{Binding User.Image, Converter={StaticResource ImageConverter}, ConverterParameter=ImagesUser}"
+                                           Stretch="UniformToFill"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" Margin="12,0,12,0">
+                                    <TextBlock FontWeight="SemiBold"
+                                               FontSize="14"
+                                               Foreground="{StaticResource DeepBrown}"
+                                               Text="{Binding User.Login, TargetNullValue=unknown}"/>
+                                    <TextBlock Margin="0,2,0,0"
+                                               Foreground="{StaticResource MediumBrown}"
+                                               Text="{Binding Product.ProductName, StringFormat=Товар: {0}, TargetNullValue=Товар: неизвестно}"/>
+                                    <TextBlock Margin="0,8,0,0"
+                                               FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextDark}"
+                                               Text="{Binding Title}"/>
+                                    <TextBlock Margin="0,4,0,0"
+                                               TextWrapping="Wrap"
+                                               Foreground="{StaticResource TextDark}"
+                                               Text="{Binding ReviewText}"/>
+                                    <TextBlock Margin="0,6,0,0"
+                                               Foreground="{StaticResource WarmBrown}"
+                                               Text="{Binding CreatedAt, StringFormat=dd.MM.yyyy HH:mm, TargetNullValue=Дата не указана}"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="2"
+                                        Width="110"
+                                        Height="34"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource BasicButton3}"
+                                        Click="DeleteReview_Click"
+                                        Tag="{Binding ReviewId}"
+                                        Content="Удалить"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</Window>

@@ -180,7 +180,7 @@ namespace CigarHouseApp.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при добавлении товара: {ex.Message} {ex.InnerException.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка при добавлении товара: {ex.Message} {ex.InnerException?.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -188,6 +188,7 @@ namespace CigarHouseApp.Pages
         {
             using (var context = new CigarhouseContext())
             {
+                var transaction = context.Database.BeginTransaction();
                 var product = context.Products.FirstOrDefault(p=>p.ProductId == currentProduct.ProductId);
 
                 product.ProductName = productName;
@@ -220,12 +221,13 @@ namespace CigarHouseApp.Pages
                     {
                         accessory.Material=AccessoryStats.Material;
                         accessory.Color = AccessoryStats.Color;
-                        context.Accessories.Update(AccessoryStats);
+                        context.Accessories.Update(accessory);
 
                     }
                 }
 
                 context.SaveChanges();
+                transaction.Commit();
             }
         }
 
@@ -260,8 +262,9 @@ namespace CigarHouseApp.Pages
                     AccessoryStats.ProductId = product.ProductId;
                     context.Accessories.Add(AccessoryStats);
                 }
-                transaction.Commit();
                 context.SaveChanges();
+                transaction.Commit();
+
             }
         }
 

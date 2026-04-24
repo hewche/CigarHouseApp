@@ -81,12 +81,15 @@ namespace CigarHouseApp.Views
         {
             using (var context = new CigarhouseContext())
             {
-                _currentUser.FirstName = tbFirstName.Text;
-                _currentUser.LastName = tbLastName.Text;
-                _currentUser.Phone = tbPhone.Text;
-                _currentUser.Email = tbEmail.Text;
+                var user = context.Users.FirstOrDefault(u=>u.UserId == _currentUser.UserId);
+                user.FirstName = tbFirstName.Text;
+                user.LastName = tbLastName.Text;
+                user.Phone = tbPhone.Text;
+                user.Email = tbEmail.Text;
+                user.Password = _currentUser.Password;
+                user.Birthday = dpBirthDate.SelectedDate;
 
-                context.Users.Update(_currentUser);
+                context.Users.Update(user);
                 context.SaveChanges();
             }
         }
@@ -126,7 +129,14 @@ namespace CigarHouseApp.Views
             string filename = _imageService.UploadPhoto("ImagesUser");
             if (!string.IsNullOrEmpty(filename))
             {
-                UpdateAvatar(filename);               
+                try
+                {
+                    UpdateAvatar(filename);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message + ex.InnerException?.Message);
+                }
             }
         }
 
@@ -135,13 +145,19 @@ namespace CigarHouseApp.Views
             using (var context = new CigarhouseContext())
             {
                 _currentUser.Image = filename;
+                var dbUser = context.Users.FirstOrDefault(u => u.UserId == _currentUser.UserId);
+                if (dbUser is null)
+                {
+                    throw new Exception("Пользователь не найден при обновлении аватарки.");
+                }
 
-                context.Users.Update(_currentUser);
+                dbUser.Image = filename;
                 context.SaveChanges();
             }
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"..\..\..\ImagesUser\" + filename);
+            string avatarPath = _imageService.GetImagePath("ImagesUser", filename);
+            bitmap.UriSource = new Uri(avatarPath);
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
 
