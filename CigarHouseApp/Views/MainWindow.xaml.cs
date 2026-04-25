@@ -113,15 +113,29 @@ namespace CigarHouseApp.Views
 
         private void btnUserProfile_Click(object sender, RoutedEventArgs e)
         {
-            
-            UserUpdateProfileWindow userUpdateProfileWindow = new UserUpdateProfileWindow(currentUser);
-            if(userUpdateProfileWindow.ShowDialog() == true )
+            if(currentUser.Login != "unknown")
             {
-                UpdateUser(currentUser.UserId);
+                UserUpdateProfileWindow userUpdateProfileWindow = new UserUpdateProfileWindow(currentUser);
+                if (userUpdateProfileWindow.ShowDialog() == true)
+                {
+                    UpdateUser(currentUser.UserId);
+                }
+                else
+                {
+
+                }
             }
             else
             {
-
+                if (MessageBox.Show("Войти в аккаунт?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    AuthentificationWindow auth = new AuthentificationWindow();
+                    Application.Current.MainWindow.Close();
+                    Application.Current.MainWindow = auth;
+                    if (auth.ShowDialog() == true)
+                    {
+                    }
+                }
             }
         }
 
