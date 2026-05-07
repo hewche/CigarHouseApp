@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CigarHouseApp.Models;
 
-public partial class AccessoryInfo
+public partial class TopRatedProduct
 {
     public int? ProductId { get; set; }
 
@@ -11,11 +11,11 @@ public partial class AccessoryInfo
 
     public string? BrandName { get; set; }
 
-    public int? Quantity { get; set; }
+    public decimal? AvgRating { get; set; }
+
+    public long? ReviewCount { get; set; }
 
     public decimal? Price { get; set; }
 
-    public string? Material { get; set; }
-
-    public string? Color { get; set; }
+    public int? StockQuantity { get; set; }
 }

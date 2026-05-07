@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace CigarHouseApp.Models;
 
-public partial class BrandProduct
+public partial class UserCartItem
 {
-    public int? BrandId { get; set; }
+    public int? CartId { get; set; }
 
-    public string? BrandName { get; set; }
-
-    public string? Phone { get; set; }
+    public int? UserId { get; set; }
 
     public int? ProductId { get; set; }
 
@@ -17,5 +15,5 @@ public partial class BrandProduct
 
     public int? Quantity { get; set; }
 
-    public decimal? Price { get; set; }
+    public decimal? CostProduct { get; set; }
 }

@@ -179,6 +179,12 @@
                 BorderThickness="0,1,0,0"
                 Padding="25,15">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ExitButton" 
+      Content="Выйти"
+      Style="{StaticResource BasicButton}"
+      Width="120"
+      Margin="0,0,15,0"
+      Click="ExitButton_Click"/>
                 <Button x:Name="CancelButton" 
                         Content="Отмена"
                         Style="{StaticResource BasicButton}"
@@ -190,6 +196,7 @@
                         Style="{StaticResource BasicButton2}"
                         Width="120"
                         Click="SaveButton_Click"/>
+               
             </StackPanel>
         </Border>
     </Grid>

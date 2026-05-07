@@ -62,6 +62,11 @@ namespace CigarHouseApp.Views
                 foreach (Product product in orderProducts)
                 {
                     order.OrderItems.Add(new OrderItem() { ProductId = product.ProductId, Quantity = product.PurchaseAmount });
+
+                    var productQ = context.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+                    productQ.Quantity -= product.PurchaseAmount;
+
+                    context.Products.Update(productQ);
                 }
                 order.OrderStatusId = 1;
                 order.UserId = _main.currentUser.UserId;

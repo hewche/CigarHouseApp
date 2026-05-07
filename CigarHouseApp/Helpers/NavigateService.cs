@@ -34,9 +34,6 @@ namespace CigarHouseApp.Helpers
                 case PageType.ListProductPage:
                     main.cigarFrame.Navigate(new ListProductsPage(ProductStatus.CIGAR));
                     break;
-                case PageType.BestProductsPage:
-                    main.cigarFrame.Navigate(new BestProductsPage());
-                    break;
                 case PageType.ListProductPageAccessories:
                     main.cigarFrame.Navigate(new ListProductsPage(ProductStatus.ACCESSORY));
                     break;

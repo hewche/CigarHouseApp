@@ -60,8 +60,10 @@ namespace CigarHouseApp.Pages
         private void CalculateCost()
         {
             subTotal = cartProducts.Sum(p => p.CostProduct*p.PurchaseAmount);
-            if (cartProducts.Count > 2)
-                deliveryTotal = 125;
+            if (cartProducts.Count < 3 && cartProducts.Count != 0)
+                deliveryTotal = 1250;
+            else if (cartProducts.Count == 0)
+                deliveryTotal = 0;
             else
                 deliveryTotal = 0;
             total = subTotal + deliveryTotal;
@@ -121,6 +123,7 @@ namespace CigarHouseApp.Pages
                 main.currentUser.Usercart.Products.Remove(product);
                 cartFavoritesService.TogglePurchase(product);
             }
+            UpdateCost();
         }
 
         private void btnRemoveFromCart_Click(object sender, RoutedEventArgs e)
@@ -163,6 +166,7 @@ namespace CigarHouseApp.Pages
                 {
                     DeleteProduct(product);
                 }
+                UpdateCost();
                 MessageBox.Show("Заказ сформирован");
             }
             else

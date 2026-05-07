@@ -12,6 +12,7 @@
         Background="{StaticResource BeigeLight}">
     <Window.Resources>
         <helpers:ImageConverter x:Key="ImageConverter"/>
+        <helpers:AvatarsConverter x:Key="AvatarsConverter"/>
         <Style x:Key="FlatListViewItemStyle" TargetType="ListViewItem">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -42,10 +43,6 @@
                    HorizontalAlignment="Center"/>
 
         <StackPanel Grid.Row="1" Margin="0,10,0,14" HorizontalAlignment="Center">
-            <TextBlock Text="Поиск по login"
-                       Foreground="{StaticResource MediumBrown}"
-                       Margin="2,0,0,4"
-                       HorizontalAlignment="Center"/>
             <TextBox x:Name="tbSearchLogin"
                      Width="280"
                      HorizontalAlignment="Center"
@@ -80,9 +77,12 @@
                                         CornerRadius="23"
                                         ClipToBounds="True"
                                         VerticalAlignment="Top"
-                                        Background="{StaticResource BeigeMedium}">
-                                    <Image Source="{Binding Image, Converter={StaticResource ImageConverter}, ConverterParameter=ImagesUser}"
-                                           Stretch="UniformToFill"/>
+                                        >
+                                    <Border.Background>
+                                        <ImageBrush x:Name="imgBrushAvatar" ImageSource="{Binding Image, Converter={StaticResource AvatarsConverter}, ConverterParameter=ImagesUser}"
+Stretch="UniformToFill"/>
+                                    </Border.Background>
+
                                 </Border>
 
                                 <StackPanel Grid.Column="1" Margin="12,0,12,0">

@@ -67,7 +67,8 @@ namespace CigarHouseApp.Views
                 && !string.IsNullOrEmpty(tbLastName.Text)
                 && !string.IsNullOrEmpty(tbLogin.Text)
                 && !string.IsNullOrEmpty(dpBirthDate.SelectedDate.ToString())
-                && !string.IsNullOrEmpty(tbPhone.Text);
+                && !string.IsNullOrEmpty(tbPhone.Text)
+                && !string.IsNullOrEmpty(dpBirthDate.SelectedDate.ToString());
         }
         private void ShowPasswordPanel()
         {
@@ -81,16 +82,24 @@ namespace CigarHouseApp.Views
         {
             using (var context = new CigarhouseContext())
             {
+                if(context.Users.FirstOrDefault(u=>u.Login == _currentUser.Login)!=null)
+                {
+                    MessageBox.Show("Логин занят");
+                    return;
+                }
                 var user = context.Users.FirstOrDefault(u=>u.UserId == _currentUser.UserId);
                 user.FirstName = tbFirstName.Text;
                 user.LastName = tbLastName.Text;
                 user.Phone = tbPhone.Text;
+                user.Login = _currentUser.Login;
                 user.Email = tbEmail.Text;
                 user.Password = _currentUser.Password;
                 user.Birthday = dpBirthDate.SelectedDate;
 
                 context.Users.Update(user);
                 context.SaveChanges();
+                this.DialogResult = true;
+
             }
         }
 
@@ -103,6 +112,16 @@ namespace CigarHouseApp.Views
             this.DialogResult = false;
         }
 
+        private int CalculateAge(DateTime birthDate)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+            if (birthDate.Date > today.AddYears(-age))
+                age--;
+
+            return age;
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (CheckPassword())
@@ -113,14 +132,25 @@ namespace CigarHouseApp.Views
             {
                 try
                 {
-                    UpdateUser();
-                    this.DialogResult = true;
+                    if (CalculateAge(dpBirthDate.SelectedDate.Value)>=18)
+                    {
+                      
+                        UpdateUser();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Неверный возраст");
+                    }
                 }
                 catch (Exception ex)
                 {
                     this.DialogResult = false;
                     MessageBox.Show("Пользователь не был обновлен");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Заполните все поля!");
             }
         }
 
@@ -163,4 +193,14 @@ namespace CigarHouseApp.Views
 
             imgBrushAvatar.ImageSource = bitmap;
         }
-}}
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            AuthentificationWindow auth = new AuthentificationWindow();
+            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow = auth;
+            auth.Show();
+            this.Close();
+        }
+    }
+}

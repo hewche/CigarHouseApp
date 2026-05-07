@@ -114,6 +114,8 @@ namespace CigarHouseApp.Helpers
         private List<Product> SetPurchase(List<Product> products)
         {
             List<Product> cartProducts = _mainWindow.currentUser.Usercart.Products.ToList();
+
+
             if (cartProducts == null || !cartProducts.Any())
                 return products;
 

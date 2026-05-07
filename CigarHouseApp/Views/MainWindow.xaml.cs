@@ -97,12 +97,15 @@ namespace CigarHouseApp.Views
 
         private void ConfigureRoleTabs()
         {
-            bool hasManagementAccess = currentUser?.RoleId == 1;
+             bool hasManagementAccess = currentUser?.RoleId == 1 || currentUser?.RoleId == 3;
             tabAddProduct.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
             tabOrderManagement.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
+            moderatorButtonsPanel.Visibility = hasManagementAccess ? Visibility.Visible : Visibility.Collapsed;
 
-            bool isContentModerator = currentUser?.RoleId == 3;
-            moderatorButtonsPanel.Visibility = isContentModerator ? Visibility.Visible : Visibility.Collapsed;
+            //bool isContentModerator = currentUser?.RoleId == 3;
+            //moderatorButtonsPanel.Visibility = isContentModerator ? Visibility.Visible : Visibility.Collapsed;
+            //tabAddProduct.Visibility = isContentModerator ? Visibility.Visible : Visibility.Collapsed;
+            //tabOrderManagement.Visibility = isContentModerator ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -143,17 +146,21 @@ namespace CigarHouseApp.Views
         {
             using (var context = new CigarhouseContext())
             {
-                currentUser =  context.Users
-                .Include(u => u.Usercart)
-                    .ThenInclude(uc => uc.Products)
-                .Include(u => u.Userfavorite)
-                    .ThenInclude(uf => uf.Products)
-                .Include(u => u.Orders)
-                    .ThenInclude(o => o.OrderStatus)
-                .Include(u => u.Orders)
-                    .ThenInclude(o => o.OrderItems)
-                        .ThenInclude(i => i.Product)
-                .FirstOrDefault(u => u.UserId == userId);
+                currentUser = context.Users
+                    .Include(u => u.Usercart)
+                        .ThenInclude(uc => uc.Products)
+                    .Include(u => u.Userfavorite)
+                        .ThenInclude(uf => uf.Products)
+                            .ThenInclude(p => p.Cigar)
+                    .Include(u => u.Userfavorite)
+                        .ThenInclude(uf => uf.Products)
+                            .ThenInclude(p => p.Accessory)
+                    .Include(u => u.Orders)
+                        .ThenInclude(o => o.OrderStatus)
+                    .Include(u => u.Orders)
+                        .ThenInclude(o => o.OrderItems)
+                            .ThenInclude(i => i.Product)
+                    .FirstOrDefault(u => u.UserId == userId);
             }
         }
 

@@ -287,7 +287,7 @@
                                            FontWeight="SemiBold" 
                                            Foreground="{StaticResource DeepBrown}"
                                            Margin="0,0,0,5"/>
-                                <TextBlock Text="Доставка рассчитывается после выбора способа получения" 
+                                <TextBlock Text="Доставка рассчитывается от количества продуктов" 
                                            FontSize="11" 
                                            Foreground="{StaticResource MediumBrown}"
                                            TextWrapping="Wrap"
